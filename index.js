@@ -26,6 +26,7 @@ import ProfileScreen from './src/screens/ProfileScreen'
 import ClassScreen from './src/screens/ClassScreen'
 import ChatScreen from './src/screens/ChatScreen'
 import AccountScreen from './src/screens/AccountScreen'
+import settingsIcon from './src/assets/settings.png'
 
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
@@ -49,21 +50,33 @@ Navigation.registerComponentWithRedux('Classroom', () => ClassroomScreen, Provid
 Navigation.registerComponentWithRedux('AuthLoading', () => AuthLoadingScreen, Provider, store)
 Navigation.registerComponentWithRedux('Account', () => AccountScreen, Provider, store)
 Navigation.registerComponentWithRedux('Questions', () => QuestionsScreen, Provider, store)
-Navigation.registerComponentWithRedux('Profile', () => ProfileScreen, Provider, store)
+Navigation.registerComponentWithRedux('Account', () => ProfileScreen, Provider, store)
 Navigation.registerComponentWithRedux('Class', () => ClassScreen, Provider, store)
 Navigation.registerComponentWithRedux('Chat', () => ChatScreen, Provider, store)
 
 Navigation.setDefaultOptions({
     bottomTab: {
-        selectedTextColor: '#3FB0D4',
+        // selectedTextColor: '#3FB0D4',
         selectedIconColor: '#3FB0D4',
         textColor: '#707070',
     },
+
+    bottomTabs: {
+        titleDisplayMode: 'alwaysShow'
+    },
+
     topBar: {
         title: {
             text: 'Logo',
-            color: '#257F9B'
+            color: '#257F9B',
+            fontWeight: 'bold',
+            fontSize: '20'
         },
+        rightButtons: [
+            {
+                icon: settingsIcon
+            }
+        ]
     }
 })
 

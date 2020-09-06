@@ -17,7 +17,8 @@ export const mainRoot = {
                             {
                                 component: {
                                     id: 'DashboardScreen',
-                                    name: 'Dashboard'
+                                    // name: 'Dashboard'
+                                    name: 'Class'
                                 }
                             }
                         ],

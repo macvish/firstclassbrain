@@ -51,12 +51,12 @@ const DashboardScreen = props => {
                 <View>
                     <Text style={styles.headerText}>Popular Videos</Text>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 10}}>
-                        <CardView src={pp} title='Physics Week 1 : Motion' />
-                        <CardView src={cf} title='Mathematics Week 1 : Polynomials' />
+                        <CardView src={pp} />
+                        <CardView src={cf} />
                     </View>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <CardView src={pp} title='Physics Week 1 : Motion' />
-                        <CardView src={cf} title='Mathematics Week 1 : Polynomials' />
+                        <CardView src={pp} />
+                        <CardView src={cf} />
                     </View>
                 </View>
             </ScrollView>

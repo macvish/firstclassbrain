@@ -2,7 +2,7 @@ import * as React from "react";
 import Svg, { Defs, Path } from "react-native-svg";
 /* SVGR has dropped some elements not supported by react-native-svg: style */
 
-function InvisibleIcon(props) {
+const InvisibleIcon = (props) => {
   return (
     <Svg width={20.449} height={18.667} viewBox="0 0 20.449 18.667" {...props}>
       <Defs></Defs>

@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     },
 
     fadeContainer: {
-        height: 60,
+        height: 50,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         borderBottomRightRadius: 20,
         borderBottomLeftRadius: 20,
@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
     title: {
         color: '#ffffff',
         fontWeight: 'bold',
-        fontSize: 22
+        fontSize: 18,
+        // textAlign: 'center'
     }
 })

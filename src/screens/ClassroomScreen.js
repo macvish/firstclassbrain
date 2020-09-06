@@ -24,6 +24,7 @@ const ClassroomScreen = props => {
                 numColumns={2}
                 keyExtractor={item => item.id}
                 extraData={testConent.classroom}
+                style={{paddingTop: 5}}
             />
         </View>
     )
