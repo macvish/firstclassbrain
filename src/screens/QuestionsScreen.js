@@ -1,17 +1,30 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-elements'
+import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
-import CardView from '../components/CardView'
+
+import AlertModal from '../components/AlertModal'
+import QuestionsCardView from '../components/QuestionsCardView'
 import testConent from '../helper/test.json'
 
 const { width, height } = Dimensions.get('window')
 
-const QuestionsScreen = () => {
+const QuestionsScreen = props => {
 
     const [value, setValue] = useState(1)
 
     const [activeBtn, setActiveBtn] = useState(1)
+
+    const [modalVisible, setModalVisible] = useState(false)
+
+    useEffect(() => {
+        if(props.questionTab){
+            setValue(props.questionTab)
+            setActiveBtn(props.questionTab)
+            console.log(props.questionTab)
+        }
+    }, [props.questionTab])
 
     return (
         <View style={styles.container}>
@@ -47,43 +60,62 @@ const QuestionsScreen = () => {
                     }}
                 />
             </View>
-            <Content screen={value} />
+            <Content screen={value} componentId={props.componentId} />
         </View>
     )
 }
 
-const Content = ({ screen }) => {
+const Content = ({ screen, componentId }) => {
     switch (screen) {
         case 1:
-            return <Screen />
+            return <Screen componentId={componentId} />
 
         case 2:
-            return <Screen />
+            return <Screen componentId={componentId} />
 
         case 3:
-            return <Screen /> 
+            return <Screen componentId={componentId} /> 
     
         default:
-            <Screen />
+            <Screen componentId={componentId} />
     }
 }
 
 const Screen = props => {
 
-    const renderItem = ({item}) => {
+    const [modalVisible, setModalVisible] = useState(false)
+
+    const onContinue = () => {
+        setModalVisible(false)
+        
+    }
+
+    const onCloseModal = () => {
+        setModalVisible(false)
+    }
+
+    const renderItem = ({item, onPress}) => {
         return <View style={{paddingRight: 20, paddingBottom: 20}}>
-            <CardView uri={item.src} title={item.title} height={height/8} />
+            <QuestionsCardView uri={item.src} title={item.title} item={item} componentId={props.componentId} height={height/8} />
         </View>
     }
 
     return (
-        <FlatList
-            data={testConent.questions}
-            renderItem={renderItem}
-            numColumns={2}
-            keyExtractor={item => item.id}
-            extraData={testConent.questions}
-        />
+        <>
+            <FlatList
+                data={testConent.questions}
+                renderItem={renderItem}
+                numColumns={2}
+                keyExtractor={item => item.id}
+                extraData={testConent.questions}
+            />
+            <AlertModal 
+                visible={modalVisible} 
+                message='Do you want to start your Assignment Quiz?'
+                onClose={onCloseModal} 
+                onContinue={onContinue}
+            />
+        </>
     )
 }
 

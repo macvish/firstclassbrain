@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { StyleSheet, Text, View, KeyboardAvoidingView, Dimensions, Keyboard, InteractionManager, ActivityIndicator, ImageBackground } from 'react-native'
-import { Input, Button, Avatar } from 'react-native-elements'
+import { Input, Button, Avatar, Image } from 'react-native-elements'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 import * as Animatable from 'react-native-animatable'
 
-import img from '../assets/login_image.png'
-import img_overlay from '../assets/login_fade.png'
+import img from '../assets/images/login_image.png'
+import img_overlay from '../assets/images/login_fade.png'
 import EmailIcon from '../constants/EmailIcon'
 import LockIcon from '../constants/LockIcon'
 import InvisibleIcon from '../constants/InvisibleIcon'
+import { login } from '../reducers/authAction'
+import logo from '../assets/logo/logo.jpeg'
 
 const {width, height} = Dimensions.get('window')
 
@@ -25,6 +27,8 @@ const LoginScreen = props => {
     const [err, setErr] = useState('')
 
     const [submitLoading, setSubmitLoading] = useState(false)
+
+    const submitButton = useRef(null)
 
     useEffect(() => {
         setSignupMsg(props.signup_success_message)
@@ -67,12 +71,11 @@ const LoginScreen = props => {
             ...prevState, [name]: e
         }))
     }
-
     
     const handleSubmit = () => {
         Keyboard.dismiss()
 
-        submitButton.current.bounceOut(300).then(endState => {
+        // submitButton.current.bounceOut(300).then(endState => {
             setSubmitLoading(true)
     
             if(data.password == '')
@@ -95,7 +98,7 @@ const LoginScreen = props => {
                 }, 2000);
             }
     
-        })
+        // })
     }
 
     return (
@@ -118,8 +121,14 @@ const LoginScreen = props => {
                                 <Text style={{fontSize: 22, color: 'white'}}>Sign in</Text>
                             </View>
                             <View>
-                                <Text style={{fontSize: 40, color: 'white'}}>LOGO</Text>
-                                <Text style={{fontSize: 40, color: 'white'}}>LOGO</Text>
+                                <Image 
+                                    source={logo}
+                                    style={{
+                                        width: width/3,
+                                        height: width/3,
+                                        borderRadius: 10
+                                    }}
+                                />
                             </View>
                         </ImageBackground>
                     </ImageBackground>
@@ -169,9 +178,9 @@ const LoginScreen = props => {
                             title='Sign in'
                             buttonStyle={styles.button}
                             titleStyle={{fontSize: 22, fontWeight: '700'}}
-                            onPress={() => handleSubmit}
+                            onPress={() => handleSubmit()}
                         />
-                    </View> : <ActivityIndicator size={50} color='#FDAD45' />}
+                    </View> : <ActivityIndicator size={50} color='#257F9B' />}
                 </View>
             </KeyboardAvoidingView>
 
@@ -204,7 +213,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    
+    login
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)

@@ -5,13 +5,66 @@ import { Navigation } from 'react-native-navigation'
 import * as Progress from 'react-native-progress'
 
 import CardViewFade from '../components/CardViewFade'
-import pp from '../assets/physics_program.png'
-import cf from '../assets/chemistry_fact.png'
+import pp from '../assets/images/physics_program.png'
+import cf from '../assets/images/chemistry_fact.png'
 import CardView from '../components/CardView'
+import testConent from '../helper/test.json'
+import ClassroomCardView from '../components/ClassroomCardView'
 
 const { width, height } = Dimensions.get('window')
 
 const DashboardScreen = props => {
+
+    const handleNavigation = (screenName, componentName, index) => {
+        Navigation.push(props.componentId, {
+            component: {
+                name: screenName,
+                passProps: {
+                    // navProp: options
+                },
+                options: {
+                    // bottomTabs: {
+                    //     currentTabIndex: index
+                    // },
+                    animations: {
+                        push: {
+                            content: {
+                                translationX: {
+                                    from: width,
+                                    to: 0,
+                                    duration: 300
+                                }
+                            }
+                        },
+                        pop: {
+                            content: {
+                                translationX: {
+                                    from: 0,
+                                    to: width,
+                                    duration: 300
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    const handleNavigateTab = (tabIndex) => {
+        Navigation.mergeOptions('BottomTabs', {
+            bottomTabs: {
+                currentTabIndex: 1
+            }
+        })
+    }
+
+    const renderClasses = () => {
+        let classes = testConent.classroom.sort(() =>  0.5 - Math.random()).slice(0, 2)
+        return classes.map((data, index) => {
+            return <ClassroomCardView key={data.id} componentId={props.componentId} uri={data.src} item={data} title={data.title} height={height/8} />
+        })
+    }
 
     return (
         <View style={styles.container}>
@@ -19,8 +72,7 @@ const DashboardScreen = props => {
                 <View style={styles.wrapper}>
                     <Text style={styles.headerText}>Most Viewed</Text>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <CardViewFade src={pp} title='Physics' />
-                        <CardViewFade src={cf} title='Chemistry' />
+                        {renderClasses() ?? (<Text> No content yet </Text>)}
                     </View>
                 </View>
                 
@@ -29,6 +81,7 @@ const DashboardScreen = props => {
                         title='Assignments'
                         titleStyle={{ color: 'white', fontSize: 20}}
                         buttonStyle={styles.btn}
+                        onPress={() => handleNavigateTab(1)}
                     />
                 </View>
 

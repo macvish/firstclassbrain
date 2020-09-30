@@ -5,23 +5,23 @@ import { Icon, Button } from 'react-native-elements'
 import Swiper from 'react-native-swiper'
 import { Navigation } from 'react-native-navigation'
 import * as Animatable from 'react-native-animatable'
+import { connect } from 'react-redux'
 
-import onboard_one from '../assets/onboard_one.png'
-import onboard_two from '../assets/onboard_two.png'
-import onboard_three from '../assets/onboard_three.png'
-
+import onboarding_header from '../assets/images/onboarding_header.png'
+import onboard_one from '../assets/images/onboard_one.png'
+import onboard_two from '../assets/images/onboard_two.png'
+import onboard_three from '../assets/images/onboard_three.png'
 import { authRoot } from '../navigation/authRootNavigation'
 import { onboard } from '../reducers/authAction'
-import { connect } from 'react-redux'
 
 const {width, height} = Dimensions.get('window')
 const OnboardingScreen = props => {
-    const onCompleted = async () => {
+    const onCompleted = () => {
         props.onboard()
         
-        buttonAnimation.current.bounceOut(300).then(endState => {
+        // buttonAnimation.current.bounceOut(300).then(endState => {
             Navigation.setRoot(authRoot)
-        })
+        // })
     }
 
     const swiperRef = useRef(0)
@@ -38,7 +38,7 @@ const OnboardingScreen = props => {
                 // onIndexChanged={}
                 showsPagination={false}
                 ref={swiperRef}
-                scrollEnabled={true}
+                scrollEnabled={false}
             >
                 {/* Slide 1 */}
                 <View style={styles.container}>
@@ -46,6 +46,8 @@ const OnboardingScreen = props => {
                         title='Access to Course Materials' 
                         content='Have access to various course materials depending on your subject and class'
                         onPress={() => swiperRef.current.scrollBy(1)}
+                        skip={true}
+                        skipAction={() => swiperRef.current.scrollBy(2)}
                         image={onboard_one}
                         skip={true}
                     />
@@ -57,6 +59,8 @@ const OnboardingScreen = props => {
                         title='Study made easier with Videos' 
                         content='Have access to various course videos depending on your subject and class'
                         onPress={() => swiperRef.current.scrollBy(1)}
+                        skip={true}
+                        skipAction={() => swiperRef.current.scrollBy(1)}
                         image={onboard_two}
                         skip={true}
                     />
@@ -81,11 +85,17 @@ const OnboardingContent = params => {
     return (
         <>
                 <View style={{alignItems: 'center', height: '25%', justifyContent: 'flex-start'}}>
-                    {/* <LogoSvg /> */}
-                    <View style={{backgroundColor: '#3FB0D4', width: width, height: '90%', flexDirection: 'row', justifyContent: 'flex-end'}}>
-                        <TouchableOpacity onPress={() => params.onPress()}>
-                            <Text style={{color: 'white', marginRight: 30, marginTop: 30}}>Skip</Text>
-                        </TouchableOpacity>
+                    {/* <headerSvg /> */}
+                    <View 
+                        style={styles.headerWrapper}>
+                        <ImageBackground 
+                            source={onboarding_header} 
+                            style={styles.header}
+                        >
+                            {params.skip ? <TouchableOpacity onPress={() => params.skipAction()}>
+                                <Text style={{color: 'white', marginRight: 30, marginTop: 30}}>Skip</Text>
+                            </TouchableOpacity> : null}
+                        </ImageBackground>
                     </View>
                 </View>
 
@@ -141,10 +151,18 @@ const styles = StyleSheet.create({
         height: height,
         backgroundColor: '#FFF',
     },
+
+    headerWrapper: {
+        backgroundColor: '#FFF', 
+        width: width, 
+        height: width/1.7, 
+    },
     
-    logo: {
-        // flex: 1
-        
+    header: {
+        width: width,
+        height: '100%',
+        flexDirection: 'row', 
+        justifyContent: 'flex-end'
     },
 
     title: {

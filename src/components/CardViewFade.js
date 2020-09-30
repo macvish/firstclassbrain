@@ -1,7 +1,7 @@
 import React from 'react'
 import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Navigation } from 'react-native-navigation'
-import pp from '../assets/physics_program.png'
+import pp from '../assets/images/physics_program.png'
 
 const { width, height } = Dimensions.get('window')
 

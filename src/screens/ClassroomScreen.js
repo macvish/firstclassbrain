@@ -1,9 +1,8 @@
 import React, {useState} from 'react'
-import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native'
-import { Button } from 'react-native-elements'
+import { Dimensions, FlatList, StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
-import CardView from '../components/CardView'
-import CardViewFade from '../components/CardViewFade'
+
+import ClassroomCardView from '../components/ClassroomCardView'
 import testConent from '../helper/test.json'
 
 const { width, height } = Dimensions.get('window')
@@ -12,7 +11,7 @@ const ClassroomScreen = props => {
 
     const renderItem = ({item}) => {
         return <View style={{paddingRight: 20, paddingBottom: 20}}>
-            <CardViewFade uri={item.src} title={item.title} height={height/8} />
+            <ClassroomCardView componentId={props.componentId} uri={item.src} item={item} title={item.title} height={height/8} />
         </View>
     }
 
@@ -36,7 +35,16 @@ const ClassroomScreen = props => {
 //     }
 // }
 
-export default ClassroomScreen
+const mapStateToProps = (state) => ({
+    
+})
+
+const mapDispatchToProps = {
+    
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ClassroomScreen)
 
 const styles = StyleSheet.create({
     container: {

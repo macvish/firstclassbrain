@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { StyleSheet, Text, View, KeyboardAvoidingView, Dimensions, 
-    Keyboard, ScrollView, ActivityIndicator, ImageBackground } from 'react-native'
+    Keyboard, ScrollView, ActivityIndicator, ImageBackground, TouchableOpacity } from 'react-native'
 import { Input, Button, Avatar } from 'react-native-elements'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
-import * as Animatable from 'react-native-animatable'
+// import * as Animatable from 'react-native-animatable'
+import { Dropdown } from 'react-native-material-dropdown'
+import DateTimePicker from '@react-native-community/datetimepicker'
 
-import img from '../assets/login_image.png'
-import img_overlay from '../assets/login_fade.png'
-import EmailIcon from '../constants/EmailIcon'
-import LockIcon from '../constants/LockIcon'
+import img from '../assets/images/login_image.png'
+import img_overlay from '../assets/images/login_fade.png'
+import { signup } from '../reducers/authAction'
 import InvisibleIcon from '../constants/InvisibleIcon'
 
 const {width, height} = Dimensions.get('window')
@@ -17,14 +18,22 @@ const {width, height} = Dimensions.get('window')
 const RegistrationScreen = props => {
 
     const [data, setData] = useState({
-        fullname: '',
+        firstName: '',
+        lastName: '',
+        otherName: '',
         email: '',
-        password: '',
-        student: '',
-        class: '',
+        phone: '',
+        dateOfBirth: `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`,
+        address: '',
+        schoolClass: '',
+        department: '',
         password: '',
         confirm_password: ''
     })
+
+    const [showDate, setShowDate] = useState(false)
+
+    const [date, setDate] = useState(new Date)
 
     const [signupMsg, setSignupMsg] = useState('')
 
@@ -40,6 +49,12 @@ const RegistrationScreen = props => {
         setData(prevState => ({
             ...prevState, [name]: e
         }))
+    }
+
+    const handleChangeDate = (e, s) => {
+        handleInput('dateOfBirth', `${new Date(s).getFullYear()}-${new Date(s).getMonth()}-${new Date(s).getDate()}`)
+        setDate(s)
+        setShowDate(false)
     }
 
     
@@ -61,9 +76,9 @@ const RegistrationScreen = props => {
                 setErr('Email field can not be empty')
             }
     
-            if(data.email !== '' && data.password !== ''){
+            if(data.email !== '' && data.password !== '' && data.confirm_password === data.password && data.fullname !== '' && data.class !== '' ){
                 setErr('')
-                props.login(data)
+                props.signup(data)
                 setTimeout(() => {
                     setSubmitLoading(false)
                 }, 2000);
@@ -75,7 +90,7 @@ const RegistrationScreen = props => {
     return (
         <View style={styles.container}>
 
-            <View style={styles.header}>
+            {/* <View style={styles.header}>
                 <View style={{marginTop: -80}}>
                     <ImageBackground source={img} style={styles.img}>
                         <ImageBackground source={img_overlay} style={styles.img_fade}>
@@ -89,23 +104,23 @@ const RegistrationScreen = props => {
                         </ImageBackground>
                     </ImageBackground>
                 </View>
-            </View>
+            </View> */}
 
             {/* Title */}
-            <View style={{alignSelf: 'center', width: width/1.24, paddingBottom: 10}}>
-                <Text style={{fontSize: 20, fontWeight: '700', color: '#171717'}}>Create your account</Text>
+            <View style={{alignSelf: 'center', width: width/1.24, paddingBottom: 60, marginTop: 60}}>
+                <Text style={{fontSize: 25, fontWeight: '700', color: '#171717'}}>Create your account</Text>
                 {props.signup_success_message ? <Text style={{color: '#171717'}}>{signupMsg}</Text> : null}
             </View>
             
 
-            <ScrollView style={{flex: 1,}}>
+            <ScrollView style={{}}>
 
             <KeyboardAvoidingView
                 behavior='position'
                 keyboardVerticalOffset={
                     Platform.select({
                         ios: () => 0,
-                        android: () => 40
+                        android: () => -40
                 })()}
                 // style={styles.inputContainer}
             >
@@ -113,42 +128,80 @@ const RegistrationScreen = props => {
                 {/* Input Fields */}
                 <View style={styles.inputs}>
                     <Input 
-                        placeholder='Full Name'
+                        placeholder='First Name'
                         placeholderTextColor='#707070'
-                        textContentType='name'
-                        inputContainerStyle={{ borderBottomColor: '#171717', borderBottomWidth: 2.5, }}
-                        leftIcon={<EmailIcon />}
+                        textContentType='givenName'
+                        inputContainerStyle={styles.inputContainerStyle}
                         inputStyle={{color: '#707070'}} 
-                        onChangeText={e => handleInput('fullname', e)} />
+                        onChangeText={e => handleInput('firstName', e)} />
+                    <Input 
+                        placeholder='Last Name'
+                        placeholderTextColor='#707070'
+                        textContentType='familyName'
+                        inputContainerStyle={styles.inputContainerStyle}
+                        inputStyle={{color: '#707070'}} 
+                        onChangeText={e => handleInput('lastName', e)} />
+                    <Input 
+                        placeholder='Other Name'
+                        placeholderTextColor='#707070'
+                        textContentType='middleName'
+                        inputContainerStyle={styles.inputContainerStyle}
+                        inputStyle={{color: '#707070'}} 
+                        onChangeText={e => handleInput('otherName', e)} />
                     <Input 
                         placeholder='Email'
                         placeholderTextColor='#707070'
                         textContentType='emailAddress'
                         inputContainerStyle={styles.inputContainerStyle}
-                        leftIcon={<EmailIcon />}
                         inputStyle={{color: '#707070'}} 
                         onChangeText={e => handleInput('email', e)} />
                     <Input 
-                        placeholder='Student' 
+                        placeholder='Phone Number'
                         placeholderTextColor='#707070'
+                        textContentType='telephoneNumber'
                         inputContainerStyle={styles.inputContainerStyle}
-                        leftIcon={<LockIcon />}
-                        rightIcon={<InvisibleIcon />}
-                        inputStyle={{color: '#707070'}}
-                        secureTextEntry onChangeText={e => handleInput('student', e)} />
-                    <Input 
-                        placeholder='Class'
-                        placeholderTextColor='#707070'
-                        inputContainerStyle={styles.inputContainerStyle}
-                        leftIcon={<EmailIcon />}
                         inputStyle={{color: '#707070'}} 
-                        onChangeText={e => handleInput('class', e)} />
+                        onChangeText={e => handleInput('phone', e)} />
+                    <TouchableOpacity onPress={() => setShowDate(true) }>
+                        <Input 
+                            placeholder='date of Birth'
+                            placeholderTextColor='#707070'
+                            disabled={true}
+                            value={`${data.dateOfBirth}`}
+                            inputContainerStyle={styles.inputContainerStyle}
+                            inputStyle={{color: '#707070'}} />
+                    </TouchableOpacity>
+                    {showDate && (
+                        <DateTimePicker
+                            testID="dateTimePicker"
+                            value={date}
+                            mode='date'
+                            display="default"
+                            onChange={handleChangeDate}
+                        />
+                    )}
+                    <Dropdown
+                        data={[
+                            {value: 'junior-1', label: 'Jss 1'},
+                            {value: 'junior-2', label: 'Jss 2'},
+                            {value: 'junior-3', label: 'Jss 3'},
+                            {value: 'secondary-1', label: 'Sss 1'},
+                            {value: 'secondary-2', label: 'Sss 2'},
+                            {value: 'secondary-3', label: 'Sss 3'},
+                        ]}
+                        containerStyle={{...styles.inputContainerStyle, marginTop: -40, marginBottom: 20, width: width/1.27, alignSelf: "center"}}
+                        labelTextStyle={{color: '#707070'}}
+                        itemColor='#707070'
+                        style={{borderBottomWidth: 0}}
+                        label='Class'
+                        onChangeText={e => handleInput('class', e)}
+                        inputContainerStyle={{ borderBottomWidth: 0 }}
+                    />
                     <Input 
                         placeholder='Password' 
                         placeholderTextColor='#707070'
                         textContentType='password'
                         inputContainerStyle={styles.inputContainerStyle}
-                        leftIcon={<LockIcon />}
                         rightIcon={<InvisibleIcon />}
                         inputStyle={{color: '#707070'}}
                         secureTextEntry onChangeText={e => handleInput('password', e)} />
@@ -157,7 +210,6 @@ const RegistrationScreen = props => {
                         placeholderTextColor='#707070'
                         textContentType='password'
                         inputContainerStyle={styles.inputContainerStyle}
-                        leftIcon={<LockIcon />}
                         rightIcon={<InvisibleIcon />}
                         inputStyle={{color: '#707070'}}
                         secureTextEntry onChangeText={e => handleInput('password', e)} />
@@ -182,7 +234,7 @@ const RegistrationScreen = props => {
                 }}>
                     {!submitLoading ? <View>
                         <Button 
-                            title='Sign in'
+                            title='Sign Up'
                             buttonStyle={styles.button}
                             titleStyle={{fontSize: 22, fontWeight: '700'}}
                             onPress={() => handleSubmit}
@@ -198,7 +250,7 @@ const RegistrationScreen = props => {
 
                 <View style={{flexDirection: 'row'}}>
                     <Button title="Already have an account?" type='clear' titleStyle={{fontSize: 16, color: '#707070'}} />
-                    <Button title='Sign Up' type='clear' titleStyle={styles.clearButton} onPress={() => Navigation.pop(props.componentId)} />
+                    <Button title='Sign In' type='clear' titleStyle={styles.clearButton} onPress={() => Navigation.pop(props.componentId)} />
                 </View>
             </View>
         </View>
@@ -216,7 +268,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    
+    signup
 }
 
 
@@ -261,8 +313,6 @@ const styles = StyleSheet.create({
         color: '#3FB0D4',
         fontSize: 16,
         fontWeight: '200',
-        borderBottomWidth: 1,
-        borderBottomColor: '#FFF'
     },
 
     inputContainer: {

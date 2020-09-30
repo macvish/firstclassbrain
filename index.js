@@ -6,9 +6,6 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 
-
-// import App from './App'
-// import {name as appName} from './app.json'
 import { rootReducer } from './src/reducers/rootReducer'
 import { authLoadingRoot } from './src/navigation/authLoadingRootNavigation'
 import { authRoot } from './src/navigation/authRootNavigation'
@@ -26,7 +23,8 @@ import ProfileScreen from './src/screens/ProfileScreen'
 import ClassScreen from './src/screens/ClassScreen'
 import ChatScreen from './src/screens/ChatScreen'
 import AccountScreen from './src/screens/AccountScreen'
-import settingsIcon from './src/assets/settings.png'
+import settingsIcon from './src/assets/icons/settings.png'
+import QuizScreen from './src/screens/QuizScreen'
 
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
@@ -53,6 +51,7 @@ Navigation.registerComponentWithRedux('Questions', () => QuestionsScreen, Provid
 Navigation.registerComponentWithRedux('Account', () => ProfileScreen, Provider, store)
 Navigation.registerComponentWithRedux('Class', () => ClassScreen, Provider, store)
 Navigation.registerComponentWithRedux('Chat', () => ChatScreen, Provider, store)
+Navigation.registerComponentWithRedux('Quiz', () => QuizScreen, Provider, store)
 
 Navigation.setDefaultOptions({
     bottomTab: {
@@ -67,14 +66,14 @@ Navigation.setDefaultOptions({
 
     topBar: {
         title: {
-            text: 'Logo',
+            text: 'First Class Brain',
             color: '#257F9B',
             fontWeight: 'bold',
             fontSize: '20'
         },
         rightButtons: [
             {
-                icon: settingsIcon
+                // icon: settingsIcon
             }
         ]
     }

@@ -21,27 +21,30 @@ export const login = ({email, password}) => async (dispatch) => {
   // if(email == email && password == password){
   //   Navigation.setRoot(mainRoot)
   // }
-    await API.post('auth/login', { email, password })
+    await API.post('signin-student', { email, password })
     .then(res => {
       const { data } = res
+      console.log(data)
       if(res.status === 200){
-        AsyncStorage.setItem('access_token', `${data.data.token}`)
-        AsyncStorage.setItem('access_id', `${data.data.id}`)
-        dispatch({type: LOGIN, payload: data.data})
-        Navigation.setRoot(authLoadingRoot)
+        AsyncStorage.setItem('access_token', `${data.token}`)
+        AsyncStorage.setItem('access_id', `${data.id}`)
+        dispatch({type: LOGIN, payload: data})
+        Navigation.setRoot(mainRoot)
       }
       else{
-        dispatch({ type: LOGIN_FAILURE, msg: data.data.message })
+        console.log(err)
+        dispatch({ type: LOGIN_FAILURE, msg: data.message })
       }
     })
     .catch(err => {
+        console.log(err)
         dispatch({type: LOGIN_FAILURE, msg: 'Something went wrong, please try again'})
     })
 }
 
-export const signup = ({fullname, email, password}) => async (dispatch) => {
+export const signup = (data) => async (dispatch) => {
 
-    await API.post('auth/signup', { fullname, email, password })
+    await API.post('signup-student', { data })
   .then(res => {
     const { data } = res
     if(res.status === 200){
@@ -50,7 +53,7 @@ export const signup = ({fullname, email, password}) => async (dispatch) => {
       Navigation.pop('AuthStack')
     }
     else{
-      dispatch({ type: SIGN_UP_FAILURE, msg: data.data.message })
+      dispatch({ type: SIGN_UP_FAILURE, msg: data.message })
     }
   })
   .catch(err => {
@@ -64,56 +67,24 @@ export const forgot_password = ({email}) => async (dispatch) => {
 .then(res => {
   const { data } = res
   if(res.status === 200){
-    dispatch({ type: FORGOT_PASSWORD, msg: data.data.message })
+    dispatch({ type: FORGOT_PASSWORD, msg: data.message })
     Navigation.push('AuthStack', {
       component: {
           name: 'Verify',
           passProps: {
             email: email,
-            uid: data.data.uid
+            uid: data.uid
           }
       }
     })
   } else{
-    dispatch({ type: FORGOT_PASSWORD, msg: data.data.message })
+    dispatch({ type: FORGOT_PASSWORD, msg: data.message })
   }
 })
 .catch(err => {
   console.log(err)
   dispatch({ type: FORGOT_PASSWORD, msg: err })
 })
-}
-
-export const verify_email = (uid, token) => async (dispatch) => {
-	await API.get(`auth//token/${uid}/${token}`)
-	.then(res => {
-		const { data } = res
-		if(res.status === 200){
-			dispatch({ type: VERIFY_EMAIL, msg: data.data.message })
-			// Navigation.setRoot(mainRoot)
-		} else{
-			dispatch({ type: FORGOT_PASSWORD, msg: data.data.message })
-		}
-	})
-	.catch(err => {
-		dispatch({ type: VERIFY_EMAIL, msg: err.msg })
-	})
-}
-
-export const change_password = (uid, token, email, {password}) => async (dispatch) => {
-	await API.post(`auth/password/token/${uid}/${token}`, { email, password })
-	.then(res => {
-		const { data } = res
-		if(res.status === 200){
-			dispatch({ type: RESEND_CODE, msg: data.msg })
-			Navigation.popToRoot('AuthStack')
-		} else{
-			dispatch({ type: FORGOT_PASSWORD, msg: data.data.message })
-		}
-	})
-	.catch(err => {
-		dispatch({ type: RESEND_CODE, msg: err.msg })
-	})
 }
 
 export const logout = () => async (dispatch) => {

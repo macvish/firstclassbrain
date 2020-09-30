@@ -1,9 +1,9 @@
 import React from 'react'
-import dashboardIcon from '../assets/dashboard.png'
-import questionsIcon from '../assets/questions.png'
-import classroomIcon from '../assets/classroom.png'
-import chatIcon from '../assets/chat.png'
-import accountIcon from '../assets/account.png'
+import dashboardIcon from '../assets/icons/dashboard.png'
+import questionsIcon from '../assets/icons/questions.png'
+import classroomIcon from '../assets/icons/classroom.png'
+import chatIcon from '../assets/icons/chat.png'
+import accountIcon from '../assets/icons/account.png'
 
 export const mainRoot = {
     root: {
@@ -17,8 +17,8 @@ export const mainRoot = {
                             {
                                 component: {
                                     id: 'DashboardScreen',
-                                    // name: 'Dashboard'
-                                    name: 'Class'
+                                    name: 'Dashboard'
+                                    // name: 'Quiz'
                                 }
                             }
                         ],
@@ -68,25 +68,25 @@ export const mainRoot = {
                         }
                     }
                 },
-                {
-                    stack: {
-                        id: 'ChatStack',
-                        children: [
-                            {
-                                component: {
-                                    id: 'ChatScreen',
-                                    name: 'Chat'
-                                }
-                            }
-                        ],
-                        options: {
-                            bottomTab: {
-                                icon: chatIcon,
-                                text: 'Chat'
-                            }
-                        }
-                    }
-                },
+                // {
+                //     stack: {
+                //         id: 'ChatStack',
+                //         children: [
+                //             {
+                //                 component: {
+                //                     id: 'ChatScreen',
+                //                     name: 'Chat'
+                //                 }
+                //             }
+                //         ],
+                //         options: {
+                //             bottomTab: {
+                //                 icon: chatIcon,
+                //                 text: 'Chat'
+                //             }
+                //         }
+                //     }
+                // },
                 {
                     stack: {
                         id: 'AccountStack',
