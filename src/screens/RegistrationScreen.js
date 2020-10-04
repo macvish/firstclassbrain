@@ -15,6 +15,26 @@ import InvisibleIcon from '../constants/InvisibleIcon'
 
 const {width, height} = Dimensions.get('window')
 
+const classes = [
+    {value: 1, label: 'Basic 1'},
+    {value: 2, label: 'Basic 2'},
+    {value: 3, label: 'Basic 3'},
+    {value: 4, label: 'Basic 4'},
+    {value: 5, label: 'Basic 5'},
+    {value: 6, label: 'Jss 1'},
+    {value: 7, label: 'Jss 2'},
+    {value: 8, label: 'Jss 3'},
+    {value: 9, label: 'Sss 1'},
+    {value: 10, label: 'Sss 2'},
+    {value: 11, label: 'Sss 3'},
+]
+
+const departments = [
+    {value: 'Art', label: 'Art'},
+    {value: 'Commercial', label: 'Commercial'},
+    {value: 'Science', label: 'Science'},
+]
+
 const RegistrationScreen = props => {
 
     const [data, setData] = useState({
@@ -25,7 +45,7 @@ const RegistrationScreen = props => {
         phone: '',
         dateOfBirth: `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`,
         address: '',
-        schoolClass: '',
+        schoolClass: null,
         department: '',
         password: '',
         confirm_password: ''
@@ -49,6 +69,7 @@ const RegistrationScreen = props => {
         setData(prevState => ({
             ...prevState, [name]: e
         }))
+        console.log(data)
     }
 
     const handleChangeDate = (e, s) => {
@@ -181,22 +202,29 @@ const RegistrationScreen = props => {
                         />
                     )}
                     <Dropdown
-                        data={[
-                            {value: 'junior-1', label: 'Jss 1'},
-                            {value: 'junior-2', label: 'Jss 2'},
-                            {value: 'junior-3', label: 'Jss 3'},
-                            {value: 'secondary-1', label: 'Sss 1'},
-                            {value: 'secondary-2', label: 'Sss 2'},
-                            {value: 'secondary-3', label: 'Sss 3'},
-                        ]}
+                        data={classes}
                         containerStyle={{...styles.inputContainerStyle, marginTop: -40, marginBottom: 20, width: width/1.27, alignSelf: "center"}}
                         labelTextStyle={{color: '#707070'}}
                         itemColor='#707070'
                         style={{borderBottomWidth: 0}}
                         label='Class'
-                        onChangeText={e => handleInput('class', e)}
+                        onChangeText={e => handleInput('schoolClass', e)}
                         inputContainerStyle={{ borderBottomWidth: 0 }}
                     />
+                    {data.schoolClass === 9 || data.schoolClass === 10 || data.schoolClass === 11 ? 
+                        <Dropdown
+                            data={departments}
+                            containerStyle={{...styles.inputContainerStyle, marginTop: -40, marginBottom: 20, width: width/1.27, alignSelf: "center"}}
+                            labelTextStyle={{color: '#707070'}}
+                            itemColor='#707070'
+                            style={{borderBottomWidth: 0}}
+                            label='Department'
+                            onChangeText={e => handleInput('department', e)}
+                            inputContainerStyle={{ borderBottomWidth: 0 }}
+                        /> 
+                    :
+                        null
+                    }
                     <Input 
                         placeholder='Password' 
                         placeholderTextColor='#707070'

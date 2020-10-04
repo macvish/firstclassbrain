@@ -18,10 +18,7 @@ const {width, height} = Dimensions.get('window')
 const OnboardingScreen = props => {
     const onCompleted = () => {
         props.onboard()
-        
-        // buttonAnimation.current.bounceOut(300).then(endState => {
-            Navigation.setRoot(authRoot)
-        // })
+        Navigation.setRoot(authRoot)
     }
 
     const swiperRef = useRef(0)
@@ -35,7 +32,6 @@ const OnboardingScreen = props => {
         }}>
             <Swiper 
                 loop={false}
-                // onIndexChanged={}
                 showsPagination={false}
                 ref={swiperRef}
                 scrollEnabled={false}

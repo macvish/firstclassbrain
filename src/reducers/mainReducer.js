@@ -1,4 +1,4 @@
-import { FULLSCREEN, GET_PRODUCTS, GET_PRODUCTS_FAILED, PROFILE_PICS } from './reducerTypes';
+import { FULLSCREEN, GET_COURSES, GET_COURSES_FAILED, PROFILE_PICS } from './reducerTypes';
 const INT_STATE = {
     products: {},
     categories: {},
@@ -13,12 +13,12 @@ export const mainReducer = (state = INT_STATE, action) => {
             return Object.assign({}, state, {
                 has_onboarded: action.data
             })
-        case GET_PRODUCTS:
+        case GET_COURSES:
             return Object.assign({}, state, {
                 products: action.payload,
                 categories: action.cat
             })
-        case GET_PRODUCTS_FAILED:
+        case GET_COURSES_FAILED:
             return Object.assign({}, state, {
                 err_msg: action.msg
             })

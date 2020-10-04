@@ -1,0 +1,79 @@
+[
+    {
+        "id": 1,
+        "class": "Basic 1"
+    },
+    {
+        "id": 2,
+        "class": "Basic 2"
+    },
+    {
+        "id": 3,
+        "class": "Basic 3"
+    },
+    {
+        "id": 4,
+        "class": "Basic 4"
+    },
+    {
+        "id": 5,
+        "class": "Basic 5"
+    },
+    {
+        "id": 6,
+        "class": "JSS 1"
+    },
+    {
+        "id": 7,
+        "class": "JSS 2"
+    },
+    {
+        "id": 8,
+        "class": "JSS 3"
+    },
+    {
+        "id": 9,
+        "class": "SSS 1",
+        "department": "Science"
+    },
+    {
+        "id": 10,
+        "class": "SSS 1",
+        "department": "Commercial"
+    },
+    {
+        "id": 11,
+        "class": "SSS 1",
+        "department": "Art"
+    },
+    {
+        "id": 12,
+        "class": "SSS 2",
+        "department": "Science"
+    },
+    {
+        "id": 13,
+        "class": "SSS 2",
+        "department": "Commercial"
+    },
+    {
+        "id": 14,
+        "class": "SSS 2",
+        "department": "Art"
+    },
+    {
+        "id": 15,
+        "class": "SSS 3",
+        "department": "Science"
+    },
+    {
+        "id": 16,
+        "class": "SSS 3",
+        "department": "Commercial"
+    },
+    {
+        "id": 17,
+        "class": "SSS 3",
+        "department": "Art"
+    }
+]

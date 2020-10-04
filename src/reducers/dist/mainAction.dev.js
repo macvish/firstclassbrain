@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.paystack_payment = exports.send_cart = exports.set_avatar = exports.get_products = exports.delete_user = exports.edit_user = exports.get_user = exports.fullscreen = void 0;
+exports.paystack_payment = exports.send_cart = exports.set_avatar = exports.GET_COURSES = exports.delete_user = exports.edit_user = exports.get_user = exports.fullscreen = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -171,7 +171,7 @@ var delete_user = function delete_user() {
 
 exports.delete_user = delete_user;
 
-var get_products = function get_products() {
+var GET_COURSES = function GET_COURSES() {
   return function _callee4(dispatch) {
     return regeneratorRuntime.async(function _callee4$(_context4) {
       while (1) {
@@ -215,20 +215,20 @@ var get_products = function get_products() {
                   audios: audios
                 };
                 dispatch({
-                  type: _reducerTypes.GET_PRODUCTS,
+                  type: _reducerTypes.GET_COURSES,
                   payload: _media,
                   cat: cat
                 });
               } else {
                 console.log('other than 200', data);
                 dispatch({
-                  type: _reducerTypes.GET_PRODUCTS_FAILED,
+                  type: _reducerTypes.GET_COURSES_FAILED,
                   msg: data.message
                 });
               }
             })["catch"](function (err) {
               dispatch({
-                type: _reducerTypes.GET_PRODUCTS_FAILED,
+                type: _reducerTypes.GET_COURSES_FAILED,
                 msg: 'Something went wrong, please try again'
               });
             });
@@ -242,7 +242,7 @@ var get_products = function get_products() {
   };
 };
 
-exports.get_products = get_products;
+exports.GET_COURSES = GET_COURSES;
 
 var set_avatar = function set_avatar(data) {
   return function (dispatch) {

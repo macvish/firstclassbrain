@@ -1,0 +1,747 @@
+[
+    {
+        "class": 1,
+        "subject": "maths",
+        "name": "Mathematics"
+    },
+    {
+        "class": 1,
+        "subject": "english",
+        "name": "English"
+    },
+    {
+        "class": 1,
+        "subject": "crk",
+        "name": "C.R.K"
+    },
+    {
+        "class": 1,
+        "subject": "irk",
+        "name": "I.R.K"
+    },
+    {
+        "class": 1,
+        "subject": "social-studies",
+        "name": "Social Studies"
+    },
+    {
+        "class": 1,
+        "subject": "health-education",
+        "name": "Health Education"
+    },
+    {
+        "class": 1,
+        "subject": "computer",
+        "name": "Computer Science"
+    },
+    {
+        "class": 1,
+        "subject": "spelling",
+        "name": "Spelling"
+    },
+    {
+        "class": 1,
+        "subject": "language",
+        "name": "Language"
+    },
+    {
+        "class": 1,
+        "subject": "diction",
+        "name": "Diction"
+    },
+    {
+        "class": 2,
+        "subject": "maths",
+        "name": "Mathematics"
+    },
+    {
+        "class": 2,
+        "subject": "english",
+        "name": "English"
+    },
+    {
+        "class": 2,
+        "subject": "crk",
+        "name": "C.R.K"
+    },
+    {
+        "class": 2,
+        "subject": "irk",
+        "name": "I.R.K"
+    },
+    {
+        "class": 2,
+        "subject": "social-studies",
+        "name": "Social Studies"
+    },
+    {
+        "class": 2,
+        "subject": "health-education",
+        "name": "Health Education"
+    },
+    {
+        "class": 2,
+        "subject": "computer",
+        "name": "Computer Science"
+    },
+    {
+        "class": 2,
+        "subject": "spelling",
+        "name": "Spelling"
+    },
+    {
+        "class": 2,
+        "subject": "language",
+        "name": "Language"
+    },
+    {
+        "class": 2,
+        "subject": "diction",
+        "name": "Diction"
+    },
+    {
+        "class": 3,
+        "subject": "maths",
+        "name": "Mathematics"
+    },
+    {
+        "class": 3,
+        "subject": "english",
+        "name": "English"
+    },
+    {
+        "class": 3,
+        "subject": "crk",
+        "name": "C.R.K"
+    },
+    {
+        "class": 3,
+        "subject": "irk",
+        "name": "I.R.K"
+    },
+    {
+        "class": 3,
+        "subject": "social-studies",
+        "name": "Social Studies"
+    },
+    {
+        "class": 3,
+        "subject": "health-education",
+        "name": "Health Education"
+    },
+    {
+        "class": 3,
+        "subject": "computer",
+        "name": "Computer Science"
+    },
+    {
+        "class": 3,
+        "subject": "spelling",
+        "name": "Spelling"
+    },
+    {
+        "class": 3,
+        "subject": "language",
+        "name": "Language"
+    },
+    {
+        "class": 3,
+        "subject": "diction",
+        "name": "Diction"
+    },
+    {
+        "class": 4,
+        "subject": "maths",
+        "name": "Mathematics"
+    },
+    {
+        "class": 4,
+        "subject": "english",
+        "name": "English"
+    },
+    {
+        "class": 4,
+        "subject": "crk",
+        "name": "C.R.K"
+    },
+    {
+        "class": 4,
+        "subject": "irk",
+        "name": "I.R.K"
+    },
+    {
+        "class": 4,
+        "subject": "social-studies",
+        "name": "Social Studies"
+    },
+    {
+        "class": 4,
+        "subject": "health-education",
+        "name": "Health Education"
+    },
+    {
+        "class": 4,
+        "subject": "computer",
+        "name": "Computer Science"
+    },
+    {
+        "class": 4,
+        "subject": "spelling",
+        "name": "Spelling"
+    },
+    {
+        "class": 4,
+        "subject": "language",
+        "name": "Language"
+    },
+    {
+        "class": 4,
+        "subject": "diction",
+        "name": "Diction"
+    },
+    {
+        "class": 5,
+        "subject": "maths",
+        "name": "Mathematics"
+    },
+    {
+        "class": 5,
+        "subject": "english",
+        "name": "English"
+    },
+    {
+        "class": 5,
+        "subject": "crk",
+        "name": "C.R.K"
+    },
+    {
+        "class": 5,
+        "subject": "irk",
+        "name": "I.R.K"
+    },
+    {
+        "class": 5,
+        "subject": "social-studies",
+        "name": "Social Studies"
+    },
+    {
+        "class": 5,
+        "subject": "health-education",
+        "name": "Health Education"
+    },
+    {
+        "class": 5,
+        "subject": "computer",
+        "name": "Computer Science"
+    },
+    {
+        "class": 5,
+        "subject": "spelling",
+        "name": "Spelling"
+    },
+    {
+        "class": 5,
+        "subject": "language",
+        "name": "Language"
+    },
+    {
+        "class": 5,
+        "subject": "diction",
+        "name": "Diction"
+    },
+    {
+        "class": 6,
+        "subject": "maths",
+        "name": "Mathematics"
+    },
+    {
+        "class": 6,
+        "subject": "english",
+        "name": "English"
+    },
+    {
+        "class": 6,
+        "subject": "crk",
+        "name": "C.R.K"
+    },
+    {
+        "class": 6,
+        "subject": "irk",
+        "name": "I.R.K"
+    },
+    {
+        "class": 6,
+        "subject": "basic-science",
+        "name": "Basic Science"
+    },
+    {
+        "class": 6,
+        "subject": "business-studies",
+        "name": "Business Studies"
+    },
+    {
+        "class": 6,
+        "subject": "civic",
+        "name": "Civic Education"
+    },
+    {
+        "class": 6,
+        "subject": "basic-technology",
+        "name": "Basic Technology"
+    },
+    {
+        "class": 7,
+        "subject": "maths",
+        "name": "Mathematics"
+    },
+    {
+        "class": 7,
+        "subject": "english",
+        "name": "English"
+    },
+    {
+        "class": 7,
+        "subject": "crk",
+        "name": "C.R.K"
+    },
+    {
+        "class": 7,
+        "subject": "irk",
+        "name": "I.R.K"
+    },
+    {
+        "class": 7,
+        "subject": "basic-science",
+        "name": "Basic Science"
+    },
+    {
+        "class": 7,
+        "subject": "business-studies",
+        "name": "Business Studies"
+    },
+    {
+        "class": 7,
+        "subject": "civic",
+        "name": "Civic Education"
+    },
+    {
+        "class": 7,
+        "subject": "basic-technology",
+        "name": "Basic Technology"
+    },
+    {
+        "class": 8,
+        "subject": "maths",
+        "name": "Mathematics"
+    },
+    {
+        "class": 8,
+        "subject": "english",
+        "name": "English"
+    },
+    {
+        "class": 8,
+        "subject": "crk",
+        "name": "C.R.K"
+    },
+    {
+        "class": 8,
+        "subject": "irk",
+        "name": "I.R.K"
+    },
+    {
+        "class": 8,
+        "subject": "basic-science",
+        "name": "Basic Science"
+    },
+    {
+        "class": 8,
+        "subject": "business-studies",
+        "name": "Business Studies"
+    },
+    {
+        "class": 8,
+        "subject": "civic",
+        "name": "Civic Education"
+    },
+    {
+        "class": 8,
+        "subject": "basic-technology",
+        "name": "Basic Technology"
+    },
+    {
+        "class": 9,
+        "subject": "maths",
+        "name": "Mathematics"
+    },
+    {
+        "class": 9,
+        "subject": "english",
+        "name": "English"
+    },
+    {
+        "class": 9,
+        "subject": "biology",
+        "name": "Biology"
+    },
+    {
+        "class": 9,
+        "subject": "physics",
+        "name": "Physics"
+    },
+    {
+        "class": 9,
+        "subject": "further-maths",
+        "name": "Further Mathematics"
+    },
+    {
+        "class": 9,
+        "subject": "chemistry",
+        "name": "Chemistry"
+    },
+    {
+        "class": 9,
+        "subject": "agric",
+        "name": "Agricultural Science"
+    },
+    {
+        "class": 9,
+        "subject": "economics",
+        "name": "Economics"
+    },
+    {
+        "class": 9,
+        "subject": "civic",
+        "name": "Civic Education"
+    },
+    {
+        "class": 10,
+        "subject": "maths",
+        "name": "Mathematics"
+    },
+    {
+        "class": 10,
+        "subject": "english",
+        "name": "English"
+    },
+    {
+        "class":10,
+        "subject": "crk",
+        "name": "C.R.K"
+    },
+    {
+        "class":10,
+        "subject": "irk",
+        "name": "I.R.K"
+    },
+    {
+        "class": 10,
+        "subject": "commerce",
+        "name": "Commerce"
+    },
+    {
+        "class": 10,
+        "subject": "social-studies",
+        "name": "Social Studies"
+    },
+    {
+        "class": 10,
+        "subject": "accounting",
+        "name": "Financial Accounting"
+    },
+    {
+        "class": 10,
+        "subject": "civic",
+        "name": "Civic Education"
+    },
+    {
+        "class": 11,
+        "subject": "maths",
+        "name": "Mathematics"
+    },
+    {
+        "class": 11,
+        "subject": "english",
+        "name": "English"
+    },
+    {
+        "class":11,
+        "subject": "crk",
+        "name": "C.R.K"
+    },
+    {
+        "class":11,
+        "subject": "irk",
+        "name": "I.R.K"
+    },
+    {
+        "class": 11,
+        "subject": "government",
+        "name": "Government"
+    },
+    {
+        "class": 11,
+        "subject": "biology",
+        "name": "Biology"
+    },
+    {
+        "class": 11,
+        "subject": "agric-science",
+        "name": "Agricultural Science"
+    },
+    {
+        "class": 11,
+        "subject": "civic",
+        "name": "Civic Education"
+    },
+    {
+        "class": 12,
+        "subject": "maths",
+        "name": "Mathematics"
+    },
+    {
+        "class": 12,
+        "subject": "english",
+        "name": "English"
+    },
+    {
+        "class": 12,
+        "subject": "biology",
+        "name": "Biology"
+    },
+    {
+        "class": 12,
+        "subject": "physics",
+        "name": "Physics"
+    },
+    {
+        "class": 12,
+        "subject": "further-maths",
+        "name": "Further Mathematics"
+    },
+    {
+        "class": 12,
+        "subject": "chemistry",
+        "name": "Chemistry"
+    },
+    {
+        "class": 12,
+        "subject": "agric",
+        "name": "Agricultural Science"
+    },
+    {
+        "class": 12,
+        "subject": "economics",
+        "name": "Economics"
+    },
+    {
+        "class": 12,
+        "subject": "civic",
+        "name": "Civic Education"
+    },
+    {
+        "class": 13,
+        "subject": "maths",
+        "name": "Mathematics"
+    },
+    {
+        "class": 13,
+        "subject": "english",
+        "name": "English"
+    },
+    {
+        "class":13,
+        "subject": "crk",
+        "name": "C.R.K"
+    },
+    {
+        "class":13,
+        "subject": "irk",
+        "name": "I.R.K"
+    },
+    {
+        "class": 13,
+        "subject": "commerce",
+        "name": "Commerce"
+    },
+    {
+        "class": 13,
+        "subject": "social-studies",
+        "name": "Social Studies"
+    },
+    {
+        "class": 13,
+        "subject": "accounting",
+        "name": "Financial Accounting"
+    },
+    {
+        "class": 13,
+        "subject": "civic",
+        "name": "Civic Education"
+    },
+    {
+        "class": 14,
+        "subject": "maths",
+        "name": "Mathematics"
+    },
+    {
+        "class": 14,
+        "subject": "english",
+        "name": "English"
+    },
+    {
+        "class":14,
+        "subject": "crk",
+        "name": "C.R.K"
+    },
+    {
+        "class":14,
+        "subject": "irk",
+        "name": "I.R.K"
+    },
+    {
+        "class": 14,
+        "subject": "government",
+        "name": "Government"
+    },
+    {
+        "class": 14,
+        "subject": "biology",
+        "name": "Biology"
+    },
+    {
+        "class": 14,
+        "subject": "agric-science",
+        "name": "Agricultural Science"
+    },
+    {
+        "class": 14,
+        "subject": "civic",
+        "name": "Civic Education"
+    },
+    {
+        "class": 15,
+        "subject": "maths",
+        "name": "Mathematics"
+    },
+    {
+        "class": 15,
+        "subject": "english",
+        "name": "English"
+    },
+    {
+        "class": 15,
+        "subject": "biology",
+        "name": "Biology"
+    },
+    {
+        "class": 15,
+        "subject": "physics",
+        "name": "Physics"
+    },
+    {
+        "class": 15,
+        "subject": "further-maths",
+        "name": "Further Mathematics"
+    },
+    {
+        "class": 15,
+        "subject": "chemistry",
+        "name": "Chemistry"
+    },
+    {
+        "class": 15,
+        "subject": "agric",
+        "name": "Agricultural Science"
+    },
+    {
+        "class": 15,
+        "subject": "economics",
+        "name": "Economics"
+    },
+    {
+        "class": 15,
+        "subject": "civic",
+        "name": "Civic Education"
+    },
+    {
+        "class": 16,
+        "subject": "maths",
+        "name": "Mathematics"
+    },
+    {
+        "class": 16,
+        "subject": "english",
+        "name": "English"
+    },
+    {
+        "class":16,
+        "subject": "crk",
+        "name": "C.R.K"
+    },
+    {
+        "class":16,
+        "subject": "irk",
+        "name": "I.R.K"
+    },
+    {
+        "class": 16,
+        "subject": "commerce",
+        "name": "Commerce"
+    },
+    {
+        "class": 16,
+        "subject": "social-studies",
+        "name": "Social Studies"
+    },
+    {
+        "class": 16,
+        "subject": "accounting",
+        "name": "Financial Accounting"
+    },
+    {
+        "class": 16,
+        "subject": "civic",
+        "name": "Civic Education"
+    },
+    {
+        "class": 17,
+        "subject": "maths",
+        "name": "Mathematics"
+    },
+    {
+        "class": 17,
+        "subject": "english",
+        "name": "English"
+    },
+    {
+        "class":17,
+        "subject": "crk",
+        "name": "C.R.K"
+    },
+    {
+        "class":17,
+        "subject": "irk",
+        "name": "I.R.K"
+    },
+    {
+        "class": 17,
+        "subject": "government",
+        "name": "Government"
+    },
+    {
+        "class": 17,
+        "subject": "biology",
+        "name": "Biology"
+    },
+    {
+        "class": 17,
+        "subject": "agric-science",
+        "name": "Agricultural Science"
+    },
+    {
+        "class": 17,
+        "subject": "civic",
+        "name": "Civic Education"
+    }
+]

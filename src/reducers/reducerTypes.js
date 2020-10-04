@@ -24,9 +24,9 @@ export const GET_USER = 'GET_USER'
 
 export const GET_USER_FAILED = 'GET_USER_FAILED'
 
-export const GET_PRODUCTS = 'GET_PRODUCTS'
+export const GET_COURSES = 'GET_COURSES'
 
-export const GET_PRODUCTS_FAILED = 'GET_PRODUCTS_FAILED'
+export const GET_COURSES_FAILED = 'GET_COURSES_FAILED'
 
 export const PROFILE_PICS = 'PROFILE_PICS'
 

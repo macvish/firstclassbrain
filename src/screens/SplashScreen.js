@@ -10,7 +10,7 @@ import splash_bg from '../assets/images/splash_bg.png'
 import { onBoardRoot } from '../navigation/onBoardRootNavigation'
 import { mainRoot } from '../navigation/mainRootNavigation'
 import { authRoot } from '../navigation/authRootNavigation'
-import { get_user, get_products } from '../reducers/mainAction'
+import { get_user, GET_COURSES } from '../reducers/mainAction'
 import logo from '../assets/logo/logo.jpeg'
 
 const {width, height} = Dimensions.get('window')
@@ -23,10 +23,10 @@ const SplashScreen = props => {
     const [station, setStation] = useState(0)
 
     useEffect(() => {
-        setStation(1)
-        setTimeout(() => {
-            setCounter(prevState => prevState + 0.2)
-        }, 2000);
+            setStation(1)
+            setTimeout(() => {
+                setCounter(prevState => prevState + 0.2)
+            }, 2000)
 
         return () => {
             if(counter == 1){
@@ -39,16 +39,16 @@ const SplashScreen = props => {
 
     useEffect(() => {
         _bootstrapAsync()
+
         return () => {
         }
     }, [station])
 
     // Fetch the token from storage then navigate to our appropriate place
 	const _bootstrapAsync = async () => {
-        console.log('get info')
 
         // Fetch the token from storage then navigate to our appropriate place
-          const userToken = await AsyncStorage.getItem('access_id')
+          const userToken = await AsyncStorage.getItem('access_token')
   
           const onboarded = await AsyncStorage.getItem('has_onboarded')
           // This will switch to the App screen or Auth screen and this loading
@@ -56,10 +56,10 @@ const SplashScreen = props => {
           if(onboarded){
               if (userToken){
                   if(Object.keys(props.payload).length !== 0){
-                      props.get_products(userToken)
+                    // props.GET_COURSES(userToken)
                   }
                   else{
-                      props.get_products(userToken)
+                    // props.GET_COURSES(userToken)
                       props.get_user(userToken)
                   }
               }
@@ -72,27 +72,29 @@ const SplashScreen = props => {
       // Fetch the token from storage then navigate to our appropriate place
 	const _bootstrapAsyncNaviagete = async () => {
 
-        console.log('navigate')
-
         // Fetch the token from storage then navigate to our appropriate place
-          const userToken = await AsyncStorage.getItem('access_id')
-  
-          const onboarded = await AsyncStorage.getItem('has_onboarded')
-          // This will switch to the App screen or Auth screen and this loading
-          // screen will be unmounted and thrown away.
-          if(onboarded){
-              if (userToken){
-                  if(Object.keys(props.payload).length !== 0){
-                      Navigation.setRoot(mainRoot)
-                  }
-              }
-              else{
-                  Navigation.setRoot(authRoot)
-              }
-          }else{
-              Navigation.setRoot(onBoardRoot)
-          }
-      };
+        const userToken = await AsyncStorage.getItem('access_token')
+
+        const onboarded = await AsyncStorage.getItem('has_onboarded')
+        // This will switch to the App screen or Auth screen and this loading
+        // screen will be unmounted and thrown away.
+        if(onboarded){
+            if (userToken){
+                if(Object.keys(props.payload).length !== 0){
+                    Navigation.setRoot(mainRoot)
+                }
+                else{
+                    Navigation.setRoot(authRoot)
+                }
+            }
+            else{
+                Navigation.setRoot(authRoot)
+            }
+        }
+        else{
+            Navigation.setRoot(onBoardRoot)
+        }
+    }
 
     return (
         <ImageBackground source={splash_bg} style={styles.container}>
@@ -128,11 +130,11 @@ SplashScreen.options = {
 }
 
 const mapStateToProps = (state) => ({
-    payload: state.main.payload
+    payload: state.auth.payload
 })
 
 const mapDispatchToProps = {
-    get_products,
+    GET_COURSES,
     get_user,
 }
 

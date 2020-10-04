@@ -27,6 +27,7 @@ export const login = ({email, password}) => async (dispatch) => {
       console.log(data)
       if(res.status === 200){
         AsyncStorage.setItem('access_token', `${data.token}`)
+        console.log(data.token)
         AsyncStorage.setItem('access_id', `${data.id}`)
         dispatch({type: LOGIN, payload: data})
         Navigation.setRoot(mainRoot)

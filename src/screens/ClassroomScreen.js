@@ -1,24 +1,35 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { Dimensions, FlatList, StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
 
 import ClassroomCardView from '../components/ClassroomCardView'
 import testConent from '../helper/test.json'
+import subjects from '../helper/subjects.json'
 
 const { width, height } = Dimensions.get('window')
 
+
 const ClassroomScreen = props => {
+
+    const [classroom, setClassroom] = useState(subjects.filter(item => item.class === 7))
+    
+    useEffect(() => {
+        // subjects.filter(item => item.class === 9)
+        // console.log(sub)
+        return () => {
+        }
+    }, [props.user])
 
     const renderItem = ({item}) => {
         return <View style={{paddingRight: 20, paddingBottom: 20}}>
-            <ClassroomCardView componentId={props.componentId} uri={item.src} item={item} title={item.title} height={height/8} />
+            <ClassroomCardView componentId={props.componentId} uri={item.src} item={item} title={item.name} height={height/8} />
         </View>
     }
 
     return (
         <View style={styles.container}>
             <FlatList
-                data={testConent.classroom}
+                data={classroom}
                 renderItem={renderItem}
                 numColumns={2}
                 keyExtractor={item => item.id}
@@ -36,7 +47,7 @@ const ClassroomScreen = props => {
 // }
 
 const mapStateToProps = (state) => ({
-    
+    user: state.auth.payload,
 })
 
 const mapDispatchToProps = {

@@ -105,7 +105,8 @@ const ClassroomCardView = props => {
 
             <PaystackWebView
                 showPayButton={false}
-                paystackKey="pk_test_895f07c74a6b76a9ad3cc3aabf62104119879257"
+                paystackKey="pk_live_93943e903c531f80899a94d9d9307effe51cc3d7"
+                // paystackKey="pk_test_895f07c74a6b76a9ad3cc3aabf62104119879257"
                 amount={120000}
                 billingEmail="email@email.com"
                 billingMobile="09787377462"

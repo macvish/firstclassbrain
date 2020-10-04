@@ -1,8 +1,8 @@
 import React from 'react'
 import AsyncStorage from '@react-native-community/async-storage'
 
-import { FULLSCREEN, GET_USER, GET_USER_FAILED, GET_PRODUCTS, 
-    GET_PRODUCTS_FAILED, PROFILE_PICS, SEND_CART, PAYMENT_SUCCESSFUL, 
+import { FULLSCREEN, GET_USER, GET_USER_FAILED, GET_COURSES, 
+    GET_COURSES_FAILED, PROFILE_PICS, SEND_CART, PAYMENT_SUCCESSFUL, 
     PAYMENT_FAILURE } from '../reducers/reducerTypes'
 import API from '../helper/API'
 import { mainRoot } from '../navigation/mainRootNavigation'
@@ -16,14 +16,14 @@ export const fullscreen = bool => dispatch => {
 }
 
 // Get User
-export const get_user = (user_id) => async (dispatch) => {
+export const get_user = (user_token) => async (dispatch) => {
 
-    API.get(`users/${user_id}`)
+    API.get(`usertoken/${user_token}`)
     .then(res => {
         const { data } = res
         if(res.status === 200){
-            dispatch({type: GET_USER, payload: data})
-            Navigation.setRoot(mainRoot)
+            dispatch({type: GET_USER, payload: data.studentData})
+            // Navigation.setRoot(mainRoot)
         }
         else{
             dispatch({ type: GET_USER_FAILED, msg: data.message })
@@ -41,7 +41,7 @@ export const edit_user = ({fullname, email, phone, pictureURL, address, password
     .then(res => {
         const { data } = res
         if(res.status === 200){
-            dispatch({type: GET_USER, payload: data})
+            dispatch({type: GET_USER, payload: data.studentData})
             Navigation.setRoot(mainRoot)
         }
         else{
@@ -55,7 +55,7 @@ export const edit_user = ({fullname, email, phone, pictureURL, address, password
 
 // Delete User
 export const delete_user = () => async (dispatch) => {
-    API.delete(`users/${user_id}`)
+    API.delete(`usertoken/${user_id}`)
     .then(res => {
         const { data } = res
         if(res.status === 200){
@@ -72,44 +72,21 @@ export const delete_user = () => async (dispatch) => {
 }
 
 // Get Products
-export const get_products = () => async (dispatch) => {
-    API.get(`product/product/${userId}`)
+export const get_courses = () => async (dispatch) => {
+    API.get(`all-courses`)
     .then(res => {
         const { data } = res
 
         if(res.status === 200){
-            console.log(data)
-            const preschool = data.filter(d => d.categoryId == 1)
-            const nursery = data.filter(d => d.categoryId == 2)
-            const primary = data.filter(d => d.categoryId == 3)
-            const secondary = data.filter(d => d.categoryId == 4)
-
-            const videos = data.filter(d => d.producttype == 'video')
-            const docs = data.filter(d => d.producttype == 'Documents')
-            const audios = data.filter(d => d.producttype == 'audio')
-
-            const cat = {
-                preschool: preschool,
-                nursery: nursery,
-                primary: primary,
-                secondary: secondary
-            }
-
-            const media = {
-                videos: videos,
-                docs: docs,
-                audios: audios,
-            }
-
-            dispatch({type: GET_PRODUCTS, payload: media, cat: cat})
+            dispatch({type: GET_COURSES, payload: media, cat: cat})
         }
         else{
             console.log('other than 200', data)
-            dispatch({ type: GET_PRODUCTS_FAILED, msg: data.message })
+            dispatch({ type: GET_COURSES_FAILED, msg: data.message })
         }
     })
     .catch(err => {
-        dispatch({type: GET_PRODUCTS_FAILED, msg: 'Something went wrong, please try again'})
+        dispatch({type: GET_COURSES_FAILED, msg: 'Something went wrong, please try again'})
     })
 }
 

@@ -80,6 +80,6 @@ Navigation.setDefaultOptions({
 })
 
 Navigation.events().registerAppLaunchedListener(() => {
-    // Navigation.setRoot(isOnboarded() ? (isLoggeIn() ? mainRoot : authRoot ) : onBoardRoot)
-    Navigation.setRoot(mainRoot)
+    Navigation.setRoot(isOnboarded() ? (isLoggeIn() ? mainRoot : authRoot ) : authLoadingRoot)
+    Navigation.setRoot(authLoadingRoot)
 })

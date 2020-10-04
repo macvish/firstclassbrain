@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Dimensions, PermissionsAndroid, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import ImagePicker from 'react-native-image-picker'
 import { Avatar, Divider, Icon } from 'react-native-elements'
@@ -10,7 +10,25 @@ const { width, height } = Dimensions.get('window')
 
 const ProfileScreen = props => {
 
-    const [avatar, setAvatar] = useState(null)
+    const [avatar, setAvatar] = useState(props.user.pic)
+
+    const [data, setData] = useState({
+
+    })
+
+    useEffect(() => {
+        return () => {
+            // setData(prevState => ({
+            //     ...prevState, 
+            //     uid: props.user.id, 
+            //     fullname: props.user.fullname,
+            //     email: props.user.email,
+            //     phone: props.user.phone,
+            //     pictureURL: props.user.pictureURL,
+            //     address: props.user.address,
+            // }))
+        }
+    }, [props.user])
 
     const handleChangeAvatar = async () => {
 
@@ -65,21 +83,13 @@ const ProfileScreen = props => {
     return (
         <View style={styles.container}>
             <View style={styles.avatarWrapper}>
-                {avatar ?  
-                    <UserAvatar 
-                        uri={avatar}
-                        size={width/1.2} 
-                        containerStyle={styles.avatar}
-                    />
-                : 
-                    <UserAvatar 
-                        size={width/1.2} 
-                        containerStyle={styles.avatar}
-                    />
-                }
-
+                <UserAvatar 
+                    uri={avatar}
+                    size={width/1.2} 
+                    containerStyle={styles.avatar}
+                />
                 <View style={styles.fadeContainer}>
-                    <Text style={styles.avatarTitle}>John Doe</Text>
+                    <Text style={styles.avatarTitle}>{`${props.user.firstName ?? 'Unknown'} ${props.user.lastName ?? null}`}</Text>
                     <Avatar 
                         rounded
                         size={70}
@@ -127,7 +137,7 @@ const ProfileScreen = props => {
 }
 
 const mapStateToProps = state => ({
-    
+    user: state.auth.payload
 })
 
 const mapDispatchToProps = {
@@ -169,7 +179,8 @@ const styles = StyleSheet.create({
     avatarTitle: {
         color: '#257F9B',
         fontWeight: 'bold',
-        fontSize: 25
+        fontSize: 25,
+        width: width/2
     },
 
     contents: {
