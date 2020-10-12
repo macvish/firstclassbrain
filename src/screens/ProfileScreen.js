@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { Dimensions, PermissionsAndroid, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import ImagePicker from 'react-native-image-picker'
 import { Avatar, Divider, Icon } from 'react-native-elements'
-
 import { connect } from 'react-redux'
+
 import UserAvatar from '../components/UserAvatar'
+import { logout } from '../reducers/authAction'
 
 const { width, height } = Dimensions.get('window')
 
@@ -114,7 +115,7 @@ const ProfileScreen = props => {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => {}}>
                         <View style={styles.menu}>
                             <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                 <Icon type='antdesign' color='#707070' size={30} name='setting' />
@@ -127,10 +128,12 @@ const ProfileScreen = props => {
 
                 <Divider style={{width: width, backgroundColor: '#707070', borderWidth: 1, borderColor: '#707070'}} />
 
-                <View style={[styles.menu, { paddingTop: 20 }]}>
-                    <Text style={styles.Logout}>Logout</Text>
-                    <Icon type='antdesign' color='#EC5959' size={30} name='logout' />
-                </View>
+                <TouchableOpacity onPress={() => props.logout()}>
+                    <View style={[styles.menu, { paddingTop: 20 }]}>
+                        <Text style={styles.Logout}>Logout</Text>
+                        <Icon type='antdesign' color='#EC5959' size={30} name='logout' />
+                    </View>
+                </TouchableOpacity>
             </View>
         </View>
     )
@@ -141,7 +144,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-    
+    logout
 }
 
 

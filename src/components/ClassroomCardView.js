@@ -2,9 +2,11 @@ import React, { useRef, useState } from 'react'
 import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import PaystackWebView from 'react-native-paystack-webview'
+import { connect } from 'react-redux'
 
 import pp from '../assets/images/physics_program.png'
 import AlertModal from './AlertModal'
+import NoContentModal from './NoContentModal'
 import SelectionModal from './SelectionModal'
 
 const { width, height } = Dimensions.get('window')
@@ -13,18 +15,28 @@ const ClassroomCardView = props => {
 
     const [options, setOptions] = useState({
         term: null,
-        week: null
+        week: null,
+        class: props.item.class,
+        subject: props.item.subject,
     })
 
     const [modalVisible, setModalVisible] = useState(false)
+    const [noContentModalVisible, setNoContentModalVisible] = useState(false)
 
     const payRef = useRef();
 
     const onContinue = () => {
         if(props.item.isPaid){
             if(options.term !== null && options.week !== null){
-                setModalVisible(false)
-                handleNavigation('Class')
+               const course = props.courses.find(data => data.classSelected === props.item.class && data.subject === props.item.subject && data.week === options.week && data.term === options.term)
+               if(course !== undefined && Object.keys(course).length > 0){
+                    setModalVisible(false)
+                    handleNavigation('Class')
+                }
+                else {
+                    setModalVisible(false)
+                    setNoContentModalVisible(true)
+                }
             }
         } else{
             setModalVisible(false)
@@ -37,6 +49,7 @@ const ClassroomCardView = props => {
     }
 
     const onCloseModal = () => {
+        setNoContentModalVisible(false)
         setModalVisible(false)
     }
 
@@ -103,6 +116,11 @@ const ClassroomCardView = props => {
                 />
             }
 
+            <NoContentModal 
+                visible={noContentModalVisible}
+                handleOnpress={onCloseModal}
+            />
+
             <PaystackWebView
                 showPayButton={false}
                 paystackKey="pk_live_93943e903c531f80899a94d9d9307effe51cc3d7"
@@ -122,7 +140,11 @@ const ClassroomCardView = props => {
     )
 }
 
-export default ClassroomCardView
+const mapStateToProps = (state) => ({
+    courses: state.main.courses
+})
+
+export default connect(mapStateToProps, )(ClassroomCardView)
 
 const styles = StyleSheet.create({
     container: {

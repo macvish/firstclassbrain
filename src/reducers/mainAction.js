@@ -78,10 +78,9 @@ export const get_courses = () => async (dispatch) => {
         const { data } = res
 
         if(res.status === 200){
-            dispatch({type: GET_COURSES, payload: media, cat: cat})
+            dispatch({type: GET_COURSES, payload: data.posts})
         }
         else{
-            console.log('other than 200', data)
             dispatch({ type: GET_COURSES_FAILED, msg: data.message })
         }
     })

@@ -10,7 +10,7 @@ import splash_bg from '../assets/images/splash_bg.png'
 import { onBoardRoot } from '../navigation/onBoardRootNavigation'
 import { mainRoot } from '../navigation/mainRootNavigation'
 import { authRoot } from '../navigation/authRootNavigation'
-import { get_user, GET_COURSES } from '../reducers/mainAction'
+import { get_user, get_courses } from '../reducers/mainAction'
 import logo from '../assets/logo/logo.jpeg'
 
 const {width, height} = Dimensions.get('window')
@@ -56,11 +56,11 @@ const SplashScreen = props => {
           if(onboarded){
               if (userToken){
                   if(Object.keys(props.payload).length !== 0){
-                    // props.GET_COURSES(userToken)
+                    props.get_courses()
                   }
                   else{
-                    // props.GET_COURSES(userToken)
-                      props.get_user(userToken)
+                    props.get_courses()
+                    props.get_user(userToken)
                   }
               }
               else{
@@ -134,7 +134,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    GET_COURSES,
+    get_courses,
     get_user,
 }
 

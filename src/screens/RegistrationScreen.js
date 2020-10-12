@@ -24,15 +24,15 @@ const classes = [
     {value: 6, label: 'Jss 1'},
     {value: 7, label: 'Jss 2'},
     {value: 8, label: 'Jss 3'},
-    {value: 9, label: 'Sss 1'},
-    {value: 10, label: 'Sss 2'},
-    {value: 11, label: 'Sss 3'},
-]
-
-const departments = [
-    {value: 'Art', label: 'Art'},
-    {value: 'Commercial', label: 'Commercial'},
-    {value: 'Science', label: 'Science'},
+    {value: 9, label: 'Sss 1 - Science'},
+    {value: 10, label: 'Sss 1 - Commercial'},
+    {value: 11, label: 'Sss 1 - Art'},
+    {value: 12, label: 'Sss 2 - Science'},
+    {value: 13, label: 'Sss 2 - Commercial'},
+    {value: 14, label: 'Sss 2 - Art'},
+    {value: 15, label: 'Sss 3 - Science'},
+    {value: 16, label: 'Sss 3 - Commercial'},
+    {value: 17, label: 'Sss 3 - Art'},
 ]
 
 const RegistrationScreen = props => {
@@ -46,7 +46,6 @@ const RegistrationScreen = props => {
         dateOfBirth: `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`,
         address: '',
         schoolClass: null,
-        department: '',
         password: '',
         confirm_password: ''
     })
@@ -211,20 +210,6 @@ const RegistrationScreen = props => {
                         onChangeText={e => handleInput('schoolClass', e)}
                         inputContainerStyle={{ borderBottomWidth: 0 }}
                     />
-                    {data.schoolClass === 9 || data.schoolClass === 10 || data.schoolClass === 11 ? 
-                        <Dropdown
-                            data={departments}
-                            containerStyle={{...styles.inputContainerStyle, marginTop: -40, marginBottom: 20, width: width/1.27, alignSelf: "center"}}
-                            labelTextStyle={{color: '#707070'}}
-                            itemColor='#707070'
-                            style={{borderBottomWidth: 0}}
-                            label='Department'
-                            onChangeText={e => handleInput('department', e)}
-                            inputContainerStyle={{ borderBottomWidth: 0 }}
-                        /> 
-                    :
-                        null
-                    }
                     <Input 
                         placeholder='Password' 
                         placeholderTextColor='#707070'

@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.paystack_payment = exports.send_cart = exports.set_avatar = exports.GET_COURSES = exports.delete_user = exports.edit_user = exports.get_user = exports.fullscreen = void 0;
+exports.paystack_payment = exports.send_cart = exports.set_avatar = exports.get_courses = exports.delete_user = exports.edit_user = exports.get_user = exports.fullscreen = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -171,7 +171,7 @@ var delete_user = function delete_user() {
 
 exports.delete_user = delete_user;
 
-var GET_COURSES = function GET_COURSES() {
+var get_courses = function get_courses() {
   return function _callee4(dispatch) {
     return regeneratorRuntime.async(function _callee4$(_context4) {
       while (1) {
@@ -242,7 +242,7 @@ var GET_COURSES = function GET_COURSES() {
   };
 };
 
-exports.GET_COURSES = GET_COURSES;
+exports.get_courses = get_courses;
 
 var set_avatar = function set_avatar(data) {
   return function (dispatch) {

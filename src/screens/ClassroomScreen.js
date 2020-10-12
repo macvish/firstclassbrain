@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { Dimensions, FlatList, StyleSheet, View } from 'react-native'
+import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 
 import ClassroomCardView from '../components/ClassroomCardView'
@@ -11,11 +11,10 @@ const { width, height } = Dimensions.get('window')
 
 const ClassroomScreen = props => {
 
-    const [classroom, setClassroom] = useState(subjects.filter(item => item.class === 7))
+    const [classroom, setClassroom] = useState(subjects.filter(item => item.class === props.user.classSelected).map(data => ({...data, isPaid: true})))
     
     useEffect(() => {
         // subjects.filter(item => item.class === 9)
-        // console.log(sub)
         return () => {
         }
     }, [props.user])
@@ -28,14 +27,18 @@ const ClassroomScreen = props => {
 
     return (
         <View style={styles.container}>
-            <FlatList
-                data={classroom}
-                renderItem={renderItem}
-                numColumns={2}
-                keyExtractor={item => item.id}
-                extraData={testConent.classroom}
-                style={{paddingTop: 5}}
-            />
+            {classroom.length >= 1 ?
+                <FlatList
+                    data={classroom}
+                    renderItem={renderItem}
+                    numColumns={2}
+                    keyExtractor={item => item.id}
+                    extraData={classroom}
+                    style={{paddingTop: 5}}
+                /> 
+            :
+                <Text>Sorry, this class contains no subjects</Text>
+            }
         </View>
     )
 }

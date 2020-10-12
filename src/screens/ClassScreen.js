@@ -1,34 +1,63 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 import HtmlView from 'react-native-htmlview'
 import VideoPlayer from 'react-native-video-player'
 
 import calendar from '../assets/icons/calendar.png'
-import zip_folder from '../assets/icons/zip-folder.png'
 import IconImage from '../components/IconImage'
+import weeks from '../helper/weeks.json'
 import testVid from '../assets/Videos/ex.mp4'
 import { CheckBox } from 'react-native-elements'
+
 
 const { width, height } = Dimensions.get('window')
 
 const ClassScreen = props => {
 
-    const [state, setState] = useState({
-        attended: false
+    const [data, setData] = useState({
+        week: weeks.find(data => data.week = props.options.week).name,
+        term: "",
+        class: props.courses.find(data => data.classSelected === 13 && data.subject === props.item.subject && data.week === props.options.week && data.term === props.options.term)
     })
+
+    useEffect(() => {
+        if(props.options.term === 1){
+            setData(prevData => ({
+                ...prevData, term: "First Term"
+            }))
+        }
+        if(props.options.term === 2){
+            setData(prevData => ({
+                ...prevData, term: "Second Term"
+            }))
+        }
+        if(props.options.term === 3){
+            setData(prevData => ({
+                ...prevData, term: "Third Term"
+            }))
+        }
+
+        return () => {
+            
+        }
+    }, [props.options.term])
 
     const [attendance, setAttendance] = useState(false)
 
-    const htmlContent = `<p>${props.item.description}</p>`
+    const htmlContent = `<p>${data.class.firstTextSlide ?? "No content yet"}</p> 
+    <p>${data.class.secondTextSlide ?? null}</p>
+    <p>${data.class.thirdTextSlide ?? null}</p>
+    <p>${data.class.fourthTextSlide ?? null}</p>
+    `
 
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Text style={{...styles.title, paddingTop: 10, paddingBottom: 10}}>{props.item.title}</Text>
+                <Text style={{...styles.title, paddingTop: 10, paddingBottom: 10, width: width/2.7}}>{data.class.courseTitle}</Text>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <IconImage source={calendar} />
-                    <Text style={{...styles.title, paddingTop: 10, paddingBottom: 10, paddingLeft: 5}}>{props.options.term} - {props.options.week}</Text>
+                    <Text style={{...styles.title, paddingTop: 10, paddingBottom: 10, paddingLeft: 5}}>{data.term} - {data.week}</Text>
                 </View>
             </View>
 
@@ -37,6 +66,8 @@ const ClassScreen = props => {
                     video={testVid}
                     style={styles.video}
                     resizeMode='cover'
+                    thumbnail={{uri: data.class.courseThumbnail}}
+                    endThumbnail={{uri: data.class.courseThumbnail}}
                 />
             </View>
 
@@ -90,7 +121,7 @@ ClassScreen.options = {
 }
 
 const mapStateToProps = (state) => ({
-    
+    courses: state.main.courses
 })
 
 const mapDispatchToProps = {
@@ -156,5 +187,6 @@ const htmlStyles = StyleSheet.create({
     p: {
         textAlign: 'justify',
         lineHeight: 18,
+        marginBottom: -50
     }
 })
