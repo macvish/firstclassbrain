@@ -1,6 +1,10 @@
-import { FULLSCREEN, GET_COURSES, GET_COURSES_FAILED, PROFILE_PICS } from './reducerTypes';
+import { 
+    FULLSCREEN, GET_COURSES, GET_COURSES_FAILED, PROFILE_PICS,
+    GET_TESTS, GET_TESTS_FAILED
+ } from './reducerTypes';
 const INT_STATE = {
-    courses: {},
+    courses: [],
+    tests: [],
     profile_pics: '',
     err_msg: '',
     fullscreen: false,
@@ -17,6 +21,14 @@ export const mainReducer = (state = INT_STATE, action) => {
                 courses: action.payload
             })
         case GET_COURSES_FAILED:
+            return Object.assign({}, state, {
+                err_msg: action.msg
+            })
+        case GET_TESTS:
+            return Object.assign({}, state, {
+                tests: action.payload
+            })
+        case GET_TESTS_FAILED:
             return Object.assign({}, state, {
                 err_msg: action.msg
             })

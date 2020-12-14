@@ -10,10 +10,10 @@ import splash_bg from '../assets/images/splash_bg.png'
 import { onBoardRoot } from '../navigation/onBoardRootNavigation'
 import { mainRoot } from '../navigation/mainRootNavigation'
 import { authRoot } from '../navigation/authRootNavigation'
-import { get_user, get_courses } from '../reducers/mainAction'
+import { get_user, get_courses, get_tests } from '../reducers/mainAction'
 import logo from '../assets/logo/logo.jpeg'
 
-const {width, height} = Dimensions.get('window')
+const {width, height} = Dimensions.get('screen')
 
 const SplashScreen = props => {
 
@@ -23,24 +23,34 @@ const SplashScreen = props => {
     const [station, setStation] = useState(0)
 
     useEffect(() => {
+        let mounted = true
+        if(mounted){
             setStation(1)
             setTimeout(() => {
                 setCounter(prevState => prevState + 0.2)
             }, 2000)
-
-        return () => {
+            
             if(counter == 1){
-                clearInterval()
                 _bootstrapAsyncNaviagete()
             }
         }
-        
-    }, [counter])
-
-    useEffect(() => {
-        _bootstrapAsync()
 
         return () => {
+            mounted = false
+            clearTimeout()
+        }
+        
+    }, [counter, setCounter, setStation])
+
+    useEffect(() => {
+        let mounted = true
+        if(mounted)
+        {
+            _bootstrapAsync()
+        }
+
+        return () => {
+            mounted = false
         }
     }, [station])
 
@@ -61,6 +71,7 @@ const SplashScreen = props => {
                   else{
                     props.get_courses()
                     props.get_user(userToken)
+                    props.get_tests()
                   }
               }
               else{
@@ -135,6 +146,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     get_courses,
+    get_tests,
     get_user,
 }
 

@@ -3,17 +3,31 @@ import { StyleSheet, Text, View, KeyboardAvoidingView, Dimensions, Keyboard, Int
 import { Input, Button, Avatar, Image } from 'react-native-elements'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
-import * as Animatable from 'react-native-animatable'
+import { Formik } from 'formik'
+import * as Yup from 'yup'
 
 import img from '../assets/images/login_image.png'
 import img_overlay from '../assets/images/login_fade.png'
-import EmailIcon from '../constants/EmailIcon'
-import LockIcon from '../constants/LockIcon'
-import InvisibleIcon from '../constants/InvisibleIcon'
 import { login } from '../reducers/authAction'
 import logo from '../assets/logo/logo.jpeg'
 
 const {width, height} = Dimensions.get('window')
+
+const INITIAL_VALUES = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    address: '',
+    classSelected: '',
+    password: '',
+    confirm_password: ''
+}
+
+const signupValidation = Yup.object({
+    email: Yup.string().required('Required').min(5, 'Must be more than 5 characters').matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g, 'Invalid email address'),
+    password: Yup.string().required('Required')
+})
 
 const LoginScreen = props => {
 
@@ -72,33 +86,14 @@ const LoginScreen = props => {
         }))
     }
     
-    const handleSubmit = () => {
+    const handleSubmit = (values) => {
         Keyboard.dismiss()
-
-        // submitButton.current.bounceOut(300).then(endState => {
-            setSubmitLoading(true)
-    
-            if(data.password == '')
-            {
-                setSubmitLoading(false)
-                setErr('Password field can not be empty')
-            }
-    
-            if(data.email == '')
-            {
-                setSubmitLoading(false)
-                setErr('Email field can not be empty')
-            }
-    
-            if(data.email !== '' && data.password !== ''){
-                setErr('')
-                props.login(data)
-                setTimeout(() => {
-                    setSubmitLoading(false)
-                }, 2000);
-            }
-    
-        // })
+        setSubmitLoading(true)
+        setErr('')
+        props.login(values)
+        setTimeout(() => {
+            setSubmitLoading(false)
+        }, 2000);
     }
 
     return (
@@ -140,48 +135,77 @@ const LoginScreen = props => {
                     {props.signup_success_message ? <Text style={{color: '#171717'}}>{signupMsg}</Text> : null}
                 </View>
 
-                <View style={styles.inputs}>
-                    <Input 
-                        placeholder='Email'
-                        placeholderTextColor='#707070'
-                        textContentType='emailAddress'
-                        inputContainerStyle={{ borderBottomColor: '#171717', borderBottomWidth: 2.5 }}
-                        leftIcon={<EmailIcon />}
-                        inputStyle={{color: '#707070'}} 
-                        onChangeText={e => handleInput('email', e)} />
-                    <Input 
-                        placeholder='Password' 
-                        placeholderTextColor='#707070'
-                        textContentType='password'
-                        inputContainerStyle={{ borderBottomColor: '#171717', borderBottomWidth: 2.5 }}
-                        leftIcon={<LockIcon />}
-                        rightIcon={<InvisibleIcon />}
-                        inputStyle={{color: '#707070'}}
-                        secureTextEntry onChangeText={e => handleInput('password', e)} />
+                <Formik
+                    initialValues={INITIAL_VALUES}
+                    validationSchema={signupValidation}
+                    onSubmit={values => handleSubmit(values)}
+                >
+                    {({ errors, handleChange, handleSubmit, setTouched, touched, validateField, values, setFieldValue }) => (
+                        <>       
+                            <View style={styles.inputs}>
+                                <Input 
+                                    placeholder='Email'
+                                    placeholderTextColor='#707070'
+                                    textContentType='emailAddress'
+                                    inputContainerStyle={{ borderBottomColor: '#171717', borderBottomWidth: 2.5 }}
+                                    inputStyle={{color: '#707070'}} 
+                                    onChangeText={e => handleInput('email', e)} 
+                                    value={values.email} 
+                                    onChangeText={handleChange('email')}
+                                    onFocus={() => {
+                                        if (!touched.email) {
+                                        setTouched({ ...touched, email: true })
+                                    }
+                                    }}
+                                    onBlur={() => validateField('email')} 
+                                />
+                                {errors.email && touched.email ? <Text style={styles.errorMessage}>{errors.email}</Text> : null}
 
-                    {err ? 
-                        <Text style={{ color: 'red', fontSize: 15, marginLeft: 10 }}>{err}</Text> : 
-                        (props.err_message ? <Text style={{ color: 'red', fontSize: 15, marginLeft: 10 }}>{props.err_message}</Text> : null)
-                    }
-                </View>
-                <View style={{
-                    // flexDirection: "row",
-                    alignItems: "center",
-                    alignSelf: 'center',
-                    justifyContent: "space-between",
-                    width: width/1.3,
-                    // height: height/6,
-                    paddingTop: height/13
-                }}>
-                    {!submitLoading ? <View>
-                        <Button 
-                            title='Sign in'
-                            buttonStyle={styles.button}
-                            titleStyle={{fontSize: 22, fontWeight: '700'}}
-                            onPress={() => handleSubmit()}
-                        />
-                    </View> : <ActivityIndicator size={50} color='#257F9B' />}
-                </View>
+                                <Input 
+                                    placeholder='Password' 
+                                    placeholderTextColor='#707070'
+                                    textContentType='password'
+                                    inputContainerStyle={{ borderBottomColor: '#171717', borderBottomWidth: 2.5 }}
+                                    inputStyle={{color: '#707070'}}
+                                    secureTextEntry onChangeText={e => handleInput('password', e)}
+                                    value={values.password} 
+                                    onChangeText={handleChange('password')}
+                                    onFocus={() => {
+                                        if (!touched.password) {
+                                        setTouched({ ...touched, password: true })
+                                    }
+                                    }}
+                                    onBlur={() => validateField('password')} 
+                                />
+                                {errors.password && touched.password ? <Text style={styles.errorMessage}>{errors.password}</Text> : null}
+
+                                {
+                                    props.loginMessage 
+                                    ? <Text style={styles.errorMessage}>{props.loginMessage}</Text> 
+                                    : null
+                                }
+                            </View>
+                            <View style={{
+                                // flexDirection: "row",
+                                alignItems: "center",
+                                alignSelf: 'center',
+                                justifyContent: "space-between",
+                                width: width/1.3,
+                                // height: height/6,
+                                paddingTop: height/13
+                            }}>
+                                {!submitLoading ? <View>
+                                    <Button 
+                                        title='Sign in'
+                                        buttonStyle={styles.button}
+                                        titleStyle={{fontSize: 22, fontWeight: '700'}}
+                                        onPress={() => handleSubmit()}
+                                    />
+                                </View> : <ActivityIndicator size={50} color='#257F9B' />}
+                            </View>
+                        </>
+                    )}
+                </Formik>
             </KeyboardAvoidingView>
 
             <View style={{
@@ -209,7 +233,7 @@ LoginScreen.options = {
 }
 
 const mapStateToProps = (state) => ({
-    
+    loginMessage: state.auth.login_err_msg
 })
 
 const mapDispatchToProps = {
@@ -266,6 +290,13 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         height: height/5,
         paddingTop: 80
+    },
+
+    errorMessage: {
+        color: 'red',
+        marginTop: -18,
+        marginBottom: 18,
+        marginLeft: 10
     },
 
     button: {

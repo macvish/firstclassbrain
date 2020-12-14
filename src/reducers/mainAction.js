@@ -1,9 +1,9 @@
-import React from 'react'
 import AsyncStorage from '@react-native-community/async-storage'
 
 import { FULLSCREEN, GET_USER, GET_USER_FAILED, GET_COURSES, 
     GET_COURSES_FAILED, PROFILE_PICS, SEND_CART, PAYMENT_SUCCESSFUL, 
-    PAYMENT_FAILURE } from '../reducers/reducerTypes'
+    PAYMENT_FAILURE, GET_TESTS, GET_TESTS_FAILED, POST_SCORE, POST_SCORE_FAILED
+} from '../reducers/reducerTypes'
 import API from '../helper/API'
 import { mainRoot } from '../navigation/mainRootNavigation'
 import { Navigation } from 'react-native-navigation'
@@ -71,7 +71,7 @@ export const delete_user = () => async (dispatch) => {
     })
 }
 
-// Get Products
+// Get Courses
 export const get_courses = () => async (dispatch) => {
     API.get(`all-courses`)
     .then(res => {
@@ -89,6 +89,43 @@ export const get_courses = () => async (dispatch) => {
     })
 }
 
+// Get tests
+export const get_tests = () => async (dispatch) => {
+    API.get(`all-tests`)
+    .then(res => {
+        const { data } = res
+
+        if(res.status === 200){
+            dispatch({type: GET_TESTS, payload: data.tests})
+        }
+        else{
+            dispatch({ type: GET_TESTS_FAILED, msg: data.message })
+        }
+    })
+    .catch(err => {
+        dispatch({type: GET_COURSES_FAILED, msg: 'Something went wrong, please try again'})
+    })
+}
+
+// Post Score
+export const send_score = (values) => async (dispatch) => {
+    API.post('/test-score', values)
+    .then(res => {
+        const { data } = res
+
+        if(res.status === 200){
+            dispatch({type: POST_SCORE, payload: data.tests})
+        }
+        else{
+            dispatch({ type: POST_SCORE_FAILED, msg: data.message })
+        }
+    })
+    .catch(err => {
+        dispatch({type: GET_COURSES_FAILED, msg: 'Something went wrong, please try again'})
+    })
+}
+
+// Set Avatar
 export const set_avatar = data => dispatch => {
     dispatch({type: PROFILE_PICS, payload: data})
 }

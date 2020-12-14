@@ -1,11 +1,11 @@
-export const authRoot = {
+export const authCheckerRoot = {
     root: {
         stack: {
-            id: 'AuthStack',
+            id: 'AuthCheckerStack',
             children: [
                 {
                     component: {
-                        name: 'Login'
+                        name: 'AuthChecker'
                     },
                 }
             ]

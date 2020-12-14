@@ -60,7 +60,9 @@ const QuestionsCardView = props => {
                 <ImageBackground source={props.src ?? pp} imageStyle={{borderRadius: 20}} style={[styles.imageContainer, props.height ? {height: props.height} : null]}>
                     {props.title ? 
                         <View style={styles.contentContainer}>
-                            <Text style={styles.title}>{props.title}</Text>
+                            <Text style={styles.title}>{String(props.title).toUpperCase()}</Text>
+                            <Text style={styles.title}>{props.subTitle}</Text>
+                            <Text style={styles.title}>{props.week}</Text>
                             <Text style={{fontSize: 17, color: 'white', textAlign: 'center'}}>Start Quiz</Text>
                         </View>
                     :
@@ -97,7 +99,7 @@ const styles = StyleSheet.create({
     },
 
     contentContainer: {
-        height: height/9,
+        height: height/7,
         backgroundColor: 'rgba(0, 0, 0, 0.3)',
         borderRadius: 20,
         justifyContent: 'space-around',

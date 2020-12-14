@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { connect } from 'react-redux'
 
 import LoadingModal from '../components/LoadingModal'
 import Quiz from '../components/Quiz'
 import QuizScoreBoard from '../components/QuizScoreBoard'
+import { send_score } from '../reducers/mainAction'
 
 const { width, height } = Dimensions.get('window')
 
 const QuizScreen = props => {
 
-    const [timer, setTimer] = useState(30)
+    const [timer, setTimer] = useState((props.item.hours * 3000) + (props.item.minutes * 60))
 
     const [modalVisible, setModalVisible] = useState(false)
 
@@ -18,22 +20,25 @@ const QuizScreen = props => {
         score: 0.0
     })
 
+    const [quizSolutions, ] = useState(props.item.questions.map((data, index) => ({ _id: index + 1, solution: data.correction })))
+
     let timeoutId
 
     useEffect(() => {
-        if(timer >= 1){      
-            timeoutId = setTimeout(() => setTimer( prevTimer => prevTimer - 1), 1000)
+        let mounted = true
+        if(mounted) {
+            if(timer >= 1){      
+                timeoutId = setTimeout(() => setTimer( prevTimer => prevTimer - 1), 1000)
+            }
+            if(timer === 1){
+                setTimer(0)
+                alert('Time up')
+            }
         }
-        if(timer === 1){
-            alert('Time up')
+        return () => {
+            mounted = false
         }
-        // return () => {
-        // }
     }, [timer])
-
-    useEffect(() => {
-        
-    })
 
     const getTimer = t  => {
         const digit = n => n < 10 ? `0${n}` : `${n}`
@@ -41,13 +46,13 @@ const QuizScreen = props => {
         const sec = digit(Math.floor(t % 60))
         const min = digit(Math.floor((t/60) % 60))
         const hr = digit(Math.floor((t/3000) % 60))
-        return min + ':' + sec
+        return hr +':' + min + ':' + sec
     }
 
     const resetTimer = () => {
         clearTimeout(timeoutId)
         setTimer(0)
-        setTimer(30)
+        setTimer((props.item.hours * 3000) + (props.item.minutes * 60))
     }
 
     const finishQuiz = () => {
@@ -57,26 +62,34 @@ const QuizScreen = props => {
     }
 
     const getScore = (score) => {
+        setTimer(1)
         setModalVisible(true)
         setQuizData(prevState => ({...prevState, score: score }))
+        const formData = {
+            testId: props.item._id,
+            studentId: props.item._id,
+            score
+        }
+        props.send_score(formData)
     }
 
     return (
         <View style={styles.container}>
             <View style={styles.header} >
-                <Text style={{fontSize: 18, fontWeight: 'bold', width: width/1.3}}>{props.item.title ?? 'Unknown'}</Text>
+                <Text style={{fontSize: 18, fontWeight: 'bold', width: width/1.45}}>{props.item.topic ?? 'Unknown'}</Text>
                 {quizData.finished ? null : <Text style={{fontSize: 18}}>{getTimer(timer)}</Text>}
             </View>
             <ScrollView>
                 {quizData.finished ? 
-                    <QuizScoreBoard solutions={props.item.solutions} score={quizData.score/100} />
+                    <QuizScoreBoard solutions={quizSolutions} score={quizData.score/100} />
                 :
                     <Quiz 
                         questions={props.item.questions} 
-                        timer={timer} resetTimer={resetTimer} 
+                        timer={timer} 
+                        resetTimer={resetTimer}
                         getScore={ score => getScore(score)} 
                         grading={props.item.grading}
-                        />
+                    />
                 }
             </ScrollView>
             <LoadingModal visible={modalVisible} handleOnpress={finishQuiz} />
@@ -84,7 +97,16 @@ const QuizScreen = props => {
     )
 }
 
-export default QuizScreen
+const mapStateToProps = (state) => ({
+    user: state.auth.payload
+})
+
+const mapDispatchToProps = {
+    send_score
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuizScreen)
 
 const styles = StyleSheet.create({
     container: {

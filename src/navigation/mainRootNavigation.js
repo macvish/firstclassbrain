@@ -1,8 +1,7 @@
-import React from 'react'
 import dashboardIcon from '../assets/icons/dashboard.png'
 import questionsIcon from '../assets/icons/questions.png'
 import classroomIcon from '../assets/icons/classroom.png'
-import chatIcon from '../assets/icons/chat.png'
+// import chatIcon from '../assets/icons/chat.png'
 import accountIcon from '../assets/icons/account.png'
 
 export const mainRoot = {

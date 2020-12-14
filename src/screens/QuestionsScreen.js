@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-elements'
-import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 
-import AlertModal from '../components/AlertModal'
 import QuestionsCardView from '../components/QuestionsCardView'
 import testConent from '../helper/test.json'
 
@@ -16,13 +14,17 @@ const QuestionsScreen = props => {
 
     const [activeBtn, setActiveBtn] = useState(1)
 
-    const [modalVisible, setModalVisible] = useState(false)
-
     useEffect(() => {
-        if(props.questionTab){
-            setValue(props.questionTab)
-            setActiveBtn(props.questionTab)
-            console.log(props.questionTab)
+        let mounted = true
+        if(mounted) {
+            if(props.questionTab){
+                setValue(props.questionTab)
+                setActiveBtn(props.questionTab)
+            }
+        }
+
+        return () => {
+            mounted = false
         }
     }, [props.questionTab])
 
@@ -39,8 +41,9 @@ const QuestionsScreen = props => {
                         setActiveBtn(1)
                     }} 
                 />
+
                 <Button 
-                    title='Examination'
+                    title='Weekly Assignments'
                     titleStyle={[styles.tabTitle, activeBtn === 2 ? { color: '#fff' } : null]} 
                     buttonStyle={[styles.tab, activeBtn === 2 ? { backgroundColor: '#3FB0D4' } : null]} 
                     containerStyle={styles.tabContainer} 
@@ -49,8 +52,9 @@ const QuestionsScreen = props => {
                         setActiveBtn(2)
                     }}
                 />
+
                 <Button 
-                    title='Weekly Assignments'
+                    title='Examination'
                     titleStyle={[styles.tabTitle, activeBtn === 3 ? { color: '#fff' } : null]} 
                     buttonStyle={[styles.tab, activeBtn === 3 ? { backgroundColor: '#3FB0D4' } : null]} 
                     containerStyle={styles.tabContainer} 
@@ -60,67 +64,85 @@ const QuestionsScreen = props => {
                     }}
                 />
             </View>
-            <Content screen={value} componentId={props.componentId} />
+            <View style={styles.contentSection}>
+                <Content 
+                    screen={value} 
+                    assessments={props.assessments} 
+                    componentId={props.componentId}
+                    user={props.user}
+                />
+            </View>
         </View>
     )
 }
 
-const Content = ({ screen, componentId }) => {
+const Content = ({ screen, componentId, assessments, user }) => {
     switch (screen) {
         case 1:
-            return <Screen componentId={componentId} />
+            return <Screen user={user} assessments={assessments} assessmentType={screen} componentId={componentId} />
 
         case 2:
-            return <Screen componentId={componentId} />
+            return <Screen user={user} assessments={assessments} assessmentType={screen} componentId={componentId} />
 
         case 3:
-            return <Screen componentId={componentId} /> 
+            return <Screen user={user} assessments={assessments} assessmentType={screen} componentId={componentId} /> 
     
         default:
-            <Screen componentId={componentId} />
+            <Screen user={user} assessments={assessments} assessmentType={screen} componentId={componentId} />
     }
 }
 
 const Screen = props => {
 
-    const [modalVisible, setModalVisible] = useState(false)
+    const [assessmentState, setAssessmentState] = useState([])
 
-    const onContinue = () => {
-        setModalVisible(false)
-        
-    }
+    useEffect(() => {
+        let mounted = true
+        if(mounted) {
+            setAssessmentState(props.assessments.filter(item => item.type === props.assessmentType && item.classSelected === props.user.classSelected))
+        }
 
-    const onCloseModal = () => {
-        setModalVisible(false)
-    }
+        return () => {
+            mounted = false
+        }
+    }, [props.assessmentType])
 
-    const renderItem = ({item, onPress}) => {
+    const renderItem = ({item}) => {
         return <View style={{paddingRight: 20, paddingBottom: 20}}>
-            <QuestionsCardView uri={item.src} title={item.title} item={item} componentId={props.componentId} height={height/8} />
+            <QuestionsCardView 
+                uri={item.src} 
+                title={item.subject} 
+                subTitle={item.topic} 
+                week={`Week ${item.week}`} 
+                item={item} componentId={props.componentId} 
+                height={'auto'} 
+            />
         </View>
     }
 
     return (
         <>
-            <FlatList
-                data={testConent.questions}
-                renderItem={renderItem}
-                numColumns={2}
-                keyExtractor={item => item.id}
-                extraData={testConent.questions}
-            />
-            <AlertModal 
-                visible={modalVisible} 
-                message='Do you want to start your Assignment Quiz?'
-                onClose={onCloseModal} 
-                onContinue={onContinue}
-            />
+            { assessmentState.length >= 1
+                ? <>
+                    <FlatList
+                        data={assessmentState}
+                        renderItem={renderItem}
+                        numColumns={2}
+                        keyExtractor={item => item.id}
+                        extraData={assessmentState}
+                    />
+                </>
+                : <View style={styles.placeHolder}>
+                    <Text style={{ textAlign: 'center' }}>Sorry, no assessments yet.</Text>    
+                </View>
+            }
         </>
     )
 }
 
 const mapStateToProps = (state) => ({
-    
+    assessments: state.main.tests,
+    user: state.auth.payload
 })
 
 const mapDispatchToProps = {
@@ -160,12 +182,11 @@ const styles = StyleSheet.create({
     headerTabs: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        // width: width/1.2,
         paddingBottom: 20
     },
 
     tab: {
-        width: width/3.4, 
+        width: width/3.2, 
         height: 35,
         borderRadius: 10,
         backgroundColor: 'transparent'
@@ -175,4 +196,16 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: '#000000'
     },
+
+    contentSection: {
+        flex: 3,
+        width: width/1.05,
+        marginTop: 10
+    },
+
+    placeHolder: {
+        flex: 1,
+        width: width,
+        justifyContent: 'center'
+    }
 })

@@ -7,14 +7,43 @@ const Quiz = props => {
     const [questionNo, setQuestionNo] = useState(0)
     const [correctAnswers, setCorrectAnswers] = useState({
         answers: [],
-        score: 0
+        score: 0.0
     })
 
     
     const [data, setData] = useState(
         {
             question: props.questions[questionNo].question,
-            options: props.questions[questionNo].answers.map((answer, i) => {return {...answer, selected: false}})
+            options: [
+                {
+                    _id: 1,
+                    name: 'answerA',
+                    answer: props.questions[questionNo].answerA,
+                    correct: props.questions[questionNo].correctAnswer === 'answerA' ? true : false,
+                    selected: false
+                },
+                {
+                    _id: 2,
+                    name: 'answerB',
+                    answer: props.questions[questionNo].answerB,
+                    correct: props.questions[questionNo].correctAnswer === 'answerB' ? true : false,
+                    selected: false
+                },
+                {
+                    _id: 3,
+                    name: 'answerC',
+                    answer: props.questions[questionNo].answerC,
+                    correct: props.questions[questionNo].correctAnswer === 'answerC' ? true : false,
+                    selected: false
+                },
+                {
+                    _id: 4,
+                    name: 'answerD',
+                    answer: props.questions[questionNo].answerD,
+                    correct: props.questions[questionNo].correctAnswer === 'answerD' ? true : false,
+                    selected: false
+                },
+            ]
         }
     )
 
@@ -29,7 +58,7 @@ const Quiz = props => {
                     ...prevAnswers, 
                     answers: [
                         ...new_correctAnswers, 
-                        {_id: selectedItem._id, questionNo: questionNo, correct: selectedItem.correct, score: props.grading}
+                        {_id: selectedItem._id, questionNo: questionNo, correct: selectedItem.correct, score: 100/props.questions.length}
                     ]
                 }))
                 setCorrectAnswers(prevAnswers => ({
@@ -48,7 +77,7 @@ const Quiz = props => {
     }
 
     const renderOptions = () => {
-        return data.options.map((data, index) => {
+        return data.options.map((data) => {
             return <AnswerButton 
                 key={data._id} 
                 title={data.answer} 
@@ -61,18 +90,97 @@ const Quiz = props => {
     }
 
     useEffect(() => {
-        setData({
-            question: props.questions[questionNo].question,
-            options: props.questions[questionNo].answers.map((answer, i) => {return {...answer, selected: false, disabled: false}})
-        })
+        let mounted = true
+        if(mounted) {
+            setData({
+                question: props.questions[questionNo].question,
+                options: [
+                    {
+                        _id: 1,
+                        name: 'answerA',
+                        answer: props.questions[questionNo].answerA,
+                        correct: props.questions[questionNo].correctAnswer === 'answerA' ? true : false,
+                        selected: false,
+                        disabled: false
+                    },
+                    {
+                        _id: 2,
+                        name: 'answerB',
+                        answer: props.questions[questionNo].answerB,
+                        correct: props.questions[questionNo].correctAnswer === 'answerB' ? true : false,
+                        selected: false,
+                        disabled: false
+                    },
+                    {
+                        _id: 3,
+                        name: 'answerC',
+                        answer: props.questions[questionNo].answerC,
+                        correct: props.questions[questionNo].correctAnswer === 'answerC' ? true : false,
+                        selected: false,
+                        disabled: false
+                    },
+                    {
+                        _id: 4,
+                        name: 'answerD',
+                        answer: props.questions[questionNo].answerD,
+                        correct: props.questions[questionNo].correctAnswer === 'answerD' ? true : false,
+                        selected: false,
+                        disabled: false
+                    },
+                ]
+            })
+        }
+        return () => {
+            mounted = false
+        }
     }, [questionNo])
 
     useEffect(() => {
-        if(props.timer === 0){
-            setData({
-                question: props.questions[questionNo].question,
-                options: props.questions[questionNo].answers.map((answer, i) => {return {...answer, disabled: true}})
-            })
+        let mounted = true
+        if(mounted) {
+            if(props.timer === 0){
+                setData({
+                    question: props.questions[questionNo].question,
+                    options: [
+                        {
+                            _id: 1,
+                            name: 'answerA',
+                            answer: props.questions[questionNo].answerA,
+                            correct: props.questions[questionNo].correctAnswer === 'answerA' ? true : false,
+                            selected: false,
+                            disabled: true
+                        },
+                        {
+                            _id: 2,
+                            name: 'answerB',
+                            answer: props.questions[questionNo].answerB,
+                            correct: props.questions[questionNo].correctAnswer === 'answerB' ? true : false,
+                            selected: false,
+                            disabled: true
+                        },
+                        {
+                            _id: 3,
+                            name: 'answerC',
+                            answer: props.questions[questionNo].answerC,
+                            correct: props.questions[questionNo].correctAnswer === 'answerC' ? true : false,
+                            selected: false,
+                            disabled: true
+                        },
+                        {
+                            _id: 4,
+                            name: 'answerD',
+                            answer: props.questions[questionNo].answerD,
+                            correct: props.questions[questionNo].correctAnswer === 'answerD' ? true : false,
+                            selected: false,
+                            disabled: true
+                        },
+                    ]
+                })
+            }
+        }
+
+        return () => {
+            mounted = false
         }
     }, [props.timer])
 
@@ -100,18 +208,7 @@ const Quiz = props => {
             </View>
 
             {renderOptions()}
-            {/* <View style={styles.solution}>
-                <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#fff' }}>Solution</Text>
-                <Text style={{
-                    fontSize: 15, 
-                    textAlign: 'justify', 
-                    color: '#fff',
-                    lineHeight: 20
-                }}>
-                    The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax 
-                    quiz prog. Junk MTV quiz graced by fox whelps.
-                </Text>
-            </View> */}
+            
             <View style={{  }}>
             <AnswerButton 
                 title={questionNo < props.questions.length-1 ? 'Next' : 'Submit'} 

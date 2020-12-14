@@ -1,5 +1,7 @@
 export const HAS_ONBOARDED = 'HAS_ONBOARDED'
 
+export const CLEAR_ALL_ERROR_MESSAGE = 'CLEAR_ALL_ERROR_MESSAGE'
+
 export const AUTH_TYPE = 'AUTH_TYPE'
 
 export const LOGIN = 'LOGIN'
@@ -27,6 +29,15 @@ export const GET_USER_FAILED = 'GET_USER_FAILED'
 export const GET_COURSES = 'GET_COURSES'
 
 export const GET_COURSES_FAILED = 'GET_COURSES_FAILED'
+
+export const GET_TESTS = 'GET_TESTS'
+
+export const GET_TESTS_FAILED = 'GET_TESTS_FAILED'
+
+export const POST_SCORE = 'POST_SCORE'
+
+export const POST_SCORE_FAILED = 'POST_SCORE_FAILED'
+
 
 export const PROFILE_PICS = 'PROFILE_PICS'
 

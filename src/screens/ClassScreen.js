@@ -18,7 +18,7 @@ const ClassScreen = props => {
     const [data, setData] = useState({
         week: weeks.find(data => data.week = props.options.week).name,
         term: "",
-        class: props.courses.find(data => data.classSelected === 13 && data.subject === props.item.subject && data.week === props.options.week && data.term === props.options.term)
+        class: props.courses.find(data => data.classSelected === props.user.classSelected && data.subject === props.item.subject && data.week === props.options.week && data.term === props.options.term)
     })
 
     useEffect(() => {
@@ -63,7 +63,7 @@ const ClassScreen = props => {
 
             <View style={styles.VideoContainer}>
                 <VideoPlayer
-                    video={testVid}
+                    video={{uri: data.class.video}}
                     style={styles.video}
                     resizeMode='cover'
                     thumbnail={{uri: data.class.courseThumbnail}}
@@ -121,7 +121,8 @@ ClassScreen.options = {
 }
 
 const mapStateToProps = (state) => ({
-    courses: state.main.courses
+    courses: state.main.courses,
+    user: state.auth.payload
 })
 
 const mapDispatchToProps = {

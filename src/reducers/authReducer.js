@@ -1,7 +1,18 @@
-import { HAS_ONBOARDED, AUTH_TYPE, LOGIN, LOGIN_FAILURE, SIGN_UP, SIGN_UP_FAILURE, LOGOUT, FORGOT_PASSWORD, GET_USER, GET_USER_FAILED } from './reducerTypes';
+import { 
+    HAS_ONBOARDED, 
+    AUTH_TYPE, 
+    LOGIN, 
+    LOGIN_FAILURE,
+    SIGN_UP, 
+    SIGN_UP_FAILURE, 
+    LOGOUT,
+    FORGOT_PASSWORD, 
+    GET_USER, 
+    GET_USER_FAILED 
+} from './reducerTypes'
+
 const INT_STATE = {
-    payload: {
-    },
+    payload: {},
     forgot_payload: {},
     login_err_msg: '',
     signup_err_msg: '',
@@ -24,7 +35,6 @@ export const authReducer = (state = INT_STATE, action) => {
             })
         case LOGIN:
             return Object.assign({}, state, {
-                payload: action.payload,
                 is_logged_in: true
             })
         case GET_USER:

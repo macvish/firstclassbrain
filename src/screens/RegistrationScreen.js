@@ -1,15 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, KeyboardAvoidingView, Dimensions, 
-    Keyboard, ScrollView, ActivityIndicator, ImageBackground, TouchableOpacity } from 'react-native'
-import { Input, Button, Avatar } from 'react-native-elements'
+    Keyboard, ScrollView, ActivityIndicator} from 'react-native'
+import { Input, Button } from 'react-native-elements'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
-// import * as Animatable from 'react-native-animatable'
-import { Dropdown } from 'react-native-material-dropdown'
-import DateTimePicker from '@react-native-community/datetimepicker'
+import { Dropdown } from 'react-native-material-dropdown-v2'
+import { Formik } from 'formik'
+import * as Yup from 'yup'
 
-import img from '../assets/images/login_image.png'
-import img_overlay from '../assets/images/login_fade.png'
 import { signup } from '../reducers/authAction'
 import InvisibleIcon from '../constants/InvisibleIcon'
 
@@ -35,24 +33,29 @@ const classes = [
     {value: 17, label: 'Sss 3 - Art'},
 ]
 
+const INITIAL_VALUES = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    address: '',
+    classSelected: '',
+    password: '',
+    confirm_password: ''
+}
+
+const signupValidation = Yup.object({
+    firstName: Yup.string().required('Required').min(2, 'Must be more than 2 characters').matches(/^[A-Za-z-]+$/, 'Must only contain letters and hyphens'),
+    lastName: Yup.string().required('Required').min(2, 'Must be more than 2 characters').matches(/^[A-Za-z-]+$/, 'Must only contain letters and hyphens'),
+    email: Yup.string().required('Required').min(5, 'Must be more than 5 characters').matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g, 'Invalid email address'),
+    phone: Yup.string().required('Required').min(11, 'Must be more than 11 numbers'),
+    address: Yup.string().required('Required').min(5, 'Must be more than 5 characters'),
+    classSelected: Yup.string().required('Required'),
+    password: Yup.string().required('Required').min(6, 'Must be 6 characters or more'),
+    confirm_password: Yup.string().required('Required').min(8, 'Must be 8 characters or more')
+})
+
 const RegistrationScreen = props => {
-
-    const [data, setData] = useState({
-        firstName: '',
-        lastName: '',
-        otherName: '',
-        email: '',
-        phone: '',
-        dateOfBirth: `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`,
-        address: '',
-        schoolClass: null,
-        password: '',
-        confirm_password: ''
-    })
-
-    const [showDate, setShowDate] = useState(false)
-
-    const [date, setDate] = useState(new Date)
 
     const [signupMsg, setSignupMsg] = useState('')
 
@@ -64,47 +67,15 @@ const RegistrationScreen = props => {
         setSignupMsg(props.signup_success_message)
     }, [props.signup_success_message])
 
-    const handleInput = (name, e) => {
-        setData(prevState => ({
-            ...prevState, [name]: e
-        }))
-        console.log(data)
-    }
-
-    const handleChangeDate = (e, s) => {
-        handleInput('dateOfBirth', `${new Date(s).getFullYear()}-${new Date(s).getMonth()}-${new Date(s).getDate()}`)
-        setDate(s)
-        setShowDate(false)
-    }
-
     
-    const handleSubmit = () => {
+    const handleSubmit = (values) => {
         Keyboard.dismiss()
-
-        submitButton.current.bounceOut(300).then(endState => {
-            setSubmitLoading(true)
-    
-            if(data.password == '')
-            {
-                setSubmitLoading(false)
-                setErr('Password field can not be empty')
-            }
-    
-            if(data.email == '')
-            {
-                setSubmitLoading(false)
-                setErr('Email field can not be empty')
-            }
-    
-            if(data.email !== '' && data.password !== '' && data.confirm_password === data.password && data.fullname !== '' && data.class !== '' ){
-                setErr('')
-                props.signup(data)
-                setTimeout(() => {
-                    setSubmitLoading(false)
-                }, 2000);
-            }
-    
-        })
+        setSubmitLoading(true)
+        setErr('')
+        props.signup(values)
+        setTimeout(() => {
+            setSubmitLoading(false)
+        }, 2000);
     }
 
     return (
@@ -147,113 +118,178 @@ const RegistrationScreen = props => {
 
                 {/* Input Fields */}
                 <View style={styles.inputs}>
-                    <Input 
-                        placeholder='First Name'
-                        placeholderTextColor='#707070'
-                        textContentType='givenName'
-                        inputContainerStyle={styles.inputContainerStyle}
-                        inputStyle={{color: '#707070'}} 
-                        onChangeText={e => handleInput('firstName', e)} />
-                    <Input 
-                        placeholder='Last Name'
-                        placeholderTextColor='#707070'
-                        textContentType='familyName'
-                        inputContainerStyle={styles.inputContainerStyle}
-                        inputStyle={{color: '#707070'}} 
-                        onChangeText={e => handleInput('lastName', e)} />
-                    <Input 
-                        placeholder='Other Name'
-                        placeholderTextColor='#707070'
-                        textContentType='middleName'
-                        inputContainerStyle={styles.inputContainerStyle}
-                        inputStyle={{color: '#707070'}} 
-                        onChangeText={e => handleInput('otherName', e)} />
-                    <Input 
-                        placeholder='Email'
-                        placeholderTextColor='#707070'
-                        textContentType='emailAddress'
-                        inputContainerStyle={styles.inputContainerStyle}
-                        inputStyle={{color: '#707070'}} 
-                        onChangeText={e => handleInput('email', e)} />
-                    <Input 
-                        placeholder='Phone Number'
-                        placeholderTextColor='#707070'
-                        textContentType='telephoneNumber'
-                        inputContainerStyle={styles.inputContainerStyle}
-                        inputStyle={{color: '#707070'}} 
-                        onChangeText={e => handleInput('phone', e)} />
-                    <TouchableOpacity onPress={() => setShowDate(true) }>
+                  <Formik
+                    initialValues={INITIAL_VALUES}
+                    validationSchema={signupValidation}
+                    onSubmit={values => handleSubmit(values)}
+                  >
+                    {({ errors, handleChange, handleSubmit, setTouched, touched, validateField, values, setFieldValue }) => (
+                      <>
                         <Input 
-                            placeholder='date of Birth'
+                            placeholder='First Name'
                             placeholderTextColor='#707070'
-                            disabled={true}
-                            value={`${data.dateOfBirth}`}
+                            textContentType='givenName'
                             inputContainerStyle={styles.inputContainerStyle}
-                            inputStyle={{color: '#707070'}} />
-                    </TouchableOpacity>
-                    {showDate && (
-                        <DateTimePicker
-                            testID="dateTimePicker"
-                            value={date}
-                            mode='date'
-                            display="default"
-                            onChange={handleChangeDate}
+                            inputStyle={{color: '#707070'}} 
+                            value={values.firstName}
+                            onChangeText={handleChange('firstName')}
+                            onFocus={() => {
+                                if (!touched.firstName) {
+                                setTouched({ ...touched, firstName: true })
+                            }
+                            }}
+                            onBlur={() => validateField('firstName')}
                         />
-                    )}
-                    <Dropdown
-                        data={classes}
-                        containerStyle={{...styles.inputContainerStyle, marginTop: -40, marginBottom: 20, width: width/1.27, alignSelf: "center"}}
-                        labelTextStyle={{color: '#707070'}}
-                        itemColor='#707070'
-                        style={{borderBottomWidth: 0}}
-                        label='Class'
-                        onChangeText={e => handleInput('schoolClass', e)}
-                        inputContainerStyle={{ borderBottomWidth: 0 }}
-                    />
-                    <Input 
-                        placeholder='Password' 
-                        placeholderTextColor='#707070'
-                        textContentType='password'
-                        inputContainerStyle={styles.inputContainerStyle}
-                        rightIcon={<InvisibleIcon />}
-                        inputStyle={{color: '#707070'}}
-                        secureTextEntry onChangeText={e => handleInput('password', e)} />
-                    <Input 
-                        placeholder='Confirm Password' 
-                        placeholderTextColor='#707070'
-                        textContentType='password'
-                        inputContainerStyle={styles.inputContainerStyle}
-                        rightIcon={<InvisibleIcon />}
-                        inputStyle={{color: '#707070'}}
-                        secureTextEntry onChangeText={e => handleInput('password', e)} />
+                        {errors.firstName && touched.firstName ? <Text style={styles.errorMessage}>{errors.firstName}</Text> : null}
 
-                    {err ? 
-                        <Text style={{ color: 'red', fontSize: 15, marginLeft: 10 }}>{err}</Text> : 
-                        (props.err_message ? <Text style={{ color: 'red', fontSize: 15, marginLeft: 10 }}>{props.err_message}</Text> : null)
-                    }
+                        <Input 
+                            placeholder='Last Name'
+                            placeholderTextColor='#707070'
+                            textContentType='familyName'
+                            inputContainerStyle={styles.inputContainerStyle}
+                            inputStyle={{color: '#707070'}} 
+                            value={values.lastName}
+                            onChangeText={handleChange('lastName')} 
+                            onFocus={() => {
+                                if (!touched.lastName) {
+                                setTouched({ ...touched, lastName: true })
+                            }
+                            }}
+                            onBlur={() => validateField('lastName')}
+                        />
+                        {errors.lastName && touched.lastName ? <Text style={styles.errorMessage}>{errors.lastName}</Text> : null}
+
+                        <Input 
+                            placeholder='Email'
+                            placeholderTextColor='#707070'
+                            textContentType='emailAddress'
+                            inputContainerStyle={styles.inputContainerStyle}
+                            inputStyle={{color: '#707070'}}
+                            value={values.email} 
+                            onChangeText={handleChange('email')}
+                            onFocus={() => {
+                                if (!touched.email) {
+                                setTouched({ ...touched, email: true })
+                            }
+                            }}
+                            onBlur={() => validateField('email')} 
+                        />
+                        {errors.email && touched.email ? <Text style={styles.errorMessage}>{errors.email}</Text> : null}
+
+                        <Input 
+                            placeholder='Phone Number'
+                            placeholderTextColor='#707070'
+                            textContentType='telephoneNumber'
+                            inputContainerStyle={styles.inputContainerStyle}
+                            inputStyle={{color: '#707070'}}
+                            value={values.phone} 
+                            onChangeText={handleChange('phone')} 
+                            onFocus={() => {
+                                if (!touched.phone) {
+                                setTouched({ ...touched, phone: true })
+                            }
+                            }}
+                            onBlur={() => validateField('phone')}
+                        />
+                        {errors.phone && touched.phone ? <Text style={styles.errorMessage}>{errors.phone}</Text> : null}
+
+                        <Input 
+                            placeholder='Address'
+                            placeholderTextColor='#707070'
+                            textContentType='fullStreetAddress'
+                            inputContainerStyle={styles.inputContainerStyle}
+                            inputStyle={{color: '#707070'}} 
+                            value={values.address}
+                            onChangeText={handleChange('address')}
+                            onFocus={() => {
+                                if (!touched.address) {
+                                setTouched({ ...touched, address: true })
+                            }
+                            }}
+                            onBlur={() => validateField('address')} 
+                        />
+                        {errors.address && touched.address ? <Text style={styles.errorMessage}>{errors.address}</Text> : null}
+
+                        <Dropdown
+                            data={classes}
+                            containerStyle={{...styles.inputContainerStyle, marginTop: -10, marginBottom: 20, width: width/1.27, alignSelf: "center"}}
+                            labelTextStyle={{color: '#707070'}}
+                            itemColor='#707070'
+                            style={{borderBottomWidth: 0, backgroundColor: '#fff'}}
+                            label='Class'
+                            value={values.classSelected}
+                            onChangeText={(value) => setFieldValue('classSelected', value)}
+                            inputContainerStyle={{ borderBottomWidth: 0 }}
+                        />
+                        {errors.classSelected && touched.classSelected ? <Text style={styles.errorMessage}>{errors.classSelected}</Text> : null}
+
+                        <Input 
+                            placeholder='Password' 
+                            placeholderTextColor='#707070'
+                            textContentType='password'
+                            inputContainerStyle={styles.inputContainerStyle}
+                            rightIcon={<InvisibleIcon />}
+                            inputStyle={{color: '#707070'}}
+                            value={values.password}
+                            secureTextEntry onChangeText={handleChange('password')} 
+                            onFocus={() => {
+                                if (!touched.password) {
+                                setTouched({ ...touched, password: true })
+                            }
+                            }}
+                            onBlur={() => validateField('password')}
+                        />
+                        {errors.password && touched.password ? <Text style={styles.errorMessage}>{errors.password}</Text> : null}
+
+                        <Input 
+                            placeholder='Confirm Password' 
+                            placeholderTextColor='#707070'
+                            textContentType='password'
+                            inputContainerStyle={styles.inputContainerStyle}
+                            rightIcon={<InvisibleIcon />}
+                            value={values.confirm_password}
+                            inputStyle={{color: '#707070'}}
+                            secureTextEntry onChangeText={handleChange('confirm_password')}
+                            onFocus={() => {
+                                if (!touched.confirm_password) {
+                                setTouched({ ...touched, confirm_password: true })
+                                }
+                            }}
+                            onBlur={() => validateField('confirm_password')}
+                        />
+                        {errors.confirm_password && touched.confirm_password ? <Text style={styles.errorMessage}>{errors.confirm_password}</Text> : null}
+
+                        {
+                            props.signupMessage 
+                            ? <Text style={styles.errorMessage}>{props.signupMessage}</Text> 
+                            : null
+                        }
+
+                        <View style={{
+                            // flexDirection: "row",
+                            alignItems: "center",
+                            alignSelf: 'center',
+                            justifyContent: "space-between",
+                            width: width/1.3,
+                            // height: height/6,
+                            paddingTop: -10
+                        }}>
+                            {!submitLoading ? <View>
+                                <Button 
+                                    title='Sign Up'
+                                    buttonStyle={styles.button}
+                                    titleStyle={{fontSize: 22, fontWeight: '700'}}
+                                    onPress={() => handleSubmit()}
+                                />
+                            </View> : <ActivityIndicator size={50} color='#FDAD45' />}
+                        </View>
+                      </>
+                    )}
+                  </Formik>
                 </View>
 
             </KeyboardAvoidingView>
             </ScrollView>
-
-            <View style={{
-                    // flexDirection: "row",
-                    alignItems: "center",
-                    alignSelf: 'center',
-                    justifyContent: "space-between",
-                    width: width/1.3,
-                    // height: height/6,
-                    paddingTop: -10
-                }}>
-                    {!submitLoading ? <View>
-                        <Button 
-                            title='Sign Up'
-                            buttonStyle={styles.button}
-                            titleStyle={{fontSize: 22, fontWeight: '700'}}
-                            onPress={() => handleSubmit}
-                        />
-                    </View> : <ActivityIndicator size={50} color='#FDAD45' />}
-                </View>
 
             <View style={{
                 alignSelf: "center",
@@ -277,7 +313,7 @@ RegistrationScreen.options = {
 }
 
 const mapStateToProps = (state) => ({
-    
+  signupMessage: state.auth.signup_err_msg
 })
 
 const mapDispatchToProps = {
@@ -329,26 +365,25 @@ const styles = StyleSheet.create({
     },
 
     inputContainer: {
-        // flex: 1,
-        // height: height/1.14,
-        // backgroundColor: 'blue',
-        // marginTop: 100
     },
 
     inputs: {
-        // flex: 1,
         width: width/1.2,
         justifyContent: 'center',
         alignSelf: 'center',
-        // height: height/5,
-        // paddingTop: 80
-        // backgroundColor: 'blue'
     },
 
     inputContainerStyle: {
         borderBottomColor: '#171717',
         borderBottomWidth: 2.5,
         marginTop: -18
+    },
+
+    errorMessage: {
+        color: 'red',
+        marginTop: -18,
+        marginBottom: 18,
+        marginLeft: 10
     },
 
     button: {

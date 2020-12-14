@@ -16,15 +16,21 @@ const QuizScoreBoard = props => {
     })
 
     useEffect(() => {
-        if(counter <= props.score)
-        setTimeout(() => {
-            setCounter(prevState => prevState + 0.01)
-        }, 50);
+        let mounted = true
+        if(mounted) {
+            if(counter <= props.score) {
+                setTimeout(() => {
+                    setCounter(prevState => prevState + 0.01)
+                }, 50);
+            }
+
+            if(counter == props.score){
+                clearTimeout()
+            }
+        }
 
         return () => {
-            if(counter == props.score){
-                clearInterval()
-            }
+            mounted = false
         }
         
     }, [counter])
@@ -53,8 +59,6 @@ const QuizScoreBoard = props => {
             <Text style={styles.headerText}>Total Score</Text>
            <Progress.Circle 
                     progress={counter} 
-                    // width={width/1.2}
-                    // height={15}
                     size={200}
                     thickness={15}
                     borderColor='#fff'
@@ -68,17 +72,6 @@ const QuizScoreBoard = props => {
             </View>
             <Text style={{...styles.headerText, textAlign: 'center'}}>Solutions</Text>
             {renderSolutions()}
-            {/* <View style={{  }}>
-            <AnswerButton 
-                title={'Submit'} 
-                backgroundColor='#257F9B'
-                textSize={22}
-                textColor='#fff'
-                textWeight='bold'
-                borderColor='#257F9B'
-                onPress={() => handleNext()}
-            />
-            </View> */}
         </View>
     )
 }

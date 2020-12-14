@@ -21,17 +21,20 @@ const ClassroomCardView = props => {
     })
 
     const [modalVisible, setModalVisible] = useState(false)
+
     const [noContentModalVisible, setNoContentModalVisible] = useState(false)
+
+    const [subcriptionPrice, setSubscriptionPrice] = useState()
 
     const payRef = useRef();
 
     const onContinue = () => {
-        if(props.item.isPaid){
+        if(props.isPaid === "true"){
             if(options.term !== null && options.week !== null){
                const course = props.courses.find(data => data.classSelected === props.item.class && data.subject === props.item.subject && data.week === options.week && data.term === options.term)
                if(course !== undefined && Object.keys(course).length > 0){
                     setModalVisible(false)
-                    handleNavigation('Class')
+                    handleNavigation('Courses')
                 }
                 else {
                     setModalVisible(false)
@@ -39,13 +42,33 @@ const ClassroomCardView = props => {
                 }
             }
         } else{
-            setModalVisible(false)
-            payRef.current.StartTransaction()   
+            if(subcriptionPrice >= 0) {
+                setModalVisible(false)
+                payRef.current.StartTransaction()   
+            }
         }
     }
 
     const handleOptions = (name, e) => {
         setOptions(prevState => ({...prevState, [name]: e}))
+    }
+
+    const handleSubscription = value => {
+        if(value = 1) {
+            setSubscriptionPrice(2000)
+        }
+
+        if(value = 2) {
+            setSubscriptionPrice(5000)
+        }
+
+        if(value = 3) {
+            setSubscriptionPrice(9000)
+        }
+
+        if(value = 4) {
+            setSubscriptionPrice(16000)
+        }
     }
 
     const onCloseModal = () => {
@@ -89,7 +112,12 @@ const ClassroomCardView = props => {
 
     return (
         <>
-            <TouchableOpacity onPress={() => setModalVisible(true)}>
+            <TouchableOpacity 
+                onPress={() => {
+                    setModalVisible(true)
+                    setSubscriptionPrice(0)
+                }}
+            >
                 <View style={styles.container}>
                     <ImageBackground source={props.src ?? pp} imageStyle={{borderRadius: 20}} style={styles.imageContainer}>
                         <View style={styles.fadeContainer}>
@@ -99,7 +127,7 @@ const ClassroomCardView = props => {
                 </View>
             </TouchableOpacity>
 
-            {props.item.isPaid ? 
+            {props.isPaid === "true" ? 
                 <SelectionModal 
                     visible={modalVisible} 
                     message='Do you want to start your Assignment Quiz?'
@@ -113,6 +141,8 @@ const ClassroomCardView = props => {
                     message='Kindly pay your fee to continue?'
                     onClose={onCloseModal} 
                     onContinue={onContinue}
+                    onChange={e => handleSubscription(e)}
+                    screen='class'
                 />
             }
 
@@ -124,11 +154,10 @@ const ClassroomCardView = props => {
             <PaystackWebView
                 showPayButton={false}
                 paystackKey="pk_live_93943e903c531f80899a94d9d9307effe51cc3d7"
-                // paystackKey="pk_test_895f07c74a6b76a9ad3cc3aabf62104119879257"
-                amount={120000}
-                billingEmail="email@email.com"
-                billingMobile="09787377462"
-                billingName="Oluwatobi Shokunbi"
+                amount={subcriptionPrice}
+                billingEmail={props.user.email}
+                billingMobile={props.user.phone}
+                billingName={`${props.user.firstName} ${props.user.lastName}`}
                 ActivityIndicatorColor="green"
                 SafeAreaViewContainer={{marginTop: 5}}
                 SafeAreaViewContainerModal={{marginTop: 5}}
@@ -141,8 +170,14 @@ const ClassroomCardView = props => {
 }
 
 const mapStateToProps = (state) => ({
-    courses: state.main.courses
+    courses: state.main.courses,
+    user: state.auth.payload
 })
+
+const mapDispatchToProps = {
+    
+}
+
 
 export default connect(mapStateToProps, )(ClassroomCardView)
 

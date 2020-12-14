@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, Modal, Dimensions } from 'react-native'
 import { Button } from 'react-native-elements'
-import { Dropdown } from 'react-native-material-dropdown'
+import { Dropdown } from 'react-native-material-dropdown-v2'
 
 const { width, height } = Dimensions.get('window')
 

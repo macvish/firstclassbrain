@@ -10,7 +10,6 @@ import { rootReducer } from './src/reducers/rootReducer'
 import { authLoadingRoot } from './src/navigation/authLoadingRootNavigation'
 import { authRoot } from './src/navigation/authRootNavigation'
 import { mainRoot } from './src/navigation/mainRootNavigation'
-import { onBoardRoot } from './src/navigation/onBoardRootNavigation'
 import SplashScreen from './src/screens/SplashScreen'
 import OnboardingScreen from './src/screens/OnboardingScreen'
 import LoginScreen from './src/screens/LoginScreen'
@@ -23,8 +22,8 @@ import ProfileScreen from './src/screens/ProfileScreen'
 import ClassScreen from './src/screens/ClassScreen'
 import ChatScreen from './src/screens/ChatScreen'
 import AccountScreen from './src/screens/AccountScreen'
-import settingsIcon from './src/assets/icons/settings.png'
 import QuizScreen from './src/screens/QuizScreen'
+import CourseScreen from './src/screens/CourseScreen'
 
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
@@ -45,7 +44,8 @@ Navigation.registerComponentWithRedux('Login', () => LoginScreen, Provider, stor
 Navigation.registerComponentWithRedux('Signup', () => RegistrationScreen, Provider, store)
 Navigation.registerComponentWithRedux('Dashboard', () => DashboardScreen, Provider, store)
 Navigation.registerComponentWithRedux('Classroom', () => ClassroomScreen, Provider, store)
-Navigation.registerComponentWithRedux('AuthLoading', () => AuthLoadingScreen, Provider, store)
+Navigation.registerComponentWithRedux('Courses', () => CourseScreen, Provider, store)
+Navigation.registerComponentWithRedux('AuthChecker', () => AuthLoadingScreen, Provider, store)
 Navigation.registerComponentWithRedux('Account', () => AccountScreen, Provider, store)
 Navigation.registerComponentWithRedux('Questions', () => QuestionsScreen, Provider, store)
 Navigation.registerComponentWithRedux('Account', () => ProfileScreen, Provider, store)

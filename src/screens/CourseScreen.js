@@ -2,15 +2,18 @@ import React, {useEffect, useState} from 'react'
 import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 
-import ClassroomCardView from '../components/ClassroomCardView'
-import subjects from '../helper/subjects.json'
+import CoursesCardView from '../components/CoursesCardView'
 
 const { width, height } = Dimensions.get('window')
 
 
-const ClassroomScreen = props => {
+const CourseScreen = props => {
 
-    const [classroom, setClassroom] = useState(subjects.filter(item => item.class === props.user.classSelected).map(data => ({...data})))
+    const [classroom, setClassroom] = useState(
+      props.classes
+      .filter(item => item.classSelected === props.user.classSelected 
+        && item.term === props.options.term && item.week === props.options.week && item.subject === props.options.subject)
+      .map(data => ({...data})))
     
     useEffect(() => {
         return () => {
@@ -19,11 +22,12 @@ const ClassroomScreen = props => {
 
     const renderItem = ({item}) => {
         return <View key={item.id} style={{paddingRight: 20, paddingBottom: 20}}>
-            <ClassroomCardView 
+            <CoursesCardView 
                 componentId={props.componentId} 
                 isPaid={props.user.paid} 
                 uri={item.video} item={item} 
-                title={item.name} height={height/8}
+                title={item.courseTitle} height={height/8}
+                options={props.options}
             />
         </View>
     }
@@ -46,6 +50,12 @@ const ClassroomScreen = props => {
     )
 }
 
+CourseScreen.options = {
+    topBar: {
+        text: 'Courses',
+    }
+}
+
 const mapStateToProps = (state) => ({
     user: state.auth.payload,
     classes: state.main.courses
@@ -56,7 +66,7 @@ const mapDispatchToProps = {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ClassroomScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(CourseScreen)
 
 const styles = StyleSheet.create({
     container: {
@@ -66,23 +76,5 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         paddingLeft: 15,
         paddingRight: 15,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-
-    wrapper: {
-        marginBottom: 20
-    },
-
-    headerText: {
-        fontSize: 20,
-        paddingBottom: 15,
-        fontWeight: '800'
-    },
-
-    btn: {
-        backgroundColor: '#3FB0D4',
-        borderRadius: 15,
-        height: 60
-    },
+    }
 })
