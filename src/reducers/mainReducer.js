@@ -1,12 +1,13 @@
 import { 
     FULLSCREEN, GET_COURSES, GET_COURSES_FAILED, PROFILE_PICS,
-    GET_TESTS, GET_TESTS_FAILED
+    GET_TESTS, GET_TESTS_FAILED, PAYMENT_SUCCESSFUL, PAYMENT_FAILURE
  } from './reducerTypes';
 const INT_STATE = {
     courses: [],
     tests: [],
     profile_pics: '',
     err_msg: '',
+    payment_message: undefined,
     fullscreen: false,
 }
 
@@ -35,6 +36,14 @@ export const mainReducer = (state = INT_STATE, action) => {
         case PROFILE_PICS:
             return Object.assign({}, state, {
                 profile_pics: action.payload
+            })
+        case PAYMENT_SUCCESSFUL:
+            return Object.assign({}, state, {
+                payment_message: action.message
+            })
+        case PAYMENT_FAILURE:
+            return Object.assign({}, state, {
+                payment_message: action.message
             })
         default:
             return state

@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, Text, View, Modal, 
-    TouchableHighlight, TextInput, Dimensions, 
-    ActivityIndicator } from 'react-native'
+import { StyleSheet, View, Modal, Dimensions, ActivityIndicator } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const {width, height} = Dimensions.get('window')
@@ -9,6 +7,7 @@ const {width, height} = Dimensions.get('window')
 const LoadingModal = props => {
 	useEffect(() => {
 		if(props.visible){
+      props.handleImmediately()
 		setTimeout(() => {
 			props.handleOnpress()
 		}, 3000);

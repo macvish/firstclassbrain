@@ -187,7 +187,7 @@ const Quiz = props => {
     const handleNext = () => {
         if(questionNo < props.questions.length-1){
             setQuestionNo(prevState => prevState+1)
-            props.resetTimer()
+            // props.resetTimer()
         }
         else{
             props.getScore(correctAnswers.score)

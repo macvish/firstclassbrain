@@ -35,9 +35,28 @@ export const get_user = (user_token) => async (dispatch) => {
 }
 
 // Edit User
-export const edit_user = ({fullname, email, phone, pictureURL, address, password}) => async (dispatch) => {
+export const change_password = (value) => async (dispatch) => {
 
-    API.put(`users/${data.user_id}`, {fullname, email, phone, pictureURL, address, password})
+    API.put(`/student/new-password`, value)
+    .then(res => {
+        const { data } = res
+        if(res.status === 200){
+            dispatch({type: GET_USER, payload: data.studentData})
+            Navigation.setRoot(mainRoot)
+        }
+        else{
+            dispatch({ type: GET_USER_FAILED, msg: data.message })
+        }
+        })
+    .catch(err => {
+        dispatch({type: GET_USER_FAILED, msg: 'Something went wrong, please try again'})
+    })
+}
+
+// Edit User
+export const change_class = (value) => async (dispatch) => {
+
+    API.put(`/update-class`, value)
     .then(res => {
         const { data } = res
         if(res.status === 200){
@@ -130,38 +149,21 @@ export const set_avatar = data => dispatch => {
     dispatch({type: PROFILE_PICS, payload: data})
 }
 
-export const send_cart = data => dispatch => {
-    API.post(`carts/carts/${userId}`, {data})
+// Payment
+export const paystack_payment = (type, reference) => dispatch => {
+    API.post(`verify/payment/${type}/${reference}`)
     .then(res => {
         const { data } = res
 
         if(res.status === 200){
 
-            dispatch({type: SEND_CART, payload: media})
-        }
-        else{
-            dispatch({ type: SEND_CART_FAILED, msg: data.message })
-        }
-    })
-    .catch(err => {
-        dispatch({type: SEND_CART_FAILED, msg: 'Something went wrong, please try again'})
-    })
-}
-
-export const paystack_payment = data => dispatch => {
-    API.post(`payment/paystack/pay`, {data})
-    .then(res => {
-        const { data } = res
-
-        if(res.status === 200){
-
-            dispatch({type: PAYMENT_SUCCESSFUL, payload: media})
+            dispatch({type: PAYMENT_SUCCESSFUL, message: data.message})
         }
         else{
             dispatch({ type: PAYMENT_FAILURE, msg: data.message })
         }
     })
     .catch(err => {
-        dispatch({type: PAYMENT_FAILURE, msg: 'Something went wrong, please try again'})
+        dispatch({type: PAYMENT_FAILURE, msg: 'Something went wrong, please try again or contact us'})
     })
 }

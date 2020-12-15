@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { StyleSheet, Text, View, KeyboardAvoidingView, Dimensions, Keyboard, InteractionManager, ActivityIndicator, ImageBackground } from 'react-native'
+import { StyleSheet, Text, View, KeyboardAvoidingView, Dimensions, Keyboard, InteractionManager, ActivityIndicator, ImageBackground, Linking } from 'react-native'
 import { Input, Button, Avatar, Image } from 'react-native-elements'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
@@ -219,7 +219,12 @@ const LoginScreen = props => {
                     <Button title='Sign Up' type='clear' titleStyle={styles.clearButton} onPress={() => navigate('Signup')} />
                 </View>
                 <View style={{marginTop: -14}}>
-                    <Button title='Forget Password' type='clear' titleStyle={styles.clearButton} />
+                    <Button 
+                        title='Forget Password' 
+                        type='clear' 
+                        titleStyle={styles.clearButton} 
+                        onPress={async () => await Linking.openURL('https://firstclassbrain.com/login')} 
+                    />
                 </View>
             </View>
         </View>
@@ -275,8 +280,6 @@ const styles = StyleSheet.create({
         color: '#3FB0D4',
         fontSize: 16,
         fontWeight: '200',
-        borderBottomWidth: 1,
-        borderBottomColor: '#FFF'
     },
 
     inputContainer: {

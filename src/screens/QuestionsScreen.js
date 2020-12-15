@@ -4,7 +4,6 @@ import { Button } from 'react-native-elements'
 import { connect } from 'react-redux'
 
 import QuestionsCardView from '../components/QuestionsCardView'
-import testConent from '../helper/test.json'
 
 const { width, height } = Dimensions.get('window')
 
@@ -122,18 +121,23 @@ const Screen = props => {
 
     return (
         <>
-            { assessmentState.length >= 1
-                ? <>
-                    <FlatList
-                        data={assessmentState}
-                        renderItem={renderItem}
-                        numColumns={2}
-                        keyExtractor={item => item.id}
-                        extraData={assessmentState}
-                    />
-                </>
+            { props.user.paid === "true" ? 
+                (assessmentState.length >= 1
+                    ? <>
+                        <FlatList
+                            data={assessmentState}
+                            renderItem={renderItem}
+                            numColumns={2}
+                            keyExtractor={item => item.id}
+                            extraData={assessmentState}
+                        />
+                    </>
+                    : <View style={styles.placeHolder}>
+                        <Text style={{ textAlign: 'center' }}>Sorry, no assessments yet.</Text>    
+                    </View>
+                )
                 : <View style={styles.placeHolder}>
-                    <Text style={{ textAlign: 'center' }}>Sorry, no assessments yet.</Text>    
+                    <Text style={{ textAlign: 'center', paddingRight: 10, width: width/1.5 }}>Sorry, you need to pay to access this.</Text>    
                 </View>
             }
         </>
@@ -206,6 +210,7 @@ const styles = StyleSheet.create({
     placeHolder: {
         flex: 1,
         width: width,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })

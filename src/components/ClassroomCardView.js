@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import PaystackWebView from 'react-native-paystack-webview'
@@ -8,6 +8,8 @@ import pp from '../assets/images/physics_program.png'
 import AlertModal from './AlertModal'
 import NoContentModal from './NoContentModal'
 import SelectionModal from './SelectionModal'
+import LoadingModal from './LoadingModal'
+import { paystack_payment, get_user, get_courses, get_tests } from '../reducers/mainAction'
 
 const { width, height } = Dimensions.get('window')
 
@@ -24,7 +26,23 @@ const ClassroomCardView = props => {
 
     const [noContentModalVisible, setNoContentModalVisible] = useState(false)
 
-    const [subcriptionPrice, setSubscriptionPrice] = useState()
+    const [ loadingModalVisible, setLoadingModalVisible ] = useState(false)
+
+    const [subscriptionPrice, setSubscriptionPrice] = useState(0)
+
+    const [subscriptionType, setSubscriptionType ] = useState('')
+
+    const [ paymentMessage, setPaymentMessage ] = useState(undefined)
+
+    useEffect(() => {
+        let mounted = true
+        if(mounted) {
+            setPaymentMessage(props.paymentMessage)
+        }
+        return () => {
+            mounted = false
+        }
+    }, [props.paymentMessage])
 
     const payRef = useRef();
 
@@ -42,7 +60,7 @@ const ClassroomCardView = props => {
                 }
             }
         } else{
-            if(subcriptionPrice >= 0) {
+            if(subscriptionPrice >= 0) {
                 setModalVisible(false)
                 payRef.current.StartTransaction()   
             }
@@ -54,26 +72,49 @@ const ClassroomCardView = props => {
     }
 
     const handleSubscription = value => {
-        if(value = 1) {
-            setSubscriptionPrice(2000)
+        if(value === 1) {
+            setSubscriptionPrice(10)
+            setSubscriptionType('monthly')
         }
 
-        if(value = 2) {
+        if(value === 2) {
             setSubscriptionPrice(5000)
+            setSubscriptionType('quarterly')
         }
 
-        if(value = 3) {
+        if(value === 3) {
             setSubscriptionPrice(9000)
+            setSubscriptionType('biannually')
         }
 
-        if(value = 4) {
+        if(value === 4) {
             setSubscriptionPrice(16000)
+            setSubscriptionType('annually')
         }
     }
 
     const onCloseModal = () => {
         setNoContentModalVisible(false)
         setModalVisible(false)
+        setLoadingModalVisible(false)
+    }
+
+    const onCancelPayment = e => {
+        alert('Payment process was canceled')
+    }
+
+    const onSuccessfulPayment = e =>  {
+        let referenceCode = e.data.transactionRef.reference
+        console.log(referenceCode, subscriptionType) 
+        props.paystack_payment(subscriptionType, referenceCode)
+    }
+
+    const refreshAll = async () => {
+        const userToken = await AsyncStorage.getItem('access_token')
+
+        props.get_courses()
+        props.get_user(userToken)
+        props.get_tests()
     }
 
     const handleNavigation = screenName => {
@@ -146,6 +187,12 @@ const ClassroomCardView = props => {
                 />
             }
 
+            <LoadingModal
+                visible={loadingModalVisible}
+                handleImmediately={refreshAll}
+                handleOnPress={paymentMessage ? onCloseModal : null}
+            />
+
             <NoContentModal 
                 visible={noContentModalVisible}
                 handleOnpress={onCloseModal}
@@ -154,16 +201,17 @@ const ClassroomCardView = props => {
             <PaystackWebView
                 showPayButton={false}
                 paystackKey="pk_live_93943e903c531f80899a94d9d9307effe51cc3d7"
-                amount={subcriptionPrice}
+                amount={subscriptionPrice}
                 billingEmail={props.user.email}
                 billingMobile={props.user.phone}
                 billingName={`${props.user.firstName} ${props.user.lastName}`}
                 ActivityIndicatorColor="green"
                 SafeAreaViewContainer={{marginTop: 5}}
                 SafeAreaViewContainerModal={{marginTop: 5}}
-                onCancel={(e) => { /** handle response here */ }}
-                onSuccess={(e) => { /** handle response here */ }}
+                onCancel={onCancelPayment}
+                onSuccess={onSuccessfulPayment}
                 ref={payRef}
+                refNumber={''+Math.floor((Math.random() * 1000000000) + 1)}
             />
         </>
     )
@@ -171,15 +219,19 @@ const ClassroomCardView = props => {
 
 const mapStateToProps = (state) => ({
     courses: state.main.courses,
-    user: state.auth.payload
+    user: state.auth.payload,
+    paymentMessage: state.main.payment_message
 })
 
 const mapDispatchToProps = {
-    
+    paystack_payment,
+    get_courses,
+    get_tests,
+    get_user
 }
 
 
-export default connect(mapStateToProps, )(ClassroomCardView)
+export default connect(mapStateToProps, mapDispatchToProps)(ClassroomCardView)
 
 const styles = StyleSheet.create({
     container: {
@@ -208,7 +260,7 @@ const styles = StyleSheet.create({
     title: {
         color: '#ffffff',
         fontWeight: 'bold',
-        fontSize: 18,
+        fontSize: 16,
         // textAlign: 'center'
     }
 })

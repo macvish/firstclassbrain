@@ -10,8 +10,9 @@ import { connect } from 'react-redux'
 
 import UserAvatar from '../components/UserAvatar'
 import { logout } from '../reducers/authAction'
+import { change_password, change_class } from '../reducers/mainAction'
 
-const { width, height } = Dimensions.get('window')
+const { width } = Dimensions.get('window')
 
 const classes = [
     {value: 1, label: 'Basic 1'},
@@ -62,20 +63,17 @@ const ProfileScreen = props => {
     const [securityDropdown, setSecurityDropdown] = useState(false)
 
     const [data, setData] = useState({
-
+        userToken: ''
     })
 
-    useEffect(() => {
+    useEffect(async () => {
+        let mounted = true
+        if(mounted) {
+            const userToken = await AsyncStorage.getItem('access_token')
+            setData({userToken})
+        }
         return () => {
-            // setData(prevState => ({
-            //     ...prevState, 
-            //     uid: props.user.id, 
-            //     fullname: props.user.fullname,
-            //     email: props.user.email,
-            //     phone: props.user.phone,
-            //     pictureURL: props.user.pictureURL,
-            //     address: props.user.address,
-            // }))
+            mounted = false
         }
     }, [props.user])
 
@@ -133,17 +131,26 @@ const ProfileScreen = props => {
         Keyboard.dismiss()
         setSubmitLoading(true)
         setErr('')
-        props.signup(values)
+        props.change_class(values)
         setTimeout(() => {
             setSubmitLoading(false)
         }, 2000);
     }
 
     const handleSecuritySubmit = (values) => {
+        const { password } = values
+
         Keyboard.dismiss()
         setSubmitLoading(true)
         setErr('')
-        props.signup(values)
+
+        const properForm = {
+            password,
+            token: data.userToken
+        }
+
+        props.change_password(properForm)
+
         setTimeout(() => {
             setSubmitLoading(false)
         }, 2000);
@@ -169,6 +176,7 @@ const ProfileScreen = props => {
                         />
                     </View>
                 </View>
+
                 <View style={styles.contents}>
                     <Text style={styles.title}>My Account</Text>
                     <Divider style={{width: width, backgroundColor: '#707070', borderWidth: 1, borderColor: '#707070'}} />
@@ -298,12 +306,10 @@ const ProfileScreen = props => {
                                             }
 
                                             <View style={{
-                                                // flexDirection: "row",
                                                 alignItems: "center",
                                                 alignSelf: 'center',
                                                 justifyContent: "space-between",
                                                 width: width/1.3,
-                                                // height: height/6,
                                                 paddingTop: -10
                                             }}>
                                                 {!submitLoading ? <View>
@@ -342,7 +348,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-    logout
+    logout,
+    change_class,
+    change_password
 }
 
 
