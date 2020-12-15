@@ -3,7 +3,7 @@ import { TouchableOpacity } from 'react-native'
 import { Dimensions, ImageBackground, StyleSheet, Text, View } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 
-import pp from '../assets/images/intro_vector.png'
+import pp from '../assets/images/quiz.jpg'
 import AlertModal from './AlertModal'
 
 

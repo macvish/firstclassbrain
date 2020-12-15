@@ -3,8 +3,7 @@ import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View }
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 
-import pp from '../assets/images/physics_program.png'
-import NoContentModal from './NoContentModal'
+import pp from '../assets/images/quiz.jpg'
 
 const { width, height } = Dimensions.get('window')
 

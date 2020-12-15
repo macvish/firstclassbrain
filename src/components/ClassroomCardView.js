@@ -4,7 +4,7 @@ import { Navigation } from 'react-native-navigation'
 import PaystackWebView from 'react-native-paystack-webview'
 import { connect } from 'react-redux'
 
-import pp from '../assets/images/physics_program.png'
+import pp from '../assets/images/quiz.jpg'
 import AlertModal from './AlertModal'
 import NoContentModal from './NoContentModal'
 import SelectionModal from './SelectionModal'
