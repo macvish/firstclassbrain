@@ -3,7 +3,7 @@ import { TouchableOpacity } from 'react-native'
 import { Dimensions, ImageBackground, StyleSheet, Text, View } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 
-import pp from '../assets/images/quiz.jpg'
+import pp from '../assets/images/quiz.png'
 import AlertModal from './AlertModal'
 
 
@@ -57,7 +57,12 @@ const QuestionsCardView = props => {
         <>
         <TouchableOpacity onPress={() => setModalVisible(true)}>
             <View style={[styles.container, props.height ? {height: props.height} : null]}>
-                <ImageBackground source={props.src ?? pp} imageStyle={{borderRadius: 20}} style={[styles.imageContainer, props.height ? {height: props.height} : null]}>
+                <ImageBackground 
+                    source={props.src ?? pp} 
+                    imageStyle={{borderRadius: 20}} 
+                    style={[styles.imageContainer, props.height ? {height: props.height} : null]} 
+                    blurRadius={2.5}
+                >
                     {props.title ? 
                         <View style={styles.contentContainer}>
                             <Text style={styles.title}>{String(props.title).toUpperCase()}</Text>

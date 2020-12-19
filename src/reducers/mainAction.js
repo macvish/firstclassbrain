@@ -1,15 +1,12 @@
-import AsyncStorage from '@react-native-community/async-storage'
-
 import { FULLSCREEN, GET_USER, GET_USER_FAILED, GET_COURSES, 
-    GET_COURSES_FAILED, PROFILE_PICS, SEND_CART, PAYMENT_SUCCESSFUL, 
-    PAYMENT_FAILURE, GET_TESTS, GET_TESTS_FAILED, POST_SCORE, POST_SCORE_FAILED
+    GET_COURSES_FAILED, PROFILE_PICS, PAYMENT_SUCCESSFUL, 
+    PAYMENT_FAILURE, GET_TESTS, GET_TESTS_FAILED, POST_SCORE, CHANGE_CLASS,
+    POST_SCORE_FAILED, CHANGE_PASSWORD, CHANGE_PASSWORD_FAILED, CHANGE_CLASS_FAILED, MOST_VIEWED
 } from '../reducers/reducerTypes'
 import API from '../helper/API'
-import { mainRoot } from '../navigation/mainRootNavigation'
 import { Navigation } from 'react-native-navigation'
 import { authRoot } from '../navigation/authRootNavigation'
-
-const userId = AsyncStorage.getItem('access_id')
+import AsyncStorage from '@react-native-community/async-storage'
 
 export const fullscreen = bool => dispatch => {
     dispatch({type: FULLSCREEN, data: bool})
@@ -23,7 +20,6 @@ export const get_user = (user_token) => async (dispatch) => {
         const { data } = res
         if(res.status === 200){
             dispatch({type: GET_USER, payload: data.studentData})
-            // Navigation.setRoot(mainRoot)
         }
         else{
             dispatch({ type: GET_USER_FAILED, msg: data.message })
@@ -37,38 +33,39 @@ export const get_user = (user_token) => async (dispatch) => {
 // Edit User
 export const change_password = (value) => async (dispatch) => {
 
-    API.put(`/student/new-password`, value)
+    const token = await AsyncStorage.getItem('access_token')
+
+    await API.put(`student/change-password`, value, {headers: {Authorization: `Bearer ${token}`}})
     .then(res => {
-        const { data } = res
         if(res.status === 200){
-            dispatch({type: GET_USER, payload: data.studentData})
-            Navigation.setRoot(mainRoot)
+            dispatch({type: CHANGE_PASSWORD, message: 'Password successfully changed'})
         }
         else{
-            dispatch({ type: GET_USER_FAILED, msg: data.message })
+            dispatch({ type: CHANGE_PASSWORD_FAILED, message: 'Something went wrong, please try again' })
         }
         })
     .catch(err => {
-        dispatch({type: GET_USER_FAILED, msg: 'Something went wrong, please try again'})
+        dispatch({type: CHANGE_PASSWORD_FAILED, message: 'Something went wrong, please try again'})
     })
 }
 
 // Edit User
 export const change_class = (value) => async (dispatch) => {
 
-    API.put(`/update-class`, value)
+    const token = await AsyncStorage.getItem('access_token')
+
+    await API.put(`update-class`, value, {headers: {Authorization: `Bearer ${token}`}})
     .then(res => {
-        const { data } = res
+        const {data} = res
         if(res.status === 200){
-            dispatch({type: GET_USER, payload: data.studentData})
-            Navigation.setRoot(mainRoot)
+            dispatch({type: CHANGE_CLASS, payload: data.result, message: 'Class successfully changed'})
         }
         else{
-            dispatch({ type: GET_USER_FAILED, msg: data.message })
+            dispatch({ type: CHANGE_CLASS_FAILED, message: 'Something went wrong, please try again' })
         }
         })
     .catch(err => {
-        dispatch({type: GET_USER_FAILED, msg: 'Something went wrong, please try again'})
+        dispatch({type: CHANGE_CLASS_FAILED, message: 'Something went wrong, please try again'})
     })
 }
 
@@ -128,7 +125,10 @@ export const get_tests = () => async (dispatch) => {
 
 // Post Score
 export const send_score = (values) => async (dispatch) => {
-    API.post('/test-score', values)
+
+    const token = await AsyncStorage.getItem('access_token')
+
+    API.post('/test-score', values, {headers: {Authorization: `Bearer ${token}`}})
     .then(res => {
         const { data } = res
 
@@ -149,9 +149,17 @@ export const set_avatar = data => dispatch => {
     dispatch({type: PROFILE_PICS, payload: data})
 }
 
+// Set most viewed classes
+// export const most_viewed_classes = data => dispatch => {
+//     dispatch({type: MOST_VIEWED, id: data})
+// }
+
 // Payment
-export const paystack_payment = (type, reference) => dispatch => {
-    API.post(`verify/payment/${type}/${reference}`)
+export const paystack_payment = (type, reference) => async dispatch => {
+
+    const token = await AsyncStorage.getItem('access_token')
+
+    API.post(`verify/payment/${type}/${reference}`, {headers: {Authorization: `Bearer ${token}`}})
     .then(res => {
         const { data } = res
 

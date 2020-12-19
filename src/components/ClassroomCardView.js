@@ -2,18 +2,23 @@ import React, { useRef, useState, useEffect } from 'react'
 import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import PaystackWebView from 'react-native-paystack-webview'
+import { useNetInfo } from "@react-native-community/netinfo"
 import { connect } from 'react-redux'
+import AsyncStorage from '@react-native-community/async-storage'
 
-import pp from '../assets/images/quiz.jpg'
+import pp from '../assets/images/quiz.png'
 import AlertModal from './AlertModal'
 import NoContentModal from './NoContentModal'
 import SelectionModal from './SelectionModal'
 import LoadingModal from './LoadingModal'
 import { paystack_payment, get_user, get_courses, get_tests } from '../reducers/mainAction'
+import { Image } from 'react-native'
 
 const { width, height } = Dimensions.get('window')
 
 const ClassroomCardView = props => {
+
+    const netInfo = useNetInfo()
 
     const [options, setOptions] = useState({
         term: null,
@@ -62,7 +67,12 @@ const ClassroomCardView = props => {
         } else{
             if(subscriptionPrice >= 0) {
                 setModalVisible(false)
-                payRef.current.StartTransaction()   
+                if(netInfo.isConnected && netInfo.isInternetReachable) {
+                    payRef.current.StartTransaction()
+                }
+                else {
+                    alert('Your internet connect is down, please check and try again later')
+                }
             }
         }
     }
@@ -105,7 +115,6 @@ const ClassroomCardView = props => {
 
     const onSuccessfulPayment = e =>  {
         let referenceCode = e.data.transactionRef.reference
-        console.log(referenceCode, subscriptionType) 
         props.paystack_payment(subscriptionType, referenceCode)
     }
 
@@ -160,7 +169,12 @@ const ClassroomCardView = props => {
                 }}
             >
                 <View style={styles.container}>
-                    <ImageBackground source={props.src ?? pp} imageStyle={{borderRadius: 20}} style={styles.imageContainer}>
+                    <ImageBackground 
+                        source={props.uri ? {uri: props.uri} : pp} 
+                        imageStyle={{borderRadius: 20, resizeMode: 'contain', height: 100}} 
+                        style={styles.imageContainer} 
+                        blurRadius={2.5}
+                    >
                         <View style={styles.fadeContainer}>
                             <Text style={styles.title}>{props.title}</Text>
                         </View>

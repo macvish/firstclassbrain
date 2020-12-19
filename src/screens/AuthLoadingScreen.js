@@ -8,6 +8,7 @@ import splash_bg from '../assets/images/splash_bg.png'
 import { mainRoot } from '../navigation/mainRootNavigation'
 import { authRoot } from '../navigation/authRootNavigation'
 import { get_user, get_courses, get_tests } from '../reducers/mainAction'
+import { getAccessToken } from '../reducers/authAction'
 
 const {width, height} = Dimensions.get('screen')
 
@@ -31,11 +32,11 @@ const AuthLoadingScreen = (props) => {
         }
 
         return () => {
-            mounted = false
             clearTimeout()
+            mounted = false
         }
         
-    }, [counter, setCounter, setStation])
+    }, [counter])
 
     useEffect(() => {
         let mounted = true
@@ -62,6 +63,7 @@ const AuthLoadingScreen = (props) => {
             props.get_courses()
             props.get_tests()
             props.get_user(userToken)
+            props.getAccessToken()
         }
     }
 
@@ -112,6 +114,7 @@ const mapDispatchToProps = {
     get_courses,
     get_tests,
     get_user,
+    getAccessToken
 }
 
 

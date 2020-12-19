@@ -7,7 +7,6 @@ const {width, height} = Dimensions.get('window')
 const LoadingModal = props => {
 	useEffect(() => {
 		if(props.visible){
-      props.handleImmediately()
 		setTimeout(() => {
 			props.handleOnpress()
 		}, 3000);

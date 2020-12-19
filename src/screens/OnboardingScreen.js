@@ -1,7 +1,6 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef } from 'react'
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, ImageBackground } from 'react-native'
-import AsyncStorage from '@react-native-community/async-storage'
-import { Icon, Button } from 'react-native-elements'
+import {  Button } from 'react-native-elements'
 import Swiper from 'react-native-swiper'
 import { Navigation } from 'react-native-navigation'
 import * as Animatable from 'react-native-animatable'
@@ -14,7 +13,7 @@ import onboard_three from '../assets/images/onboard_three.png'
 import { authRoot } from '../navigation/authRootNavigation'
 import { onboard } from '../reducers/authAction'
 
-const {width, height} = Dimensions.get('window')
+const {width} = Dimensions.get('window')
 const OnboardingScreen = props => {
     const onCompleted = () => {
         props.onboard()
@@ -22,13 +21,12 @@ const OnboardingScreen = props => {
     }
 
     const swiperRef = useRef(0)
-    const buttonAnimation = useRef(null)
 
 
     return (
         <View style={{
             width: width,
-            height: height,
+            flex: 1
         }}>
             <Swiper 
                 loop={false}
@@ -83,7 +81,8 @@ const OnboardingContent = params => {
                 <View style={{alignItems: 'center', height: '25%', justifyContent: 'flex-start'}}>
                     {/* <headerSvg /> */}
                     <View 
-                        style={styles.headerWrapper}>
+                        style={styles.headerWrapper}
+                    >
                         <ImageBackground 
                             source={onboarding_header} 
                             style={styles.header}
@@ -95,12 +94,20 @@ const OnboardingContent = params => {
                     </View>
                 </View>
 
-                <Animatable.View animation='bounceIn' duration={4000} style={{alignItems: 'center', justifyContent: 'center', height: height/2}}>
+                <Animatable.View 
+                    animation='bounceIn' 
+                    duration={4000} 
+                    style={{
+                        alignItems: 'center', 
+                        justifyContent: 'center', 
+                        flex: 2,
+                    }}
+                >
                     <ImageBackground source={params.image} style={{width: width/1.3, height: width}} resizeMode='contain'>
                     </ImageBackground>
                 </Animatable.View>
 
-                <View style={{alignItems: 'center', height: height/8}}>
+                <View style={{alignItems: 'center', flex: 1}}>
                     <View style={{width: width/1.2}}>
                         <Text style={styles.title}>{params.title}</Text>
                     </View>
@@ -110,13 +117,16 @@ const OnboardingContent = params => {
                     </View>
 
                 </View>
+                <View style={{flex: 1}}>
+
+                    <Button 
+                        title={params.btnTitle ?? 'Next'}
+                        buttonStyle={styles.button}
+                        titleStyle={{fontSize: 22, fontWeight: '700'}}
+                        onPress={() => params.onPress()}
+                    />
+                </View>
             
-                <Button 
-                    title={params.btnTitle ?? 'Next'}
-                    buttonStyle={styles.button}
-                    titleStyle={{fontSize: 22, fontWeight: '700'}}
-                    onPress={() => params.onPress()}
-                />
         </>
     )
 }
@@ -141,17 +151,17 @@ export default connect(mapStateToProps, mapDispatchToProps)(OnboardingScreen)
 const styles = StyleSheet.create({
     wrapper: {
         width: width,
-        height: height
+        flex: 1
     },
     container: {
-        height: height,
+        flex: 1,
         backgroundColor: '#FFF',
     },
 
     headerWrapper: {
-        backgroundColor: '#FFF', 
+        backgroundColor: 'transparent', 
         width: width, 
-        height: width/1.7, 
+        height: width/1.7,
     },
     
     header: {
@@ -166,7 +176,6 @@ const styles = StyleSheet.create({
         color: '#171717',
         fontWeight: '700',
         textAlign: 'center',
-        // width: width/1.2
     },
 
     subTitle: {
@@ -186,5 +195,6 @@ const styles = StyleSheet.create({
         width: width/1.6,
         height: 50,
         alignSelf: 'center',
+        marginTop: 5
     },
 })

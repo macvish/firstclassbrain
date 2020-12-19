@@ -62,7 +62,7 @@ const QuizScreen = props => {
     }
 
     const getScore = (score) => {
-        setTimer(1)
+        setTimer(0)
         setModalVisible(true)
         setQuizData(prevState => ({...prevState, score: score }))
         const formData = {
@@ -79,7 +79,7 @@ const QuizScreen = props => {
                 <Text style={{fontSize: 18, fontWeight: 'bold', width: width/1.45}}>{props.item.topic ?? 'Unknown'}</Text>
                 {quizData.finished ? null : <Text style={{fontSize: 18}}>{getTimer(timer)}</Text>}
             </View>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 {quizData.finished ? 
                     <QuizScoreBoard solutions={quizSolutions} score={quizData.score/100} />
                 :

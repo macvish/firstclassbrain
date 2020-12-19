@@ -2,746 +2,895 @@
     {
         "class": 1,
         "subject": "maths",
-        "name": "Mathematics"
+        "name": "Mathematics",
+        "icon": "https://extras.firstclassbrain.com/subjects/mathematics.png"
     },
     {
         "class": 1,
         "subject": "english",
-        "name": "English"
+        "name": "English",
+        "icon": "https://extras.firstclassbrain.com/subjects/english-studies.png"
     },
     {
         "class": 1,
         "subject": "crk",
-        "name": "C.R.K"
+        "name": "C.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/christian-religious-studies.png"
     },
     {
         "class": 1,
         "subject": "irk",
-        "name": "I.R.K"
+        "name": "I.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/islamic-religious-studies.png"
     },
     {
         "class": 1,
-        "subject": "social-studies",
-        "name": "Social Studies"
+        "subject": "social_studies",
+        "name": "Social Studies",
+        "icon": "https://extras.firstclassbrain.com/subjects/social-studies.png"
     },
     {
         "class": 1,
-        "subject": "health-education",
-        "name": "Health Education"
+        "subject": "health_education",
+        "name": "Health Education",
+        "icon": "https://extras.firstclassbrain.com/subjects/health-education.png"
     },
     {
         "class": 1,
         "subject": "computer",
-        "name": "Computer Science"
+        "name": "Computer Science",
+        "icon": "https://extras.firstclassbrain.com/subjects/computer-studies.png"
     },
     {
         "class": 1,
         "subject": "spelling",
-        "name": "Spelling"
+        "name": "Spelling",
+        "icon": "https://extras.firstclassbrain.com/subjects/spelling.png"
     },
     {
         "class": 1,
         "subject": "language",
-        "name": "Language"
+        "name": "Language",
+        "icon": "https://extras.firstclassbrain.com/subjects/language.png"
     },
     {
         "class": 1,
         "subject": "diction",
-        "name": "Diction"
+        "name": "Diction",
+        "icon": "https://extras.firstclassbrain.com/subjects/diction.png"
     },
     {
         "class": 2,
         "subject": "maths",
-        "name": "Mathematics"
+        "name": "Mathematics",
+        "icon": "https://extras.firstclassbrain.com/subjects/mathematics.png"
     },
     {
         "class": 2,
         "subject": "english",
-        "name": "English"
+        "name": "English",
+        "icon": "https://extras.firstclassbrain.com/subjects/english-studies.png"
     },
     {
         "class": 2,
         "subject": "crk",
-        "name": "C.R.K"
+        "name": "C.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/christian-religious-studies.png"
     },
     {
         "class": 2,
         "subject": "irk",
-        "name": "I.R.K"
+        "name": "I.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/islamic-religious-studies.png"
     },
     {
         "class": 2,
-        "subject": "social-studies",
-        "name": "Social Studies"
+        "subject": "social_studies",
+        "name": "Social Studies",
+        "icon": "https://extras.firstclassbrain.com/subjects/social-studies.png"
     },
     {
         "class": 2,
-        "subject": "health-education",
-        "name": "Health Education"
+        "subject": "health_education",
+        "name": "Health Education",
+        "icon": "https://extras.firstclassbrain.com/subjects/health-education.png"
     },
     {
         "class": 2,
         "subject": "computer",
-        "name": "Computer Science"
+        "name": "Computer Science",
+        "icon": "https://extras.firstclassbrain.com/subjects/computer-studies.png"
     },
     {
         "class": 2,
         "subject": "spelling",
-        "name": "Spelling"
+        "name": "Spelling",
+        "icon": "https://extras.firstclassbrain.com/subjects/spelling.png"
     },
     {
         "class": 2,
         "subject": "language",
-        "name": "Language"
+        "name": "Language",
+        "icon": "https://extras.firstclassbrain.com/subjects/language.png"
     },
     {
         "class": 2,
         "subject": "diction",
-        "name": "Diction"
+        "name": "Diction",
+        "icon": "https://extras.firstclassbrain.com/subjects/diction.png"
     },
     {
         "class": 3,
         "subject": "maths",
-        "name": "Mathematics"
+        "name": "Mathematics",
+        "icon": "https://extras.firstclassbrain.com/subjects/mathematics.png"
     },
     {
         "class": 3,
         "subject": "english",
-        "name": "English"
+        "name": "English",
+        "icon": "https://extras.firstclassbrain.com/subjects/english-studies.png"
     },
     {
         "class": 3,
         "subject": "crk",
-        "name": "C.R.K"
+        "name": "C.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/christian-religious-studies.png"
     },
     {
         "class": 3,
         "subject": "irk",
-        "name": "I.R.K"
+        "name": "I.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/islamic-religious-studies.png"
     },
     {
         "class": 3,
-        "subject": "social-studies",
-        "name": "Social Studies"
+        "subject": "social_studies",
+        "name": "Social Studies",
+        "icon": "https://extras.firstclassbrain.com/subjects/social-studies.png"
     },
     {
         "class": 3,
-        "subject": "health-education",
-        "name": "Health Education"
+        "subject": "health_education",
+        "name": "Health Education",
+        "icon": "https://extras.firstclassbrain.com/subjects/health-education.png"
     },
     {
         "class": 3,
         "subject": "computer",
-        "name": "Computer Science"
+        "name": "Computer Science",
+        "icon": "https://extras.firstclassbrain.com/subjects/computer-studies.png"
     },
     {
         "class": 3,
         "subject": "spelling",
-        "name": "Spelling"
+        "name": "Spelling",
+        "icon": "https://extras.firstclassbrain.com/subjects/spelling.png"
     },
     {
         "class": 3,
         "subject": "language",
-        "name": "Language"
+        "name": "Language",
+        "icon": "https://extras.firstclassbrain.com/subjects/language.png"
     },
     {
         "class": 3,
         "subject": "diction",
-        "name": "Diction"
+        "name": "Diction",
+        "icon": "https://extras.firstclassbrain.com/subjects/diction.png"
     },
     {
         "class": 4,
         "subject": "maths",
-        "name": "Mathematics"
+        "name": "Mathematics",
+        "icon": "https://extras.firstclassbrain.com/subjects/mathematics.png"
     },
     {
         "class": 4,
         "subject": "english",
-        "name": "English"
+        "name": "English",
+        "icon": "https://extras.firstclassbrain.com/subjects/english-studies.png"
     },
     {
         "class": 4,
         "subject": "crk",
-        "name": "C.R.K"
+        "name": "C.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/christian-religious-studies.png"
     },
     {
         "class": 4,
         "subject": "irk",
-        "name": "I.R.K"
+        "name": "I.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/islamic-religious-studies.png"
     },
     {
         "class": 4,
-        "subject": "social-studies",
-        "name": "Social Studies"
+        "subject": "social_studies",
+        "name": "Social Studies",
+        "icon": "https://extras.firstclassbrain.com/subjects/social-studies.png"
     },
     {
         "class": 4,
-        "subject": "health-education",
-        "name": "Health Education"
+        "subject": "health_education",
+        "name": "Health Education",
+        "icon": "https://extras.firstclassbrain.com/subjects/health-education.png"
     },
     {
         "class": 4,
         "subject": "computer",
-        "name": "Computer Science"
+        "name": "Computer Science",
+        "icon": "https://extras.firstclassbrain.com/subjects/computer-studies.png"
     },
     {
         "class": 4,
         "subject": "spelling",
-        "name": "Spelling"
+        "name": "Spelling",
+        "icon": "https://extras.firstclassbrain.com/subjects/spelling.png"
     },
     {
         "class": 4,
         "subject": "language",
-        "name": "Language"
+        "name": "Language",
+        "icon": "https://extras.firstclassbrain.com/subjects/language.png"
     },
     {
         "class": 4,
         "subject": "diction",
-        "name": "Diction"
+        "name": "Diction",
+        "icon": "https://extras.firstclassbrain.com/subjects/diction.png"
     },
     {
         "class": 5,
         "subject": "maths",
-        "name": "Mathematics"
+        "name": "Mathematics",
+        "icon": "https://extras.firstclassbrain.com/subjects/mathematics.png"
     },
     {
         "class": 5,
         "subject": "english",
-        "name": "English"
+        "name": "English",
+        "icon": "https://extras.firstclassbrain.com/subjects/english-studies.png"
     },
     {
         "class": 5,
         "subject": "crk",
-        "name": "C.R.K"
+        "name": "C.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/christian-religious-studies.png"
     },
     {
         "class": 5,
         "subject": "irk",
-        "name": "I.R.K"
+        "name": "I.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/islamic-religious-studies.png"
     },
     {
         "class": 5,
-        "subject": "social-studies",
-        "name": "Social Studies"
+        "subject": "social_studies",
+        "name": "Social Studies",
+        "icon": "https://extras.firstclassbrain.com/subjects/social-studies.png"
     },
     {
         "class": 5,
-        "subject": "health-education",
-        "name": "Health Education"
+        "subject": "health_education",
+        "name": "Health Education",
+        "icon": "https://extras.firstclassbrain.com/subjects/health-education.png"
     },
     {
         "class": 5,
         "subject": "computer",
-        "name": "Computer Science"
+        "name": "Computer Science",
+        "icon": "https://extras.firstclassbrain.com/subjects/computer-studies.png"
     },
     {
         "class": 5,
         "subject": "spelling",
-        "name": "Spelling"
+        "name": "Spelling",
+        "icon": "https://extras.firstclassbrain.com/subjects/spelling.png"
     },
     {
         "class": 5,
         "subject": "language",
-        "name": "Language"
+        "name": "Language",
+        "icon": "https://extras.firstclassbrain.com/subjects/language.png"
     },
     {
         "class": 5,
         "subject": "diction",
-        "name": "Diction"
+        "name": "Diction",
+        "icon": "https://extras.firstclassbrain.com/subjects/diction.png"
     },
     {
         "class": 6,
         "subject": "maths",
-        "name": "Mathematics"
+        "name": "Mathematics",
+        "icon": "https://extras.firstclassbrain.com/subjects/mathematics.png"
     },
     {
         "class": 6,
         "subject": "english",
-        "name": "English"
+        "name": "English",
+        "icon": "https://extras.firstclassbrain.com/subjects/english-studies.png"
     },
     {
         "class": 6,
         "subject": "crk",
-        "name": "C.R.K"
+        "name": "C.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/christian-religious-studies.png"
     },
     {
         "class": 6,
         "subject": "irk",
-        "name": "I.R.K"
+        "name": "I.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/islamic-religious-studies.png"
     },
     {
         "class": 6,
-        "subject": "basic-science",
-        "name": "Basic Science"
+        "subject": "basic_science",
+        "name": "Basic Science",
+        "icon": "https://extras.firstclassbrain.com/subjects/basic-science.png"
     },
     {
         "class": 6,
-        "subject": "business-studies",
-        "name": "Business Studies"
+        "subject": "business_studies",
+        "name": "Business Studies",
+        "icon": "https://extras.firstclassbrain.com/subjects/business-studies.png"
     },
     {
         "class": 6,
         "subject": "civic",
-        "name": "Civic Education"
+        "name": "Civic Education",
+        "icon": "https://extras.firstclassbrain.com/subjects/civic-education.png"
     },
     {
         "class": 6,
-        "subject": "basic-technology",
-        "name": "Basic Technology"
+        "subject": "basic_technology",
+        "name": "Basic Technology",
+        "icon": "https://extras.firstclassbrain.com/subjects/basic-technology.png"
     },
     {
         "class": 7,
         "subject": "maths",
-        "name": "Mathematics"
+        "name": "Mathematics",
+        "icon": "https://extras.firstclassbrain.com/subjects/mathematics.png"
     },
     {
         "class": 7,
         "subject": "english",
-        "name": "English"
+        "name": "English",
+        "icon": "https://extras.firstclassbrain.com/subjects/english-studies.png"
     },
     {
         "class": 7,
         "subject": "crk",
-        "name": "C.R.K"
+        "name": "C.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/christian-religious-studies.png"
     },
     {
         "class": 7,
         "subject": "irk",
-        "name": "I.R.K"
+        "name": "I.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/islamic-religious-studies.png"
     },
     {
         "class": 7,
-        "subject": "basic-science",
-        "name": "Basic Science"
+        "subject": "basic_science",
+        "name": "Basic Science",
+        "icon": "https://extras.firstclassbrain.com/subjects/basic-science.png"
     },
     {
         "class": 7,
-        "subject": "business-studies",
-        "name": "Business Studies"
+        "subject": "business_studies",
+        "name": "Business Studies",
+        "icon": "https://extras.firstclassbrain.com/subjects/business-studies.png"
     },
     {
         "class": 7,
         "subject": "civic",
-        "name": "Civic Education"
+        "name": "Civic Education",
+        "icon": "https://extras.firstclassbrain.com/subjects/civic-education.png"
     },
     {
         "class": 7,
-        "subject": "basic-technology",
-        "name": "Basic Technology"
+        "subject": "basic_technology",
+        "name": "Basic Technology",
+        "icon": "https://extras.firstclassbrain.com/subjects/basic-technology.png"
     },
     {
         "class": 8,
         "subject": "maths",
-        "name": "Mathematics"
+        "name": "Mathematics",
+        "icon": "https://extras.firstclassbrain.com/subjects/mathematics.png"
     },
     {
         "class": 8,
         "subject": "english",
-        "name": "English"
+        "name": "English",
+        "icon": "https://extras.firstclassbrain.com/subjects/english-studies.png"
     },
     {
         "class": 8,
         "subject": "crk",
-        "name": "C.R.K"
+        "name": "C.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/christian-religious-studies.png"
     },
     {
         "class": 8,
         "subject": "irk",
-        "name": "I.R.K"
+        "name": "I.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/islamic-religious-studies.png"
     },
     {
         "class": 8,
-        "subject": "basic-science",
-        "name": "Basic Science"
+        "subject": "basic_science",
+        "name": "Basic Science",
+        "icon": "https://extras.firstclassbrain.com/subjects/basic-science.png"
     },
     {
         "class": 8,
-        "subject": "business-studies",
-        "name": "Business Studies"
+        "subject": "business_studies",
+        "name": "Business Studies",
+        "icon": "https://extras.firstclassbrain.com/subjects/business-studies.png"
     },
     {
         "class": 8,
         "subject": "civic",
-        "name": "Civic Education"
+        "name": "Civic Education",
+        "icon": "https://extras.firstclassbrain.com/subjects/civic-education.png"
     },
     {
         "class": 8,
-        "subject": "basic-technology",
-        "name": "Basic Technology"
+        "subject": "basic_technology",
+        "name": "Basic Technology",
+        "icon": "https://extras.firstclassbrain.com/subjects/basic-technology.png"
     },
     {
         "class": 9,
         "subject": "maths",
-        "name": "Mathematics"
+        "name": "Mathematics",
+        "icon": "https://extras.firstclassbrain.com/subjects/mathematics.png"
     },
     {
         "class": 9,
         "subject": "english",
-        "name": "English"
+        "name": "English",
+        "icon": "https://extras.firstclassbrain.com/subjects/english-studies.png"
     },
     {
         "class": 9,
         "subject": "biology",
-        "name": "Biology"
+        "name": "Biology",
+        "icon": "https://extras.firstclassbrain.com/subjects/biology.png"
     },
     {
         "class": 9,
         "subject": "physics",
-        "name": "Physics"
+        "name": "Physics",
+        "icon": "https://extras.firstclassbrain.com/subjects/physics.png"
     },
     {
         "class": 9,
-        "subject": "further-maths",
-        "name": "Further Mathematics"
+        "subject": "further_maths",
+        "name": "Further Mathematics",
+        "icon": "https://extras.firstclassbrain.com/subjects/further-mathematics.png"
     },
     {
         "class": 9,
         "subject": "chemistry",
-        "name": "Chemistry"
+        "name": "Chemistry",
+        "icon": "https://extras.firstclassbrain.com/subjects/chemistry.png"
     },
     {
         "class": 9,
         "subject": "agric",
-        "name": "Agricultural Science"
+        "name": "Agricultural Science",
+        "icon": "https://extras.firstclassbrain.com/subjects/agricultural-science.png"
     },
     {
         "class": 9,
         "subject": "economics",
-        "name": "Economics"
+        "name": "Economics",
+        "icon": "https://extras.firstclassbrain.com/subjects/economics.png"
     },
     {
         "class": 9,
         "subject": "civic",
-        "name": "Civic Education"
+        "name": "Civic Education",
+        "icon": "https://extras.firstclassbrain.com/subjects/civic-education.png"
     },
     {
         "class": 10,
         "subject": "maths",
-        "name": "Mathematics"
+        "name": "Mathematics",
+        "icon": "https://extras.firstclassbrain.com/subjects/mathematics.png"
     },
     {
         "class": 10,
         "subject": "english",
-        "name": "English"
+        "name": "English",
+        "icon": "https://extras.firstclassbrain.com/subjects/english-studies.png"
     },
     {
         "class":10,
         "subject": "crk",
-        "name": "C.R.K"
+        "name": "C.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/christian-religious-studies.png"
     },
     {
         "class":10,
         "subject": "irk",
-        "name": "I.R.K"
+        "name": "I.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/islamic-religious-studies.png"
     },
     {
         "class": 10,
         "subject": "commerce",
-        "name": "Commerce"
+        "name": "Commerce",
+        "icon": "https://extras.firstclassbrain.com/subjects/commerce.png"
     },
     {
         "class": 10,
-        "subject": "social-studies",
-        "name": "Social Studies"
+        "subject": "social_studies",
+        "name": "Social Studies",
+        "icon": "https://extras.firstclassbrain.com/subjects/social-studies.png"
     },
     {
         "class": 10,
         "subject": "accounting",
-        "name": "Financial Accounting"
+        "name": "Financial Accounting",
+        "icon": "https://extras.firstclassbrain.com/subjects/financial-accounting.png"
     },
     {
         "class": 10,
         "subject": "civic",
-        "name": "Civic Education"
+        "name": "Civic Education",
+        "icon": "https://extras.firstclassbrain.com/subjects/civic-education.png"
     },
     {
         "class": 11,
         "subject": "maths",
-        "name": "Mathematics"
+        "name": "Mathematics",
+        "icon": "https://extras.firstclassbrain.com/subjects/mathematics.png"
     },
     {
         "class": 11,
         "subject": "english",
-        "name": "English"
+        "name": "English",
+        "icon": "https://extras.firstclassbrain.com/subjects/english-studies.png"
     },
     {
         "class":11,
         "subject": "crk",
-        "name": "C.R.K"
+        "name": "C.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/christian-religious-studies.png"
     },
     {
         "class":11,
         "subject": "irk",
-        "name": "I.R.K"
+        "name": "I.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/islamic-religious-studies.png"
     },
     {
         "class": 11,
         "subject": "government",
-        "name": "Government"
+        "name": "Government",
+        "icon": "https://extras.firstclassbrain.com/subjects/government.png"
     },
     {
         "class": 11,
         "subject": "biology",
-        "name": "Biology"
+        "name": "Biology",
+        "icon": "https://extras.firstclassbrain.com/subjects/biology.png"
     },
     {
         "class": 11,
-        "subject": "agric-science",
-        "name": "Agricultural Science"
+        "subject": "agric_science",
+        "name": "Agricultural Science",
+        "icon": "https://extras.firstclassbrain.com/subjects/agricultural-science.png"
     },
     {
         "class": 11,
         "subject": "civic",
-        "name": "Civic Education"
+        "name": "Civic Education",
+        "icon": "https://extras.firstclassbrain.com/subjects/civic-education.png"
     },
     {
         "class": 12,
         "subject": "maths",
-        "name": "Mathematics"
+        "name": "Mathematics",
+        "icon": "https://extras.firstclassbrain.com/subjects/mathematics.png"
     },
     {
         "class": 12,
         "subject": "english",
-        "name": "English"
+        "name": "English",
+        "icon": "https://extras.firstclassbrain.com/subjects/english-studies.png"
     },
     {
         "class": 12,
         "subject": "biology",
-        "name": "Biology"
+        "name": "Biology",
+        "icon": "https://extras.firstclassbrain.com/subjects/biology.png"
     },
     {
         "class": 12,
         "subject": "physics",
-        "name": "Physics"
+        "name": "Physics",
+        "icon": "https://extras.firstclassbrain.com/subjects/physics.png"
     },
     {
         "class": 12,
-        "subject": "further-maths",
-        "name": "Further Mathematics"
+        "subject": "further_maths",
+        "name": "Further Mathematics",
+        "icon": "https://extras.firstclassbrain.com/subjects/further-mathematics.png"
     },
     {
         "class": 12,
         "subject": "chemistry",
-        "name": "Chemistry"
+        "name": "Chemistry",
+        "icon": "https://extras.firstclassbrain.com/subjects/chemistry.png"
     },
     {
         "class": 12,
         "subject": "agric",
-        "name": "Agricultural Science"
+        "name": "Agricultural Science",
+        "icon": "https://extras.firstclassbrain.com/subjects/agricultural-science.png"
     },
     {
         "class": 12,
         "subject": "economics",
-        "name": "Economics"
+        "name": "Economics",
+        "icon": "https://extras.firstclassbrain.com/subjects/economics.png"
     },
     {
         "class": 12,
         "subject": "civic",
-        "name": "Civic Education"
+        "name": "Civic Education",
+        "icon": "https://extras.firstclassbrain.com/subjects/civic-education.png"
     },
     {
         "class": 13,
         "subject": "maths",
-        "name": "Mathematics"
+        "name": "Mathematics",
+        "icon": "https://extras.firstclassbrain.com/subjects/mathematics.png"
     },
     {
         "class": 13,
         "subject": "english",
-        "name": "English"
+        "name": "English",
+        "icon": "https://extras.firstclassbrain.com/subjects/english-studies.png"
     },
     {
         "class":13,
         "subject": "crk",
-        "name": "C.R.K"
+        "name": "C.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/christian-religious-studies.png"
     },
     {
         "class":13,
         "subject": "irk",
-        "name": "I.R.K"
+        "name": "I.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/islamic-religious-studies.png"
     },
     {
         "class": 13,
         "subject": "commerce",
-        "name": "Commerce"
+        "name": "Commerce",
+        "icon": "https://extras.firstclassbrain.com/subjects/commerce.png"
     },
     {
         "class": 13,
-        "subject": "social-studies",
-        "name": "Social Studies"
+        "subject": "social_studies",
+        "name": "Social Studies",
+        "icon": "https://extras.firstclassbrain.com/subjects/social-studies.png"
     },
     {
         "class": 13,
         "subject": "accounting",
-        "name": "Financial Accounting"
+        "name": "Financial Accounting",
+        "icon": "https://extras.firstclassbrain.com/subjects/financial-accounting.png"
     },
     {
         "class": 13,
         "subject": "civic",
-        "name": "Civic Education"
+        "name": "Civic Education",
+        "icon": "https://extras.firstclassbrain.com/subjects/civic-education.png"
     },
     {
         "class": 14,
         "subject": "maths",
-        "name": "Mathematics"
+        "name": "Mathematics",
+        "icon": "https://extras.firstclassbrain.com/subjects/mathematics.png"
     },
     {
         "class": 14,
         "subject": "english",
-        "name": "English"
+        "name": "English",
+        "icon": "https://extras.firstclassbrain.com/subjects/english-studies.png"
     },
     {
         "class":14,
         "subject": "crk",
-        "name": "C.R.K"
+        "name": "C.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/christian-religious-studies.png"
     },
     {
         "class":14,
         "subject": "irk",
-        "name": "I.R.K"
+        "name": "I.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/islamic-religious-studies.png"
     },
     {
         "class": 14,
         "subject": "government",
-        "name": "Government"
+        "name": "Government",
+        "icon": "https://extras.firstclassbrain.com/subjects/government.png"
     },
     {
         "class": 14,
         "subject": "biology",
-        "name": "Biology"
+        "name": "Biology",
+        "icon": "https://extras.firstclassbrain.com/subjects/biology.png"
     },
     {
         "class": 14,
-        "subject": "agric-science",
-        "name": "Agricultural Science"
+        "subject": "agric_science",
+        "name": "Agricultural Science",
+        "icon": "https://extras.firstclassbrain.com/subjects/agricultural-science.png"
     },
     {
         "class": 14,
         "subject": "civic",
-        "name": "Civic Education"
+        "name": "Civic Education",
+        "icon": "https://extras.firstclassbrain.com/subjects/civic-education.png"
     },
     {
         "class": 15,
         "subject": "maths",
-        "name": "Mathematics"
+        "name": "Mathematics",
+        "icon": "https://extras.firstclassbrain.com/subjects/mathematics.png"
     },
     {
         "class": 15,
         "subject": "english",
-        "name": "English"
+        "name": "English",
+        "icon": "https://extras.firstclassbrain.com/subjects/english-studies.png"
     },
     {
         "class": 15,
         "subject": "biology",
-        "name": "Biology"
+        "name": "Biology",
+        "icon": "https://extras.firstclassbrain.com/subjects/biology.png"
     },
     {
         "class": 15,
         "subject": "physics",
-        "name": "Physics"
+        "name": "Physics",
+        "icon": "https://extras.firstclassbrain.com/subjects/physics.png"
     },
     {
         "class": 15,
-        "subject": "further-maths",
-        "name": "Further Mathematics"
+        "subject": "further_maths",
+        "name": "Further Mathematics",
+        "icon": "https://extras.firstclassbrain.com/subjects/further-mathematics.png"
     },
     {
         "class": 15,
         "subject": "chemistry",
-        "name": "Chemistry"
+        "name": "Chemistry",
+        "icon": "https://extras.firstclassbrain.com/subjects/chemistry.png"
     },
     {
         "class": 15,
         "subject": "agric",
-        "name": "Agricultural Science"
+        "name": "Agricultural Science",
+        "icon": "https://extras.firstclassbrain.com/subjects/agricultural-science.png"
     },
     {
         "class": 15,
         "subject": "economics",
-        "name": "Economics"
+        "name": "Economics",
+        "icon": "https://extras.firstclassbrain.com/subjects/economics.png"
     },
     {
         "class": 15,
         "subject": "civic",
-        "name": "Civic Education"
+        "name": "Civic Education",
+        "icon": "https://extras.firstclassbrain.com/subjects/civic-education.png"
     },
     {
         "class": 16,
         "subject": "maths",
-        "name": "Mathematics"
+        "name": "Mathematics",
+        "icon": "https://extras.firstclassbrain.com/subjects/mathematics.png"
     },
     {
         "class": 16,
         "subject": "english",
-        "name": "English"
+        "name": "English",
+        "icon": "https://extras.firstclassbrain.com/subjects/english-studies.png"
     },
     {
         "class":16,
         "subject": "crk",
-        "name": "C.R.K"
+        "name": "C.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/christian-religious-studies.png"
     },
     {
         "class":16,
         "subject": "irk",
-        "name": "I.R.K"
+        "name": "I.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/islamic-religious-studies.png"
     },
     {
         "class": 16,
         "subject": "commerce",
-        "name": "Commerce"
+        "name": "Commerce",
+        "icon": "https://extras.firstclassbrain.com/subjects/commerce.png"
     },
     {
         "class": 16,
-        "subject": "social-studies",
-        "name": "Social Studies"
+        "subject": "social_studies",
+        "name": "Social Studies",
+        "icon": "https://extras.firstclassbrain.com/subjects/social-studies.png"
     },
     {
         "class": 16,
         "subject": "accounting",
-        "name": "Financial Accounting"
+        "name": "Financial Accounting",
+        "icon": "https://extras.firstclassbrain.com/subjects/financial-accounting.png"
     },
     {
         "class": 16,
         "subject": "civic",
-        "name": "Civic Education"
+        "name": "Civic Education",
+        "icon": "https://extras.firstclassbrain.com/subjects/civic-education.png"
     },
     {
         "class": 17,
         "subject": "maths",
-        "name": "Mathematics"
+        "name": "Mathematics",
+        "icon": "https://extras.firstclassbrain.com/subjects/mathematics.png"
     },
     {
         "class": 17,
         "subject": "english",
-        "name": "English"
+        "name": "English",
+        "icon": "https://extras.firstclassbrain.com/subjects/english-studies.png"
     },
     {
         "class":17,
         "subject": "crk",
-        "name": "C.R.K"
+        "name": "C.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/christian-religious-studies.png"
     },
     {
         "class":17,
         "subject": "irk",
-        "name": "I.R.K"
+        "name": "I.R.K",
+        "icon": "https://extras.firstclassbrain.com/subjects/islamic-religious-studies.png"
     },
     {
         "class": 17,
         "subject": "government",
-        "name": "Government"
+        "name": "Government",
+        "icon": "https://extras.firstclassbrain.com/subjects/government.png"
     },
     {
         "class": 17,
         "subject": "biology",
-        "name": "Biology"
+        "name": "Biology",
+        "icon": "https://extras.firstclassbrain.com/subjects/biology.png"
     },
     {
         "class": 17,
-        "subject": "agric-science",
-        "name": "Agricultural Science"
+        "subject": "agric_science",
+        "name": "Agricultural Science",
+        "icon": "https://extras.firstclassbrain.com/subjects/agricultural-science.png"
     },
     {
         "class": 17,
         "subject": "civic",
-        "name": "Civic Education"
+        "name": "Civic Education",
+        "icon": "https://extras.firstclassbrain.com/subjects/civic-education.png"
     }
 ]

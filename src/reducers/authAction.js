@@ -1,10 +1,10 @@
 import { Navigation } from 'react-native-navigation'
+import AsyncStorage from '@react-native-community/async-storage'
 
 import { authCheckerRoot } from '../navigation/authCheckerRootNavigation'
 import API from '../helper/API'
-import {CLEAR_ALL_ERROR_MESSAGE, LOGIN, LOGOUT, LOGIN_FAILURE, SIGN_UP, SIGN_UP_FAILURE, FORGOT_PASSWORD, HAS_ONBOARDED} from './reducerTypes'
+import {CLEAR_ALL_ERROR_MESSAGE, LOGIN, LOGOUT, LOGIN_FAILURE, SIGN_UP, SIGN_UP_FAILURE, FORGOT_PASSWORD, HAS_ONBOARDED, GET_ACCESS_TOKEN} from './reducerTypes'
 import { authRoot } from '../navigation/authRootNavigation'
-import AsyncStorage from '@react-native-community/async-storage'
 
 export const onboard = () => async (dispatch) => {
   await AsyncStorage.setItem('has_onboarded', 'true')
@@ -12,27 +12,32 @@ export const onboard = () => async (dispatch) => {
 }
 
 export const clearErrorMessages = () => async (dispatch) => {
-  dispatch({ type: CLEAR_ALL_ERROR_MESSAGE, data: true})
+  dispatch({ type: CLEAR_ALL_ERROR_MESSAGE })
+}
+
+export const getAccessToken = () => async (dispatch) => {
+  const token = await AsyncStorage.getItem('access_token')
+  dispatch({ type: GET_ACCESS_TOKEN, payload: token })
 }
 
 export const login = (data) => async (dispatch) => {
-    await API.post('signin-student/', data)
-    .then(res => {
-      const { data } = res
-      if(res.status === 200){
-        AsyncStorage.setItem('access_token', `${data.token}`)
-        AsyncStorage.setItem('access_id', `${data.id}`)
-        dispatch({ type: LOGIN })
-        Navigation.setRoot(authCheckerRoot)
-      }
-      else{
-        dispatch({ type: LOGIN_FAILURE, msg: data.message })
-      }
-    })
-    .catch(err => {
-      console.log(err.response.data.error)
-      dispatch({type: LOGIN_FAILURE, msg: err.response.data ? err.response.data.error : 'Something went wrong, please try again'})
-    })
+  await API.post('signin-student/', data)
+  .then(res => {
+    const { data } = res
+    if(res.status === 200){
+      AsyncStorage.setItem('access_token', `${data.token}`)
+      AsyncStorage.setItem('access_id', `${data.id}`)
+      dispatch({ type: LOGIN, payload: data.token})
+      Navigation.setRoot(authCheckerRoot)
+    }
+    else{
+      dispatch({ type: LOGIN_FAILURE, msg: data.message })
+    }
+  })
+  .catch(err => {
+
+    dispatch({type: LOGIN_FAILURE, msg: err.response.data ? err.response.data.error : 'Something went wrong, please try again'})
+  })
 }
 
 export const signup = (data) => async (dispatch) => {
@@ -41,7 +46,6 @@ export const signup = (data) => async (dispatch) => {
     .then(res => {
       const { data } = res
       if(res.status === 200){
-        AsyncStorage.setItem('access_token', data.access_token)
         dispatch({type: SIGN_UP})
         Navigation.pop('AuthStack')
       }
@@ -50,7 +54,7 @@ export const signup = (data) => async (dispatch) => {
       }
     })
     .catch(err => {
-      console.log(err.response)
+
       dispatch({type: SIGN_UP_FAILURE, msg: 'Something went wrong, please try again'})
     })
 }
@@ -76,16 +80,14 @@ export const forgot_password = ({email}) => async (dispatch) => {
   }
 })
 .catch(err => {
-  console.log(err)
+
   dispatch({ type: FORGOT_PASSWORD, msg: err })
 })
 }
 
-export const logout = () => async (dispatch) => {
+export const logout = () => (dispatch) => {
 	AsyncStorage.removeItem('access_token')
 	AsyncStorage.removeItem('access_id')
+  dispatch({type: LOGOUT})
 	Navigation.setRoot(authRoot)
-	setTimeout(() => {
-		dispatch({type: LOGOUT})
-	}, 1000);
 }

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native'
+import { useCallback } from 'react'
+import { Dimensions, FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native'
 import { Button } from 'react-native-elements'
 import { connect } from 'react-redux'
 
 import QuestionsCardView from '../components/QuestionsCardView'
+import wait from '../helper/wait'
 
 const { width, height } = Dimensions.get('window')
 
@@ -95,6 +97,15 @@ const Screen = props => {
 
     const [assessmentState, setAssessmentState] = useState([])
 
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true)
+        wait(2000).then(() => {
+            setRefreshing(false)
+        })
+    }, []);
+
     useEffect(() => {
         let mounted = true
         if(mounted) {
@@ -130,6 +141,7 @@ const Screen = props => {
                             numColumns={2}
                             keyExtractor={item => item.id}
                             extraData={assessmentState}
+                            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                         />
                     </>
                     : <View style={styles.placeHolder}>

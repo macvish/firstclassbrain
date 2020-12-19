@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { memo, useState, useEffect } from 'react'
+import { ActivityIndicator, Alert, Dimensions, Keyboard, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Dropdown } from 'react-native-material-dropdown-v2'
 import { Input, Button } from 'react-native-elements'
 import { Formik } from 'formik'
@@ -7,10 +7,13 @@ import * as Yup from 'yup'
 import ImagePicker from 'react-native-image-picker'
 import { Avatar, Divider, Icon } from 'react-native-elements'
 import { connect } from 'react-redux'
+import { useNetInfo } from "@react-native-community/netinfo"
+import AsyncStorage from '@react-native-community/async-storage'
 
 import UserAvatar from '../components/UserAvatar'
-import { logout } from '../reducers/authAction'
+import { logout, clearErrorMessages } from '../reducers/authAction'
 import { change_password, change_class } from '../reducers/mainAction'
+import API from '../helper/API'
 
 const { width } = Dimensions.get('window')
 
@@ -49,122 +52,220 @@ const profileValidation = Yup.object({
 
 const securityValidation = Yup.object({
     password: Yup.string().required('Required').min(6, 'Must be 6 characters or more'),
-    confirm_password: Yup.string().required('Required').min(6, 'Must be 6 characters or more')
+    confirm_password: Yup.string().required('Required').min(6, 'Must be 6 characters or more').when('password', {
+        is: val => (val && val.length > 0 ? true : false),
+        then: Yup.string().oneOf(
+            [Yup.ref('password')],
+            "Both password need to be the same"
+        )
+    })
 })
 
-const ProfileScreen = props => {
+const ProfileScreen = memo((props) => {
+
+    const netInfo = useNetInfo()
 
     const [avatar, setAvatar] = useState(props.user.pic)
 
-    const [submitLoading, setSubmitLoading] = useState(false)
+    const [submitClassLoading, setSubmitClassLoading] = useState(false)
+
+    const [submitPasswordLoading, setSubmitPasswordLoading] = useState(false)
 
     const [editProfileDropdown, setEditProfileDropdown] = useState(false)
 
     const [securityDropdown, setSecurityDropdown] = useState(false)
 
+    const [imageLoading, setImageLoading] = useState(false)
+
+    const [profileChangeState, setProfileStateChange] = useState({
+        changeClassMessage: '',
+        changePasswordMessage: ''
+    })
+
     const [data, setData] = useState({
         userToken: ''
     })
 
-    useEffect(async () => {
+    useEffect(() => {
         let mounted = true
         if(mounted) {
-            const userToken = await AsyncStorage.getItem('access_token')
-            setData({userToken})
+            async () => {
+                const userToken = await AsyncStorage.getItem('access_token')
+                setData({userToken})
+            }
+            props.clearErrorMessages()
         }
         return () => {
             mounted = false
         }
     }, [props.user])
 
+    useEffect(() => {
+        let mounted = true
+        if(mounted) {
+            setProfileStateChange({
+                changeClassMessage: props.changeClassMessage,
+                changePasswordMessage: props.changePasswordMessage
+            })
+        }
+
+        return () => {
+            mounted = false
+        }
+    }, [props.changeClassMessage, props.changePasswordMessage])
+
+    useEffect(() => {
+        let mounted = true
+        if(mounted) {
+            if(profileChangeState.changeClassMessage) {
+                setSubmitClassLoading(false)
+                alert(profileChangeState.changeClassMessage)
+            }
+
+            if(profileChangeState.changePasswordMessage) {
+                setSubmitPasswordLoading(false)
+                alert(profileChangeState.changePasswordMessage)
+            }
+        }
+
+        return () => {
+            mounted = false
+        }
+    }, [profileChangeState.changeClassMessage, profileChangeState.changePasswordMessage])
+
+    const uploadProfilePhoto = async (image) => {
+        var form_data = new FormData();
+        form_data.append("file", image)
+        form_data.append("upload_preset","ao-estate")
+        form_data.append("cloud_name","josh-equere")
+
+        await fetch("https://api.cloudinary.com/v1_1/josh-equere/image/upload", {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'multipart/form-data',
+            },
+            body: form_data
+        }).then(res => res.json())
+            .then(async data => {
+                await API.put(`/updatepic/student`, 
+                    { pic: data.url }, 
+                    {headers: {Authorization: `Bearer ${props.token}`}}
+                )
+                .then(res => {
+                    if(res.status === 200){
+                        setAvatar(data.secure_url);
+                        props.set_avatar(data.secure_url)
+                        setImageLoading(false)
+                    } else {
+                        Alert.alert("Alert",
+                        "Picture failed to upload",
+                        [{ text: "OK"}], { cancelable: true })
+                        setImageLoading(false)
+                    }
+                })
+                .catch(err => 
+                    {
+                        Alert.alert("Alert",
+                        "Picture failed to upload.",
+                        [{ text: "OK" }], { cancelable: true })
+                        setImageLoading(false)
+                    }
+                )
+
+            }).catch(err => {
+                Alert.alert("Alert",
+                "Picture failed to upload.",
+                [{ text: "OK" }], { cancelable: true })
+                setImageLoading(false)
+            })
+    }
+
     const handleChangeAvatar = async () => {
 
         ImagePicker.showImagePicker({}, async (response) => {
            
             if (response.didCancel) {
-                console.info('Cancel')
+                alert('Cancelled')
             } else if (response.error) {
-                console.info(response.error)
+                alert("Photo couldn't upload")
             } else {
-                console.info('success')
-                const source = { uri: response.uri, cache: true };
-                const pictureURL = 'data:image/jpeg;base64,' + response.data
-                // const pictureURL = response.data
-                const filename = response.fileName
+                const uri = response.uri
+                const type = response.type
+                const name = response.fileName
 
-                await API.put(`/updatepic/student`, { pictureURL  })
-                .then(res => {
-                    if(res.status === 200){
-                        const { data } = res
-                        
-                        setAvatar({title: '', source: source.uri});
-                        props.set_avatar(source.uri)
-                    } else {
-                        Alert.alert("Alert Title",
-                        "Picture upload failed",
-                        [
-                          { text: "OK"}
-                        ],
-                        { cancelable: true })
-                    }
-                })
-                .catch(err => 
-                    {
-                        console.log(err)
-                        Alert.alert("Alert Title",
-                        "Picture upload failed",
-                        [
-                        { text: "OK" }
-                        ],
-                        { cancelable: true })
-                    }
-                )
-                
-                
-              setAvatar(pictureURL)
+                const source = {
+                    uri,
+                    type,
+                    name
+                }
 
+                setImageLoading(true)
+                uploadProfilePhoto(source)
             }
         });
     }
 
-    const handleSubmit = (values) => {
+    const handleClassSubmit = (values) => {
         Keyboard.dismiss()
-        setSubmitLoading(true)
-        setErr('')
-        props.change_class(values)
-        setTimeout(() => {
-            setSubmitLoading(false)
-        }, 2000);
+        setSubmitClassLoading(true)
+        props.clearErrorMessages()
+
+        if(netInfo.isConnected && netInfo.isInternetReachable) {
+            props.change_class(values)
+        }
+        else {
+            setTimeout(() => {
+                setSubmitClassLoading(false)
+                alert('Your internet connection is down, try again later')
+            }, 1500);
+        }
     }
 
     const handleSecuritySubmit = (values) => {
         const { password } = values
 
         Keyboard.dismiss()
-        setSubmitLoading(true)
-        setErr('')
+        setSubmitPasswordLoading(true)
+        props.clearErrorMessages()
 
         const properForm = {
             password,
-            token: data.userToken
         }
-
-        props.change_password(properForm)
-
-        setTimeout(() => {
-            setSubmitLoading(false)
-        }, 2000);
+        
+        if(netInfo.isConnected && netInfo.isInternetReachable) {
+            props.change_password(properForm)
+        }
+        else {
+            setTimeout(() => {
+                setSubmitPasswordLoading(false)
+                alert('Your internet connection is down, try again later')
+            }, 1500);
+        }
     }
 
     return (
         <ScrollView style={{ }}>
             <View style={styles.container}>
                 <View style={styles.avatarWrapper}>
-                    <UserAvatar 
-                        uri={avatar}
-                        size={width/1.2} 
-                        containerStyle={styles.avatar}
-                    />
+                    {
+                        imageLoading 
+                        ? <Avatar 
+                            rounded={false}
+                            size={width/1.2}
+                            activeOpacity={0.7}
+                            containerStyle={styles.avatar}
+                            avatarStyle={{borderRadius: 30, resizeMode: 'cover'}}
+                            renderPlaceholderContent={<ActivityIndicator size={40} color='#257F9B' />}
+                            placeholderStyle={{color: '#707070'}}
+                        />
+                        : <UserAvatar 
+                            uri={props.user.pic}
+                            size={width/1.2} 
+                            containerStyle={styles.avatar}
+                            placeholderStyle={styles.avatar}
+                        />
+                    }
                     <View style={styles.fadeContainer}>
                         <Text style={styles.avatarTitle}>{`${props.user.firstName ?? 'Unknown'} ${props.user.lastName ?? null}`}</Text>
                         <Avatar 
@@ -181,7 +282,10 @@ const ProfileScreen = props => {
                     <Text style={styles.title}>My Account</Text>
                     <Divider style={{width: width, backgroundColor: '#707070', borderWidth: 1, borderColor: '#707070'}} />
                     <View style={styles.menuWrapper}>
-                        <TouchableOpacity onPress={() => setEditProfileDropdown(prev => !prev)}>
+                        <TouchableOpacity onPress={() => {
+                            setEditProfileDropdown(!editProfileDropdown)
+                            setSecurityDropdown(false)
+                            }}>
                             <View style={styles.menu}>
                                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                     <Icon type='antdesign' color='#707070' size={30} name='lock' />
@@ -197,9 +301,9 @@ const ProfileScreen = props => {
                                     <Formik
                                         initialValues={INITIAL_Profile_VALUES}
                                         validationSchema={profileValidation}
-                                        onSubmit={values => handleSubmit(values)}
+                                        onSubmit={values => handleClassSubmit(values)}
                                     >
-                                        {({ errors, handleSubmit, touched, validateField, values, setFieldValue }) => (
+                                        {({ errors, handleSubmit, touched, setFieldValue }) => (
                                         <>
                                             <Dropdown
                                                 data={classes}
@@ -213,30 +317,22 @@ const ProfileScreen = props => {
                                                 inputContainerStyle={{ borderBottomWidth: 0 }}
                                             />
                                             {errors.classSelected && touched.classSelected ? <Text style={styles.errorMessage}>{errors.classSelected}</Text> : null}
- 
-                                            {
-                                                props.signupMessage 
-                                                ? <Text style={styles.errorMessage}>{props.signupMessage}</Text> 
-                                                : null
-                                            }
 
                                             <View style={{
-                                                // flexDirection: "row",
                                                 alignItems: "center",
                                                 alignSelf: 'center',
                                                 justifyContent: "space-between",
                                                 width: width/1.3,
-                                                // height: height/6,
                                                 paddingTop: -10
                                             }}>
-                                                {!submitLoading ? <View>
+                                                {!submitClassLoading ? <View>
                                                     <Button 
-                                                        title='Submit'
+                                                        title='Change'
                                                         buttonStyle={styles.button}
                                                         titleStyle={{fontSize: 17, fontWeight: '500'}}
                                                         onPress={() => handleSubmit()}
                                                     />
-                                                </View> : <ActivityIndicator size={40} color='#FDAD45' />}
+                                                </View> : <ActivityIndicator size={40} color='#257F9B' />}
                                             </View>
                                         </>
                                         )}
@@ -245,7 +341,10 @@ const ProfileScreen = props => {
                                 : null
                         }
 
-                        <TouchableOpacity onPress={() => setSecurityDropdown(prev => !prev)}>
+                        <TouchableOpacity onPress={() => {
+                            setSecurityDropdown(prev => !prev)
+                            setEditProfileDropdown(false)
+                            }}>
                             <View style={styles.menu}>
                                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                     <Icon type='antdesign' color='#707070' size={30} name='setting' />
@@ -312,14 +411,14 @@ const ProfileScreen = props => {
                                                 width: width/1.3,
                                                 paddingTop: -10
                                             }}>
-                                                {!submitLoading ? <View>
+                                                {!submitPasswordLoading ? <View>
                                                     <Button 
                                                         title='Submit'
                                                         buttonStyle={styles.button}
                                                         titleStyle={{fontSize: 17, fontWeight: '500'}}
                                                         onPress={() => handleSubmit()}
                                                     />
-                                                </View> : <ActivityIndicator size={40} color='#FDAD45' />}
+                                                </View> : <ActivityIndicator size={40} color='#257F9B' />}
                                             </View>
                                         </>
                                         )}
@@ -341,16 +440,20 @@ const ProfileScreen = props => {
             </View>
         </ScrollView>
     )
-}
+})
 
 const mapStateToProps = state => ({
-    user: state.auth.payload
+    user: state.auth.payload,
+    changePasswordMessage: state.main.change_password_message,
+    changeClassMessage: state.main.change_class_message,
+    token: state.auth.access_token
 })
 
 const mapDispatchToProps = {
     logout,
     change_class,
-    change_password
+    change_password,
+    clearErrorMessages
 }
 
 
@@ -359,16 +462,18 @@ export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen)
 const styles = StyleSheet.create({
     container: {
         width: width,
-        paddingTop: 40
+        paddingTop: 40,
+        backgroundColor: 'transparent'
     },
 
     avatarWrapper: {
+        backgroundColor: 'transparent',
         alignItems: 'center',
         height: width/1.2
     },
 
     avatar: {
-        backgroundColor: '#707070',
+        backgroundColor: 'rgba(240, 240, 240, 1)',
         borderRadius: 40
     },
 

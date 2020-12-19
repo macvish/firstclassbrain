@@ -3,7 +3,7 @@ import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View }
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 
-import pp from '../assets/images/quiz.jpg'
+import pp from '../assets/images/quiz.png'
 
 const { width, height } = Dimensions.get('window')
 
@@ -52,7 +52,12 @@ const CoursesCardView = props => {
                 onPress={() => onContinue()}
             >
                 <View style={styles.container}>
-                    <ImageBackground source={props.src ?? pp} imageStyle={{borderRadius: 20}} style={styles.imageContainer}>
+                    <ImageBackground 
+                        source={props.src ? {uri: props.src} : pp} 
+                        imageStyle={{borderRadius: 20}} 
+                        style={styles.imageContainer} 
+                        blurRadius={1.5}
+                    >
                         <View style={styles.fadeContainer}>
                             <Text style={styles.title}>{props.title}</Text>
                         </View>

@@ -8,7 +8,10 @@ import {
     LOGOUT,
     FORGOT_PASSWORD, 
     GET_USER, 
-    GET_USER_FAILED 
+    GET_USER_FAILED ,
+    CLEAR_ALL_ERROR_MESSAGE,
+    GET_ACCESS_TOKEN,
+    CHANGE_CLASS
 } from './reducerTypes'
 
 const INT_STATE = {
@@ -21,6 +24,7 @@ const INT_STATE = {
     is_logged_in: false,
     has_onboarded: false,
     auth_type: '',
+    access_token: ''
 }
 
 export const authReducer = (state = INT_STATE, action) => {
@@ -35,7 +39,12 @@ export const authReducer = (state = INT_STATE, action) => {
             })
         case LOGIN:
             return Object.assign({}, state, {
-                is_logged_in: true
+                is_logged_in: true,
+                access_token: action.payload
+            })
+        case GET_ACCESS_TOKEN:
+            return Object.assign({}, state, {
+                access_token: action.payload
             })
         case GET_USER:
             return Object.assign({}, state, {
@@ -52,8 +61,6 @@ export const authReducer = (state = INT_STATE, action) => {
             })
             case SIGN_UP:
             return Object.assign({}, state, {
-                // payload: action.data,
-                // is_logged_in: true,
                 signup_success_message: 'Registration was successful, a verification email has been be sent to you.'
             })
         case SIGN_UP_FAILURE:
@@ -64,13 +71,26 @@ export const authReducer = (state = INT_STATE, action) => {
             return Object.assign({}, state, {
                 forgot_payload: action.data
             })
+        case CHANGE_CLASS:
+            return Object.assign({}, state, {
+                payload: action.payload
+            })
         case LOGOUT:
             return Object.assign({}, state, {
                 payload: {},
                 msg: '',
                 is_logged_in: false,
                 has_onboarded: true,
+                login_err_msg: '',
+                signup_err_msg: '',
                 auth_type: '',
+            })
+        case CLEAR_ALL_ERROR_MESSAGE:
+            return Object.assign({}, state, {
+                login_err_msg: '',
+                signup_err_msg: '',
+                signup_success_message: '',
+                err_msg: '',
             })
         default:
             return state

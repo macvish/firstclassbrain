@@ -26,6 +26,7 @@ const CourseScreen = props => {
                 componentId={props.componentId} 
                 isPaid={props.user.paid} 
                 uri={item.video} item={item} 
+                src={item.courseThumbnail}
                 title={item.courseTitle} height={height/8}
                 options={props.options}
             />

@@ -7,7 +7,6 @@ import VideoPlayer from 'react-native-video-player'
 import calendar from '../assets/icons/calendar.png'
 import IconImage from '../components/IconImage'
 import weeks from '../helper/weeks.json'
-import testVid from '../assets/Videos/ex.mp4'
 import { CheckBox } from 'react-native-elements'
 
 

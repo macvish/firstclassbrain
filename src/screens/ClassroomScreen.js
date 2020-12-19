@@ -1,28 +1,44 @@
-import React, {useEffect, useState} from 'react'
-import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native'
+import React, {useCallback, useEffect, useState} from 'react'
+import { Dimensions, FlatList, StyleSheet, Text, View, RefreshControl } from 'react-native'
 import { connect } from 'react-redux'
 
 import ClassroomCardView from '../components/ClassroomCardView'
 import subjects from '../helper/subjects.json'
+import wait from '../helper/wait'
 
 const { width, height } = Dimensions.get('window')
 
 
 const ClassroomScreen = props => {
 
-    const [classroom, setClassroom] = useState(subjects.filter(item => item.class === props.user.classSelected).map(data => ({...data})))
+    const [classroom, setClassroom] = useState([])
+
+    const [refreshing, setRefreshing] = useState(false);
     
     useEffect(() => {
-        return () => {
+        let mounted = true
+        if(mounted) {
+            setClassroom(subjects.filter(item => item.class === props.user.classSelected).map(data => ({...data})))
         }
-    }, [props.user])
+        return () => {
+            mounted = false
+        }
+    }, [props.user.classSelected])
 
-    const renderItem = ({item}) => {
-        return <View key={item.id} style={{paddingRight: 20, paddingBottom: 20}}>
+    const onRefresh = useCallback(() => {
+        setRefreshing(true)
+        wait(2000).then(() => {
+            setRefreshing(false)
+        })
+    }, []);
+
+    const renderItem = ({item, index}) => {
+        return <View key={index+1} style={{paddingRight: 10, paddingLeft: 10, paddingBottom: 20}}>
             <ClassroomCardView 
                 componentId={props.componentId} 
                 isPaid={props.user.paid} 
-                uri={item.video} item={item} 
+                // uri={item.icon} 
+                item={item} 
                 title={item.name} height={height/8}
             />
         </View>
@@ -30,14 +46,16 @@ const ClassroomScreen = props => {
 
     return (
         <View style={styles.container}>
+
             {classroom.length >= 1 ?
                 <FlatList
                     data={classroom}
                     renderItem={renderItem}
                     numColumns={2}
-                    keyExtractor={item => item.id}
+                    keyExtractor={(item, index) => index+1}
                     extraData={classroom}
                     style={{paddingTop: 5}}
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                 /> 
             :
                 <Text>Sorry, this class contains no subjects</Text>
@@ -64,8 +82,6 @@ const styles = StyleSheet.create({
         height: height,
         width: width,
         paddingTop: 20,
-        paddingLeft: 15,
-        paddingRight: 15,
         justifyContent: 'center',
         alignItems: 'center'
     },

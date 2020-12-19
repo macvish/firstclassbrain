@@ -11,6 +11,7 @@ import { onBoardRoot } from '../navigation/onBoardRootNavigation'
 import { mainRoot } from '../navigation/mainRootNavigation'
 import { authRoot } from '../navigation/authRootNavigation'
 import { get_user, get_courses, get_tests } from '../reducers/mainAction'
+import { getAccessToken } from '../reducers/authAction'
 import logo from '../assets/logo/logo.jpeg'
 
 const {width, height} = Dimensions.get('screen')
@@ -36,11 +37,11 @@ const SplashScreen = props => {
         }
 
         return () => {
-            mounted = false
             clearTimeout()
+            mounted = false
         }
         
-    }, [counter, setCounter, setStation])
+    }, [counter])
 
     useEffect(() => {
         let mounted = true
@@ -72,6 +73,7 @@ const SplashScreen = props => {
                     props.get_courses()
                     props.get_user(userToken)
                     props.get_tests()
+                    props.getAccessToken()
                   }
               }
               else{
@@ -125,7 +127,7 @@ const SplashScreen = props => {
                     color='#F6F5F5'
                     borderRadius={20}
                     borderWidth={2} 
-                    style={{marginBottom: 70}}
+                    style={{marginBottom: 100}}
                 />
             </View>
             </View>
@@ -148,6 +150,7 @@ const mapDispatchToProps = {
     get_courses,
     get_tests,
     get_user,
+    getAccessToken
 }
 
 
@@ -166,6 +169,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+
     logo: {
         width: 120,
         height: 120,
