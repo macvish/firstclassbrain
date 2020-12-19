@@ -12,7 +12,6 @@ import NoContentModal from './NoContentModal'
 import SelectionModal from './SelectionModal'
 import LoadingModal from './LoadingModal'
 import { paystack_payment, get_user, get_courses, get_tests } from '../reducers/mainAction'
-import { Image } from 'react-native'
 
 const { width, height } = Dimensions.get('window')
 
@@ -83,7 +82,7 @@ const ClassroomCardView = props => {
 
     const handleSubscription = value => {
         if(value === 1) {
-            setSubscriptionPrice(10)
+            setSubscriptionPrice(2000)
             setSubscriptionType('monthly')
         }
 
