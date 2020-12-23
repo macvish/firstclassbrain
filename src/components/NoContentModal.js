@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, Text, View, Modal, 
-    TouchableWithoutFeedback, Dimensions } from 'react-native'
+import { 
+  StyleSheet, View, Modal, 
+  TouchableWithoutFeedback, Dimensions 
+} from 'react-native'
+
+import CustomText from './CustomText'
 
 const {width, height} = Dimensions.get('window')
 
@@ -25,7 +29,7 @@ const NoContentModal = props => {
             <TouchableWithoutFeedback onPress={() => props.handleOnpress()}>
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text style={{ fontSize: 20, color: "#fff" }}>No Content Yet</Text>
+                        <CustomText style={{ fontSize: 20, color: "#fff" }}>No Content Yet</CustomText>
                     </View>
                 </View>
             </TouchableWithoutFeedback>

@@ -1,5 +1,5 @@
 import React, { memo, useState, useEffect } from 'react'
-import { ActivityIndicator, Alert, Dimensions, Keyboard, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Alert, Dimensions, Keyboard, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Dropdown } from 'react-native-material-dropdown-v2'
 import { Input, Button } from 'react-native-elements'
 import { Formik } from 'formik'
@@ -14,6 +14,8 @@ import UserAvatar from '../components/UserAvatar'
 import { logout, clearErrorMessages } from '../reducers/authAction'
 import { change_password, change_class } from '../reducers/mainAction'
 import API from '../helper/API'
+import CustomText from './CustomText'
+import { CustomText } from '../components/CustomText'
 
 const { width } = Dimensions.get('window')
 
@@ -267,7 +269,7 @@ const ProfileScreen = memo((props) => {
                         />
                     }
                     <View style={styles.fadeContainer}>
-                        <Text style={styles.avatarTitle}>{`${props.user.firstName ?? 'Unknown'} ${props.user.lastName ?? null}`}</Text>
+                        <CustomText style={styles.avatarTitle}>{`${props.user.firstName ?? 'Unknown'} ${props.user.lastName ?? null}`}</CustomText>
                         <Avatar 
                             rounded
                             size={70}
@@ -279,7 +281,7 @@ const ProfileScreen = memo((props) => {
                 </View>
 
                 <View style={styles.contents}>
-                    <Text style={styles.title}>My Account</Text>
+                    <CustomText style={styles.title}>My Account</CustomText>
                     <Divider style={{width: width, backgroundColor: '#707070', borderWidth: 1, borderColor: '#707070'}} />
                     <View style={styles.menuWrapper}>
                         <TouchableOpacity onPress={() => {
@@ -289,7 +291,7 @@ const ProfileScreen = memo((props) => {
                             <View style={styles.menu}>
                                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                     <Icon type='antdesign' color='#707070' size={30} name='lock' />
-                                    <Text style={styles.menuTitle}>Edit Profile</Text>
+                                    <CustomText style={styles.menuTitle}>Edit Profile</CustomText>
                                 </View>
                                 <Icon type='antdesign' color='#707070' size={30} name={editProfileDropdown ? 'up' : 'down'} />
                             </View>
@@ -316,7 +318,7 @@ const ProfileScreen = memo((props) => {
                                                 onChangeText={(value) => setFieldValue('classSelected', value)}
                                                 inputContainerStyle={{ borderBottomWidth: 0 }}
                                             />
-                                            {errors.classSelected && touched.classSelected ? <Text style={styles.errorMessage}>{errors.classSelected}</Text> : null}
+                                            {errors.classSelected && touched.classSelected ? <CustomText style={styles.errorMessage}>{errors.classSelected}</CustomText> : null}
 
                                             <View style={{
                                                 alignItems: "center",
@@ -348,7 +350,7 @@ const ProfileScreen = memo((props) => {
                             <View style={styles.menu}>
                                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                     <Icon type='antdesign' color='#707070' size={30} name='setting' />
-                                    <Text style={styles.menuTitle}>Privacy & Security</Text>
+                                    <CustomText style={styles.menuTitle}>Privacy & Security</CustomText>
                                 </View>
                                 <Icon type='antdesign' color='#707070' size={30} name={securityDropdown ? 'up' : 'down'} />
                             </View>
@@ -379,7 +381,7 @@ const ProfileScreen = memo((props) => {
                                                 }}
                                                 onBlur={() => validateField('password')}
                                             />
-                                            {errors.password && touched.password ? <Text style={styles.errorMessage}>{errors.password}</Text> : null}
+                                            {errors.password && touched.password ? <CustomText style={styles.errorMessage}>{errors.password}</CustomText> : null}
 
                                             <Input 
                                                 placeholder='Confirm Password' 
@@ -396,11 +398,11 @@ const ProfileScreen = memo((props) => {
                                                 }}
                                                 onBlur={() => validateField('confirm_password')}
                                             />
-                                            {errors.confirm_password && touched.confirm_password ? <Text style={styles.errorMessage}>{errors.confirm_password}</Text> : null}
+                                            {errors.confirm_password && touched.confirm_password ? <CustomText style={styles.errorMessage}>{errors.confirm_password}</CustomText> : null}
  
                                             {
                                                 props.signupMessage 
-                                                ? <Text style={styles.errorMessage}>{props.signupMessage}</Text> 
+                                                ? <CustomText style={styles.errorMessage}>{props.signupMessage}</CustomText> 
                                                 : null
                                             }
 
@@ -432,7 +434,7 @@ const ProfileScreen = memo((props) => {
 
                     <TouchableOpacity onPress={() => props.logout()}>
                         <View style={[styles.menu, { paddingTop: 20 }]}>
-                            <Text style={styles.Logout}>Logout</Text>
+                            <CustomText style={styles.Logout}>Logout</CustomText>
                             <Icon type='antdesign' color='#EC5959' size={30} name='logout' />
                         </View>
                     </TouchableOpacity>
@@ -491,7 +493,7 @@ const styles = StyleSheet.create({
 
     avatarTitle: {
         color: '#257F9B',
-        fontWeight: 'bold',
+        fontFamily: 'Montserrat-Bold',
         fontSize: 25,
         width: width/2
     },
@@ -503,8 +505,8 @@ const styles = StyleSheet.create({
 
     title: {
         color: '#171717',
-        fontWeight: 'bold',
         fontSize: 25,
+        fontFamily: 'Montserrat-Medium',
         width: width/1.2,
         paddingBottom: 10
     },

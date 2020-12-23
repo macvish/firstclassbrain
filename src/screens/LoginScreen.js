@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View, KeyboardAvoidingView, Dimensions, 
+import { StyleSheet, View, KeyboardAvoidingView, Dimensions, 
     Keyboard, ActivityIndicator, ImageBackground, Linking } from 'react-native'
 import { Input, Button, Image } from 'react-native-elements'
 import { Navigation } from 'react-native-navigation'
@@ -10,6 +10,7 @@ import * as Yup from 'yup'
 
 import img from '../assets/images/login_image.png'
 import img_overlay from '../assets/images/login_fade.png'
+import CustomText from './CustomText'
 import { login, clearErrorMessages } from '../reducers/authAction'
 import logo from '../assets/logo/logo.jpeg'
 
@@ -180,8 +181,8 @@ const LoginScreen = props => {
             </View>
 
                 <View style={{alignSelf: 'center', width: width/1.24, paddingTop: 20}}>
-                    <Text style={{fontSize: 20, fontWeight: '700', color: '#171717'}}>Login to your account</Text>
-                    {props.signupSuccessMessage ? <Text style={{color: '#3FB0D4'}}>{signupMsg}</Text> : null}
+                    <CustomText style={{fontSize: 20, fontWeight: '700', color: '#171717'}}>Login to your account</CustomText>
+                    {props.signupSuccessMessage ? <CustomText style={{color: '#3FB0D4'}}>{signupMsg}</CustomText> : null}
                 </View>
 
                 <Formik
@@ -208,7 +209,7 @@ const LoginScreen = props => {
                                     }}
                                     onBlur={() => validateField('email')} 
                                 />
-                                {errors.email && touched.email ? <Text style={styles.errorMessage}>{errors.email}</Text> : null}
+                                {errors.email && touched.email ? <CustomText style={styles.errorMessage}>{errors.email}</CustomText> : null}
 
                                 <Input 
                                     placeholder='Password' 
@@ -226,12 +227,12 @@ const LoginScreen = props => {
                                     }}
                                     onBlur={() => validateField('password')} 
                                 />
-                                {errors.password && touched.password ? <Text style={styles.errorMessage}>{errors.password}</Text> : null}
+                                {errors.password && touched.password ? <CustomText style={styles.errorMessage}>{errors.password}</CustomText> : null}
 
                                 {
                                     props.loginMessage 
-                                    ? <Text style={styles.errorMessage}>{props.loginMessage}</Text> 
-                                    : (err ? <Text style={styles.errorMessage}>{err}</Text> : null)
+                                    ? <CustomText style={styles.errorMessage}>{props.loginMessage}</CustomText> 
+                                    : (err ? <CustomText style={styles.errorMessage}>{err}</CustomText> : null)
                                 }
                             </View>
                             <View style={{
@@ -262,7 +263,7 @@ const LoginScreen = props => {
             }}>
 
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Text style={{fontSize: 16, color: '#707070'}}>Don't have an account yet?</Text>
+                    <CustomText style={{fontSize: 16, color: '#707070'}}>Don't have an account yet?</CustomText>
                     <Button title='Sign Up' type='clear' titleStyle={styles.clearButton} onPress={() => navigate('Signup')} />
                 </View>
                 <View style={{marginTop: -14}}>

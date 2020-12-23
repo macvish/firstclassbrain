@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View, KeyboardAvoidingView, Dimensions, 
+import { StyleSheet, View, Dimensions, 
     Keyboard, ScrollView, ActivityIndicator} from 'react-native'
 import { Input, Button } from 'react-native-elements'
 import { Navigation } from 'react-native-navigation'
@@ -9,6 +9,7 @@ import { useNetInfo } from "@react-native-community/netinfo"
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 
+import CustomText from './CustomText'
 import { signup, clearErrorMessages } from '../reducers/authAction'
 import InvisibleIcon from '../constants/InvisibleIcon'
 
@@ -118,8 +119,8 @@ const RegistrationScreen = props => {
 
                     {/* Title */}
                     <View style={{alignSelf: 'center', width: width/1.24, paddingBottom: 30, marginTop: 20}}>
-                        <Text style={{fontSize: 23, fontWeight: '700', color: '#171717'}}>Create your account</Text>
-                        {props.signup_success_message ? <Text style={{color: '#171717'}}>{signupMsg}</Text> : null}
+                        <CustomText style={{fontSize: 23, fontWeight: '700', color: '#171717'}}>Create your account</CustomText>
+                        {props.signup_success_message ? <CustomText style={{color: '#171717'}}>{signupMsg}</CustomText> : null}
                     </View>
                     
                     {/* Input Fields */}
@@ -146,7 +147,7 @@ const RegistrationScreen = props => {
                                     }}
                                     onBlur={() => validateField('firstName')}
                                 />
-                                {errors.firstName && touched.firstName ? <Text style={styles.errorMessage}>{errors.firstName}</Text> : null}
+                                {errors.firstName && touched.firstName ? <CustomText style={styles.errorMessage}>{errors.firstName}</CustomText> : null}
 
                                 <Input 
                                     placeholder='Last Name'
@@ -163,7 +164,7 @@ const RegistrationScreen = props => {
                                     }}
                                     onBlur={() => validateField('lastName')}
                                 />
-                                {errors.lastName && touched.lastName ? <Text style={styles.errorMessage}>{errors.lastName}</Text> : null}
+                                {errors.lastName && touched.lastName ? <CustomText style={styles.errorMessage}>{errors.lastName}</CustomText> : null}
 
                                 <Input 
                                     placeholder='Email'
@@ -180,7 +181,7 @@ const RegistrationScreen = props => {
                                     }}
                                     onBlur={() => validateField('email')} 
                                 />
-                                {errors.email && touched.email ? <Text style={styles.errorMessage}>{errors.email}</Text> : null}
+                                {errors.email && touched.email ? <CustomText style={styles.errorMessage}>{errors.email}</CustomText> : null}
 
                                 <Input 
                                     placeholder='Phone Number'
@@ -197,7 +198,7 @@ const RegistrationScreen = props => {
                                     }}
                                     onBlur={() => validateField('phone')}
                                 />
-                                {errors.phone && touched.phone ? <Text style={styles.errorMessage}>{errors.phone}</Text> : null}
+                                {errors.phone && touched.phone ? <CustomText style={styles.errorMessage}>{errors.phone}</CustomText> : null}
 
                                 <Input 
                                     placeholder='Address'
@@ -214,7 +215,7 @@ const RegistrationScreen = props => {
                                     }}
                                     onBlur={() => validateField('address')} 
                                 />
-                                {errors.address && touched.address ? <Text style={styles.errorMessage}>{errors.address}</Text> : null}
+                                {errors.address && touched.address ? <CustomText style={styles.errorMessage}>{errors.address}</CustomText> : null}
 
                                 <Dropdown
                                     data={classes}
@@ -227,7 +228,7 @@ const RegistrationScreen = props => {
                                     onChangeText={(value) => setFieldValue('classSelected', value)}
                                     inputContainerStyle={{ borderBottomWidth: 0 }}
                                 />
-                                {errors.classSelected && touched.classSelected ? <Text style={styles.errorMessage}>{errors.classSelected}</Text> : null}
+                                {errors.classSelected && touched.classSelected ? <CustomText style={styles.errorMessage}>{errors.classSelected}</CustomText> : null}
 
                                 <Input 
                                     placeholder='Password' 
@@ -245,7 +246,7 @@ const RegistrationScreen = props => {
                                     }}
                                     onBlur={() => validateField('password')}
                                 />
-                                {errors.password && touched.password ? <Text style={styles.errorMessage}>{errors.password}</Text> : null}
+                                {errors.password && touched.password ? <CustomText style={styles.errorMessage}>{errors.password}</CustomText> : null}
 
                                 <Input 
                                     placeholder='Confirm Password' 
@@ -264,12 +265,12 @@ const RegistrationScreen = props => {
                                     }}
                                     onBlur={() => validateField('confirm_password')}
                                 />
-                                {errors.confirm_password && touched.confirm_password ? <Text style={styles.errorMessage}>{errors.confirm_password}</Text> : null}
+                                {errors.confirm_password && touched.confirm_password ? <CustomText style={styles.errorMessage}>{errors.confirm_password}</CustomText> : null}
 
                                 {
                                     signupMsg 
-                                    ? <Text style={styles.errorMessage}>{signupMsg}</Text> 
-                                    : (err ? <Text style={styles.errorMessage}>{err}</Text> : null)
+                                    ? <CustomText style={styles.errorMessage}>{signupMsg}</CustomText> 
+                                    : (err ? <CustomText style={styles.errorMessage}>{err}</CustomText> : null)
                                 }
 
                                 <View style={{

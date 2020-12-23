@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Dimensions, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, StyleSheet, View } from 'react-native'
 import * as Progress from 'react-native-progress'
-import AnswerButton from '../components/AnswerButton'
+
+import CustomText from './CustomText'
 
 const { width, height } = Dimensions.get('window')
 
@@ -39,15 +40,15 @@ const QuizScoreBoard = props => {
         return solution.solutions.map((data, index) => {
             return (
                 <View key={data._id} style={styles.solution}>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#fff' }}>Solution {data.sn}:</Text>
-                    <Text style={{
+                    <CustomText style={{ fontSize: 18, fontWeight: 'bold', color: '#fff' }}>Solution {data.sn}:</CustomText>
+                    <CustomText style={{
                         fontSize: 15, 
                         textAlign: 'justify', 
                         color: '#fff',
                         lineHeight: 20
                     }}>
                         {data.solution}
-                    </Text>
+                    </CustomText>
                 </View>
             )
         })
@@ -56,7 +57,7 @@ const QuizScoreBoard = props => {
     return (
         <View style={styles.container}>
            <View style={styles.progressContainer}>
-            <Text style={styles.headerText}>Total Score</Text>
+            <CustomText style={styles.headerText}>Total Score</CustomText>
            <Progress.Circle 
                     progress={counter} 
                     size={200}
@@ -70,7 +71,7 @@ const QuizScoreBoard = props => {
                     style={{marginBottom: 40}}
                 />
             </View>
-            <Text style={{...styles.headerText, textAlign: 'center'}}>Solutions</Text>
+            <CustomText style={{...styles.headerText, textAlign: 'center'}}>Solutions</CustomText>
             {renderSolutions()}
         </View>
     )

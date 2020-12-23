@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, ImageBackground, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 
@@ -59,7 +59,7 @@ const CoursesCardView = props => {
                         blurRadius={1.5}
                     >
                         <View style={styles.fadeContainer}>
-                            <Text style={styles.title}>{props.title}</Text>
+                            <CustomText style={styles.title}>{props.title}</CustomText>
                         </View>
                     </ImageBackground>
                 </View>

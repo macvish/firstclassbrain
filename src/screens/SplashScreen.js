@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Dimensions, ImageBackground, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, ImageBackground, StyleSheet, View } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import * as Progress from 'react-native-progress'
 import { connect } from 'react-redux'

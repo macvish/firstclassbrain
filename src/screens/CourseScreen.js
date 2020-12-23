@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react'
-import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, FlatList, StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
 
 import CoursesCardView from '../components/CoursesCardView'
+import CustomText from './CustomText'
 
 const { width, height } = Dimensions.get('window')
 
@@ -45,7 +46,7 @@ const CourseScreen = props => {
                     style={{paddingTop: 5}}
                 /> 
             :
-                <Text>Sorry, this class contains no subjects</Text>
+                <CustomText>Sorry, this class contains no subjects</CustomText>
             }
         </View>
     )

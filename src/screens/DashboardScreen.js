@@ -1,10 +1,11 @@
 import React, { useCallback, useState, useEffect } from 'react'
-import { Dimensions, FlatList, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, FlatList, RefreshControl, ScrollView, StyleSheet, View } from 'react-native'
 import { Button } from 'react-native-elements'
 import { Navigation } from 'react-native-navigation'
 
 import subjects from '../helper/subjects.json'
 import ClassroomCardView from '../components/ClassroomCardView'
+import CustomText from './CustomText'
 import QuestionsCardView from '../components/QuestionsCardView'
 import { connect } from 'react-redux'
 import wait from '../helper/wait'
@@ -132,13 +133,13 @@ const DashboardScreen = props => {
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             >
                 <View style={{marginBottom: 20,}}>
-                    <Text style={styles.headerText}>Most Viewed</Text>
+                    <CustomText style={styles.headerText}>Most Viewed</CustomText>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                         <ScrollView 
                             horizontal
                             showsHorizontalScrollIndicator={false}
                         >
-                            {renderClasses() ?? (<Text> No content yet </Text>)}
+                            {renderClasses() ?? (<CustomText> No content yet </CustomText>)}
                         </ScrollView>
                     </View>
                 </View>
@@ -153,7 +154,7 @@ const DashboardScreen = props => {
                 </View>
 
                 <View style={styles.wrapper}>
-                    <Text style={styles.headerText}>Current Week</Text>
+                    <CustomText style={styles.headerText}>Current Week</CustomText>
                     <View style={{}}>
                         <FlatList
                             data={currentWeekState}
@@ -166,7 +167,7 @@ const DashboardScreen = props => {
                 </View>
 
                 <View style={styles.wrapper}>
-                    <Text style={styles.headerText}>Quiz to take</Text>
+                    <CustomText style={styles.headerText}>Quiz to take</CustomText>
                     { props.user.paid === "true" ? 
                         (assessmentState.length >= 1
                             ? <>
@@ -179,11 +180,11 @@ const DashboardScreen = props => {
                                 />
                             </>
                             : <View style={styles.placeHolder}>
-                                <Text style={{ textAlign: 'center' }}>Sorry, no assessments yet.</Text>    
+                                <CustomText style={{ textAlign: 'center' }}>Sorry, no assessments yet.</CustomText>    
                             </View>
                         )
                         : <View style={styles.placeHolder}>
-                            <Text style={{ textAlign: 'center', paddingRight: 10, width: width/1.5 }}>Sorry, you need to pay to access this.</Text>    
+                            <CustomText style={{ textAlign: 'center', paddingRight: 10, width: width/1.5 }}>Sorry, you need to pay to access this.</CustomText>    
                         </View>
                     }
                 </View>

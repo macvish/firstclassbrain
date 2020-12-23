@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, Dimensions, ImageBackground, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Dimensions, ImageBackground, StyleSheet, View } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 import AsyncStorage from '@react-native-community/async-storage'

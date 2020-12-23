@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { TouchableOpacity } from 'react-native'
-import { Dimensions, ImageBackground, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, ImageBackground, StyleSheet, View } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 
 import pp from '../assets/images/quiz.png'
+import CustomText from './CustomText'
 import AlertModal from './AlertModal'
 
 
@@ -65,10 +66,10 @@ const QuestionsCardView = props => {
                 >
                     {props.title ? 
                         <View style={styles.contentContainer}>
-                            <Text style={styles.title}>{String(props.title).toUpperCase()}</Text>
-                            <Text style={styles.title}>{props.subTitle}</Text>
-                            <Text style={styles.title}>{props.week}</Text>
-                            <Text style={{fontSize: 17, color: 'white', textAlign: 'center'}}>Start Quiz</Text>
+                            <CustomText style={styles.title}>{String(props.title).toUpperCase()}</CustomText>
+                            <CustomText style={styles.title}>{props.subTitle}</CustomText>
+                            <CustomText style={styles.title}>{props.week}</CustomText>
+                            <CustomText style={{fontSize: 17, color: 'white', textAlign: 'center'}}>Start Quiz</CustomText>
                         </View>
                     :
                         null

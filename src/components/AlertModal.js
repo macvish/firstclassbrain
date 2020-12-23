@@ -1,8 +1,9 @@
 import React from 'react'
-import { StyleSheet, Text, View, Modal, Dimensions } from 'react-native'
+import { StyleSheet, View, Modal, Dimensions } from 'react-native'
 import { Button } from 'react-native-elements'
-
 import { Dropdown } from 'react-native-material-dropdown-v2'
+
+import CustomText from './CustomText'
 
 const { width, height } = Dimensions.get('window')
 
@@ -17,7 +18,7 @@ const AlertModal = props => {
         >
             <View style={styles.container}>
                 <View style={styles.messageWrapper} >
-                    <Text style={styles.message} >{props.message}</Text>
+                    <CustomText style={styles.message} >{props.message}</CustomText>
                     {
                         props.screen === 'class' 
                             ? <Dropdown
@@ -63,8 +64,8 @@ export default AlertModal
 const styles = StyleSheet.create({
     container: {
         width: width,
-        height: height,
-        backgroundColor: 'rgba(112, 112, 112, 0.8)',
+        height: height/1.02,
+        backgroundColor: 'rgba(112, 112, 112, 0.5)',
         justifyContent: 'flex-end'
     },
 
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        height: 80,
+        height: 70,
         width: width/2,
         borderRadius: 0
     },

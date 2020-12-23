@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useCallback } from 'react'
-import { Dimensions, FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, FlatList, RefreshControl, StyleSheet, View } from 'react-native'
 import { Button } from 'react-native-elements'
 import { connect } from 'react-redux'
 
 import QuestionsCardView from '../components/QuestionsCardView'
+import CustomText from './CustomText'
 import wait from '../helper/wait'
 
 const { width, height } = Dimensions.get('window')
@@ -145,11 +146,11 @@ const Screen = props => {
                         />
                     </>
                     : <View style={styles.placeHolder}>
-                        <Text style={{ textAlign: 'center' }}>Sorry, no assessments yet.</Text>    
+                        <CustomText style={{ textAlign: 'center' }}>Sorry, no assessments yet.</CustomText>    
                     </View>
                 )
                 : <View style={styles.placeHolder}>
-                    <Text style={{ textAlign: 'center', paddingRight: 10, width: width/1.5 }}>Sorry, you need to pay to access this.</Text>    
+                    <CustomText style={{ textAlign: 'center', paddingRight: 10, width: width/1.5 }}>Sorry, you need to pay to access this.</CustomText>    
                 </View>
             }
         </>

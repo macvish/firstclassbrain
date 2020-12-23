@@ -1,7 +1,9 @@
 import React from 'react'
-import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, ImageBackground, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Navigation } from 'react-native-navigation'
+
 import pp from '../assets/images/quiz.png'
+import CustomText from './CustomText'
 
 const { width, height } = Dimensions.get('window')
 
@@ -41,7 +43,7 @@ const CardViewFade = props => {
             <View style={styles.container}>
                 <ImageBackground source={props.src ?? pp} imageStyle={{borderRadius: 20}} style={styles.imageContainer}>
                     <View style={styles.fadeContainer}>
-                        <Text style={styles.title}>{props.title}</Text>
+                        <CustomText style={styles.title}>{props.title}</CustomText>
                     </View>
                 </ImageBackground>
             </View>

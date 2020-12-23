@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, ScrollView, StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
 
 import LoadingModal from '../components/LoadingModal'
+import CustomText from './CustomText'
 import Quiz from '../components/Quiz'
 import QuizScoreBoard from '../components/QuizScoreBoard'
 import { send_score } from '../reducers/mainAction'
@@ -76,8 +77,8 @@ const QuizScreen = props => {
     return (
         <View style={styles.container}>
             <View style={styles.header} >
-                <Text style={{fontSize: 18, fontWeight: 'bold', width: width/1.45}}>{props.item.topic ?? 'Unknown'}</Text>
-                {quizData.finished ? null : <Text style={{fontSize: 18}}>{getTimer(timer)}</Text>}
+                <CustomText style={{fontSize: 18, fontWeight: 'bold', width: width/1.45}}>{props.item.topic ?? 'Unknown'}</CustomText>
+                {quizData.finished ? null : <CustomText style={{fontSize: 18}}>{getTimer(timer)}</CustomText>}
             </View>
             <ScrollView showsVerticalScrollIndicator={false}>
                 {quizData.finished ? 

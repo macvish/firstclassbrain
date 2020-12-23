@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, ImageBackground, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import PaystackWebView from 'react-native-paystack-webview'
 import { useNetInfo } from "@react-native-community/netinfo"
@@ -10,6 +10,7 @@ import pp from '../assets/images/quiz.png'
 import AlertModal from './AlertModal'
 import NoContentModal from './NoContentModal'
 import SelectionModal from './SelectionModal'
+import CustomText from './CustomText'
 import LoadingModal from './LoadingModal'
 import { paystack_payment, get_user, get_courses, get_tests } from '../reducers/mainAction'
 
@@ -175,7 +176,7 @@ const ClassroomCardView = props => {
                         blurRadius={2.5}
                     >
                         <View style={styles.fadeContainer}>
-                            <Text style={styles.title}>{props.title}</Text>
+                            <CustomText style={styles.title}>{props.title}</CustomText>
                         </View>
                     </ImageBackground>
                 </View>

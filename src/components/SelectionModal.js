@@ -1,7 +1,9 @@
 import React from 'react'
-import { StyleSheet, Text, View, Modal, Dimensions } from 'react-native'
+import { StyleSheet, View, Modal, Dimensions } from 'react-native'
 import { Button } from 'react-native-elements'
 import { Dropdown } from 'react-native-material-dropdown-v2'
+
+import CustomText from './CustomText'
 
 const { width, height } = Dimensions.get('window')
 
@@ -17,7 +19,7 @@ const SelectionModal = (props) => {
         >
             <View style={styles.container}>
                 <View style={styles.messageWrapper} >
-                    <Text style={styles.message} >Select Course Term</Text>
+                    <CustomText style={styles.message} >Select Course Term</CustomText>
                     <Dropdown
                         data={[
                             {value: 1, label: 'First Term'},
@@ -32,7 +34,7 @@ const SelectionModal = (props) => {
                         inputContainerStyle={{}}
                     />
 
-                    <Text style={styles.message} >Select Course Week</Text>
+                    <CustomText style={styles.message} >Select Course Week</CustomText>
 
                     <Dropdown
                         data={[

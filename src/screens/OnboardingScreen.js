@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, ImageBackground } from 'react-native'
+import { View, StyleSheet, Dimensions, TouchableOpacity, ImageBackground } from 'react-native'
 import {  Button } from 'react-native-elements'
 import Swiper from 'react-native-swiper'
 import { Navigation } from 'react-native-navigation'
@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 
 import onboarding_header from '../assets/images/onboarding_header.png'
 import onboard_one from '../assets/images/onboard_one.png'
+import CustomText from './CustomText'
 import onboard_two from '../assets/images/onboard_two.png'
 import onboard_three from '../assets/images/onboard_three.png'
 import { authRoot } from '../navigation/authRootNavigation'
@@ -88,7 +89,7 @@ const OnboardingContent = params => {
                             style={styles.header}
                         >
                             {params.skip ? <TouchableOpacity onPress={() => params.skipAction()}>
-                                <Text style={{color: 'white', marginRight: 30, marginTop: 30}}>Skip</Text>
+                                <CustomText style={{color: 'white', marginRight: 30, marginTop: 30}}>Skip</CustomText>
                             </TouchableOpacity> : null}
                         </ImageBackground>
                     </View>
@@ -109,11 +110,11 @@ const OnboardingContent = params => {
 
                 <View style={{alignItems: 'center', flex: 1}}>
                     <View style={{width: width/1.2}}>
-                        <Text style={styles.title}>{params.title}</Text>
+                        <CustomText style={styles.title}>{params.title}</CustomText>
                     </View>
 
                     <View>
-                        <Text style={styles.subTitle}>{params.content}</Text>
+                        <CustomText style={styles.subTitle}>{params.content}</CustomText>
                     </View>
 
                 </View>

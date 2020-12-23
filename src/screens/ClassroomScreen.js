@@ -1,8 +1,9 @@
 import React, {useCallback, useEffect, useState} from 'react'
-import { Dimensions, FlatList, StyleSheet, Text, View, RefreshControl } from 'react-native'
+import { Dimensions, FlatList, StyleSheet, View, RefreshControl } from 'react-native'
 import { connect } from 'react-redux'
 
 import ClassroomCardView from '../components/ClassroomCardView'
+import CustomText from './CustomText'
 import subjects from '../helper/subjects.json'
 import wait from '../helper/wait'
 
@@ -58,7 +59,7 @@ const ClassroomScreen = props => {
                     refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                 /> 
             :
-                <Text>Sorry, this class contains no subjects</Text>
+                <CustomText>Sorry, this class contains no subjects</CustomText>
             }
         </View>
     )

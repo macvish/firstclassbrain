@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, ScrollView, StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
 import HtmlView from 'react-native-htmlview'
 import VideoPlayer from 'react-native-video-player'
 
 import calendar from '../assets/icons/calendar.png'
+import CustomText from './CustomText'
 import IconImage from '../components/IconImage'
 import weeks from '../helper/weeks.json'
 import { CheckBox } from 'react-native-elements'
@@ -53,10 +54,10 @@ const ClassScreen = props => {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Text style={{...styles.title, paddingTop: 10, paddingBottom: 10, width: width/2.7}}>{data.class.courseTitle}</Text>
+                <CustomText style={{...styles.title, paddingTop: 10, paddingBottom: 10, width: width/2.7}}>{data.class.courseTitle}</CustomText>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <IconImage source={calendar} />
-                    <Text style={{...styles.title, paddingTop: 10, paddingBottom: 10, paddingLeft: 5}}>{data.term} - {data.week}</Text>
+                    <CustomText style={{...styles.title, paddingTop: 10, paddingBottom: 10, paddingLeft: 5}}>{data.term} - {data.week}</CustomText>
                 </View>
             </View>
 
@@ -74,7 +75,7 @@ const ClassScreen = props => {
                     <View style={{flex: 1}}>
 
                         <View style={[styles.header, {justifyContent: 'center'}]}>
-                            <Text style={{...styles.title, paddingTop: 10, paddingBottom: 10}}>Overview</Text>
+                            <CustomText style={{...styles.title, paddingTop: 10, paddingBottom: 10}}>Overview</CustomText>
                         </View>
 
                         <View style={styles.content}>
@@ -87,7 +88,7 @@ const ClassScreen = props => {
                         {/* <View style={styles.header}>
                             <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                 <IconImage source={zip_folder} width={23} />
-                                <Text style={[styles.title, {paddingLeft: 12}]}>Week1.zip</Text>
+                                <CustomText style={[styles.title, {paddingLeft: 12}]}>Week1.zip</CustomText>
                             </View>
                         </View> */}
 
@@ -104,7 +105,7 @@ const ClassScreen = props => {
                                         fontWeight: 'bold', 
                                     }}
                                 />
-                                <Text style={[styles.title, {paddingLeft: 5}]}></Text>
+                                <CustomText style={[styles.title, {paddingLeft: 5}]}></CustomText>
                             </View>
                         </View>
                     </View>

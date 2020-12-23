@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+
+import CustomText from './CustomText'
 import AnswerButton from '../components/AnswerButton'
 
 const Quiz = props => {
@@ -197,14 +199,14 @@ const Quiz = props => {
     return (
         <View style={styles.container}>
            <View style={styles.question}>
-                <Text style={{
+                <CustomText style={{
                     fontSize: 15, 
                     textAlign: 'justify', 
                     color: '#707070',
                     lineHeight: 20
                 }}>
                 {data.question}
-                </Text>
+                </CustomText>
             </View>
 
             {renderOptions()}

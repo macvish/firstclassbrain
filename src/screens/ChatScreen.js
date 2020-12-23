@@ -1,12 +1,14 @@
 import React from 'react'
-import { Dimensions, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, StyleSheet, View } from 'react-native'
+
+import CustomText from './CustomText'
 
 const {width, height} = Dimensions.get('window')
 
 const ChatScreen = () => {
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Coming Soon...</Text>
+            <CustomText style={styles.text}>Coming Soon...</CustomText>
         </View>
     )
 }

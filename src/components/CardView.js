@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { TouchableOpacity } from 'react-native'
-import { Dimensions, ImageBackground, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, ImageBackground, StyleSheet, View } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 
 import pp from '../assets/images/quiz.png'
-import AlertModal from './AlertModal'
+import CustomText from './CustomText'
 
 
 const { width, height } = Dimensions.get('window')
@@ -52,8 +52,8 @@ const CardView = props => {
                     <ImageBackground source={props.src ?? pp} imageStyle={{borderRadius: 20}} style={[styles.imageContainer, props.height ? {height: props.height} : null]}>
                         {props.title ? 
                             <View style={styles.contentContainer}>
-                                <Text style={styles.title}>{props.title}</Text>
-                                <Text style={{fontSize: 17, color: 'white', textAlign: 'center'}}>Start Quiz</Text>
+                                <CustomText style={styles.title}>{props.title}</CustomText>
+                                <CustomText style={{fontSize: 17, color: 'white', textAlign: 'center'}}>Start Quiz</CustomText>
                             </View>
                         :
                             null

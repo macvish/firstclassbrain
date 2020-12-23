@@ -1,6 +1,8 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { Button } from 'react-native-elements'
+
+import CustomText from './CustomText'
 
 const AnswerButton = props => {
     return (
