@@ -1,7 +1,7 @@
 import { FULLSCREEN, GET_USER, GET_USER_FAILED, GET_COURSES, 
     GET_COURSES_FAILED, PROFILE_PICS, PAYMENT_SUCCESSFUL, 
     PAYMENT_FAILURE, GET_TESTS, GET_TESTS_FAILED, POST_SCORE, CHANGE_CLASS,
-    POST_SCORE_FAILED, CHANGE_PASSWORD, CHANGE_PASSWORD_FAILED, CHANGE_CLASS_FAILED, MOST_VIEWED
+    POST_SCORE_FAILED, CHANGE_PASSWORD, CHANGE_PASSWORD_FAILED, CHANGE_CLASS_FAILED, MOST_VIEWED, MARK_ATTENDANCE
 } from '../reducers/reducerTypes'
 import API from '../helper/API'
 import { Navigation } from 'react-native-navigation'
@@ -28,6 +28,11 @@ export const get_user = (user_token) => async (dispatch) => {
     .catch(err => {
         dispatch({type: GET_USER_FAILED, msg: 'Something went wrong, please try again'})
     })
+}
+
+// Get updated user
+export const get_updated_user = data => dispatch => {
+    dispatch({type: GET_USER, payload: data})
 }
 
 // Edit User
@@ -123,12 +128,33 @@ export const get_tests = () => async (dispatch) => {
     })
 }
 
+// Mark Attendance
+export const mark_attendance = (topicId) => async (dispatch) => {
+
+    const token = await AsyncStorage.getItem('access_token')
+
+    API.post(`topic/attendance/${topicId}`, {headers: {Authorization: `Bearer ${token}`}})
+    .then(res => {
+        const { data } = res
+
+        if(res.status === 200){
+            dispatch({type: MARK_ATTENDANCE, payload: data.tests})
+        }
+        else{
+            dispatch({ type: MARK_ATTENDANCE_FAILED, msg: data.message })
+        }
+    })
+    .catch(err => {
+        dispatch({type: MARK_ATTENDANCE_FAILED, msg: 'Something went wrong, please try again'})
+    })
+}
+
 // Post Score
 export const send_score = (values) => async (dispatch) => {
 
     const token = await AsyncStorage.getItem('access_token')
 
-    API.post('/test-score', values, {headers: {Authorization: `Bearer ${token}`}})
+    API.post('test-score', values, {headers: {Authorization: `Bearer ${token}`}})
     .then(res => {
         const { data } = res
 
@@ -140,7 +166,7 @@ export const send_score = (values) => async (dispatch) => {
         }
     })
     .catch(err => {
-        dispatch({type: GET_COURSES_FAILED, msg: 'Something went wrong, please try again'})
+        dispatch({type: POST_SCORE_FAILED, msg: 'Something went wrong, please try again'})
     })
 }
 
@@ -148,11 +174,6 @@ export const send_score = (values) => async (dispatch) => {
 export const set_avatar = data => dispatch => {
     dispatch({type: PROFILE_PICS, payload: data})
 }
-
-// Set most viewed classes
-// export const most_viewed_classes = data => dispatch => {
-//     dispatch({type: MOST_VIEWED, id: data})
-// }
 
 // Payment
 export const paystack_payment = (type, reference) => async dispatch => {

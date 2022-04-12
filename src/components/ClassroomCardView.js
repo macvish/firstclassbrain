@@ -52,7 +52,7 @@ const ClassroomCardView = props => {
     const payRef = useRef();
 
     const onContinue = () => {
-        if(props.isPaid === "true"){
+        if(props.user.paid === "true"){
             if(options.term !== null && options.week !== null){
                const course = props.courses.find(data => data.classSelected === props.item.class && data.subject === props.item.subject && data.week === options.week && data.term === options.term)
                if(course !== undefined && Object.keys(course).length > 0){
@@ -65,7 +65,7 @@ const ClassroomCardView = props => {
                 }
             }
         } else{
-            if(subscriptionPrice >= 0) {
+            if(subscriptionPrice > 0) {
                 setModalVisible(false)
                 if(netInfo.isConnected && netInfo.isInternetReachable) {
                     payRef.current.StartTransaction()
@@ -176,13 +176,13 @@ const ClassroomCardView = props => {
                         blurRadius={2.5}
                     >
                         <View style={styles.fadeContainer}>
-                            <CustomText style={styles.title}>{props.title}</CustomText>
+                            <CustomText weight="bold" style={styles.title}>{props.title}</CustomText>
                         </View>
                     </ImageBackground>
                 </View>
             </TouchableOpacity>
 
-            {props.isPaid === "true" ? 
+            {props.user.paid === "true" ? 
                 <SelectionModal 
                     visible={modalVisible} 
                     message='Do you want to start your Assignment Quiz?'
@@ -273,8 +273,6 @@ const styles = StyleSheet.create({
 
     title: {
         color: '#ffffff',
-        fontWeight: 'bold',
         fontSize: 16,
-        // textAlign: 'center'
     }
 })

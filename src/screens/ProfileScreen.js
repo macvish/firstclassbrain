@@ -1,5 +1,5 @@
 import React, { memo, useState, useEffect } from 'react'
-import { ActivityIndicator, Alert, Dimensions, Keyboard, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Alert, Dimensions, Keyboard, Modal, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Dropdown } from 'react-native-material-dropdown-v2'
 import { Input, Button } from 'react-native-elements'
 import { Formik } from 'formik'
@@ -8,14 +8,13 @@ import ImagePicker from 'react-native-image-picker'
 import { Avatar, Divider, Icon } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { useNetInfo } from "@react-native-community/netinfo"
-import AsyncStorage from '@react-native-community/async-storage'
+import ImageViewer from 'react-native-image-zoom-viewer'
 
 import UserAvatar from '../components/UserAvatar'
 import { logout, clearErrorMessages } from '../reducers/authAction'
-import { change_password, change_class } from '../reducers/mainAction'
+import { change_password, change_class, get_updated_user } from '../reducers/mainAction'
 import API from '../helper/API'
-import CustomText from './CustomText'
-import { CustomText } from '../components/CustomText'
+import CustomText from '../components/CustomText'
 
 const { width } = Dimensions.get('window')
 
@@ -67,7 +66,7 @@ const ProfileScreen = memo((props) => {
 
     const netInfo = useNetInfo()
 
-    const [avatar, setAvatar] = useState(props.user.pic)
+    const [previewImageModal, setPreviewImageModal] = useState(false)
 
     const [submitClassLoading, setSubmitClassLoading] = useState(false)
 
@@ -84,17 +83,9 @@ const ProfileScreen = memo((props) => {
         changePasswordMessage: ''
     })
 
-    const [data, setData] = useState({
-        userToken: ''
-    })
-
     useEffect(() => {
         let mounted = true
         if(mounted) {
-            async () => {
-                const userToken = await AsyncStorage.getItem('access_token')
-                setData({userToken})
-            }
             props.clearErrorMessages()
         }
         return () => {
@@ -155,19 +146,13 @@ const ProfileScreen = memo((props) => {
                     {headers: {Authorization: `Bearer ${props.token}`}}
                 )
                 .then(res => {
-                    if(res.status === 200){
-                        setAvatar(data.secure_url);
-                        props.set_avatar(data.secure_url)
-                        setImageLoading(false)
-                    } else {
-                        Alert.alert("Alert",
-                        "Picture failed to upload",
-                        [{ text: "OK"}], { cancelable: true })
-                        setImageLoading(false)
-                    }
+                    const { data } = res
+                    props.get_updated_user(data.result)
+                    setImageLoading(false)
                 })
                 .catch(err => 
                     {
+                        console.log(err)
                         Alert.alert("Alert",
                         "Picture failed to upload.",
                         [{ text: "OK" }], { cancelable: true })
@@ -188,7 +173,6 @@ const ProfileScreen = memo((props) => {
         ImagePicker.showImagePicker({}, async (response) => {
            
             if (response.didCancel) {
-                alert('Cancelled')
             } else if (response.error) {
                 alert("Photo couldn't upload")
             } else {
@@ -232,7 +216,8 @@ const ProfileScreen = memo((props) => {
         props.clearErrorMessages()
 
         const properForm = {
-            password,
+            originalPassword: password,
+            password
         }
         
         if(netInfo.isConnected && netInfo.isInternetReachable) {
@@ -266,6 +251,7 @@ const ProfileScreen = memo((props) => {
                             size={width/1.2} 
                             containerStyle={styles.avatar}
                             placeholderStyle={styles.avatar}
+                            onPress={() => setPreviewImageModal(true)}
                         />
                     }
                     <View style={styles.fadeContainer}>
@@ -280,6 +266,24 @@ const ProfileScreen = memo((props) => {
                     </View>
                 </View>
 
+                <Modal visible={previewImageModal} transparent={true}>
+                    <View style={{ backgroundColor: '#000', flexDirection: 'row', paddingLeft: 25, paddingTop: 20 }}>
+                        <Icon 
+                            name="arrowleft" 
+                            type="antdesign" 
+                            color="#fff" 
+                            onPress={() => setPreviewImageModal(false)}
+                            style={{ fontFamily: 'Montserrat-Regular'}}
+                        />
+                    </View>
+                    <ImageViewer 
+                        imageUrls={[{url: props.user.pic}]}
+                        enableSwipeDown
+                        onCancel={() => setPreviewImageModal(false)}
+                        loadingRender={() => <ActivityIndicator size={25} color='#257F9B' />}
+                    />
+                </Modal>
+
                 <View style={styles.contents}>
                     <CustomText style={styles.title}>My Account</CustomText>
                     <Divider style={{width: width, backgroundColor: '#707070', borderWidth: 1, borderColor: '#707070'}} />
@@ -291,7 +295,7 @@ const ProfileScreen = memo((props) => {
                             <View style={styles.menu}>
                                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                     <Icon type='antdesign' color='#707070' size={30} name='lock' />
-                                    <CustomText style={styles.menuTitle}>Edit Profile</CustomText>
+                                    <CustomText weight="bold" style={styles.menuTitle}>Edit Profile</CustomText>
                                 </View>
                                 <Icon type='antdesign' color='#707070' size={30} name={editProfileDropdown ? 'up' : 'down'} />
                             </View>
@@ -350,7 +354,7 @@ const ProfileScreen = memo((props) => {
                             <View style={styles.menu}>
                                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                     <Icon type='antdesign' color='#707070' size={30} name='setting' />
-                                    <CustomText style={styles.menuTitle}>Privacy & Security</CustomText>
+                                    <CustomText weight="bold" style={styles.menuTitle}>Change Password</CustomText>
                                 </View>
                                 <Icon type='antdesign' color='#707070' size={30} name={securityDropdown ? 'up' : 'down'} />
                             </View>
@@ -371,7 +375,7 @@ const ProfileScreen = memo((props) => {
                                                 placeholderTextColor='#707070'
                                                 textContentType='password'
                                                 inputContainerStyle={styles.inputContainerStyle}
-                                                inputStyle={{color: '#707070'}}
+                                                inputStyle={{color: '#707070', fontFamily: 'Montserrat-Regular', fontSize: 16}}
                                                 value={values.password}
                                                 secureTextEntry onChangeText={handleChange('password')} 
                                                 onFocus={() => {
@@ -389,7 +393,7 @@ const ProfileScreen = memo((props) => {
                                                 textContentType='password'
                                                 inputContainerStyle={styles.inputContainerStyle}
                                                 value={values.confirm_password}
-                                                inputStyle={{color: '#707070'}}
+                                                inputStyle={{color: '#707070', fontFamily: 'Montserrat-Regular', fontSize: 16}}
                                                 secureTextEntry onChangeText={handleChange('confirm_password')}
                                                 onFocus={() => {
                                                     if (!touched.confirm_password) {
@@ -434,7 +438,7 @@ const ProfileScreen = memo((props) => {
 
                     <TouchableOpacity onPress={() => props.logout()}>
                         <View style={[styles.menu, { paddingTop: 20 }]}>
-                            <CustomText style={styles.Logout}>Logout</CustomText>
+                            <CustomText weight="bold" style={styles.Logout}>Logout</CustomText>
                             <Icon type='antdesign' color='#EC5959' size={30} name='logout' />
                         </View>
                     </TouchableOpacity>
@@ -455,7 +459,8 @@ const mapDispatchToProps = {
     logout,
     change_class,
     change_password,
-    clearErrorMessages
+    clearErrorMessages,
+    get_updated_user
 }
 
 
@@ -506,7 +511,7 @@ const styles = StyleSheet.create({
     title: {
         color: '#171717',
         fontSize: 25,
-        fontFamily: 'Montserrat-Medium',
+        fontFamily: 'Montserrat-ExtraBold',
         width: width/1.2,
         paddingBottom: 10
     },
@@ -527,7 +532,6 @@ const styles = StyleSheet.create({
     menuTitle: {
         color: '#707070',
         fontSize: 18,
-        fontWeight: 'bold',
         paddingLeft: 20
     },
 
@@ -562,6 +566,5 @@ const styles = StyleSheet.create({
     Logout:{
         color: '#EC5959',
         fontSize: 22,
-        fontWeight: 'bold'
     }
 })

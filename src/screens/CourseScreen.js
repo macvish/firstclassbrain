@@ -3,7 +3,7 @@ import { Dimensions, FlatList, StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
 
 import CoursesCardView from '../components/CoursesCardView'
-import CustomText from './CustomText'
+import CustomText from '../components/CustomText'
 
 const { width, height } = Dimensions.get('window')
 

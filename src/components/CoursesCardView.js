@@ -4,6 +4,7 @@ import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 
 import pp from '../assets/images/quiz.png'
+import CustomText from '../components/CustomText'
 
 const { width, height } = Dimensions.get('window')
 
@@ -59,7 +60,7 @@ const CoursesCardView = props => {
                         blurRadius={1.5}
                     >
                         <View style={styles.fadeContainer}>
-                            <CustomText style={styles.title}>{props.title}</CustomText>
+                            <CustomText weight="bold" style={styles.title}>{props.title}</CustomText>
                         </View>
                     </ImageBackground>
                 </View>
@@ -106,8 +107,6 @@ const styles = StyleSheet.create({
 
     title: {
         color: '#ffffff',
-        fontWeight: 'bold',
         fontSize: 18,
-        // textAlign: 'center'
     }
 })

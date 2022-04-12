@@ -3,7 +3,7 @@ import { Dimensions, ScrollView, StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
 
 import LoadingModal from '../components/LoadingModal'
-import CustomText from './CustomText'
+import CustomText from '../components/CustomText'
 import Quiz from '../components/Quiz'
 import QuizScoreBoard from '../components/QuizScoreBoard'
 import { send_score } from '../reducers/mainAction'
@@ -77,8 +77,8 @@ const QuizScreen = props => {
     return (
         <View style={styles.container}>
             <View style={styles.header} >
-                <CustomText style={{fontSize: 18, fontWeight: 'bold', width: width/1.45}}>{props.item.topic ?? 'Unknown'}</CustomText>
-                {quizData.finished ? null : <CustomText style={{fontSize: 18}}>{getTimer(timer)}</CustomText>}
+                <CustomText weight="bold" style={{fontSize: 18, width: width/1.45}}>{props.item.topic ?? 'Unknown'}</CustomText>
+                {quizData.finished ? null : <CustomText style={{fontSize: 18}}>{timer > 0 ? getTimer(timer) : '00:00:00'}</CustomText>}
             </View>
             <ScrollView showsVerticalScrollIndicator={false}>
                 {quizData.finished ? 

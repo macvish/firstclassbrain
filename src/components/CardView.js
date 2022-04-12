@@ -52,7 +52,7 @@ const CardView = props => {
                     <ImageBackground source={props.src ?? pp} imageStyle={{borderRadius: 20}} style={[styles.imageContainer, props.height ? {height: props.height} : null]}>
                         {props.title ? 
                             <View style={styles.contentContainer}>
-                                <CustomText style={styles.title}>{props.title}</CustomText>
+                                <CustomText weight="bold" style={styles.title}>{props.title}</CustomText>
                                 <CustomText style={{fontSize: 17, color: 'white', textAlign: 'center'}}>Start Quiz</CustomText>
                             </View>
                         :
@@ -93,7 +93,6 @@ const styles = StyleSheet.create({
 
     title: {
         color: '#ffffff',
-        fontWeight: 'bold',
         fontSize: 15,
         textAlign: 'center'
     }

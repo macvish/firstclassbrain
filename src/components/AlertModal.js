@@ -23,10 +23,10 @@ const AlertModal = props => {
                         props.screen === 'class' 
                             ? <Dropdown
                                 data={[
-                                    {value: 1, label: '1 Month'},
-                                    {value: 2, label: '3 Months'},
-                                    {value: 3, label: '6 Months'},
-                                    {value: 4, label: '1 Year'}
+                                    {value: 1, label: '1 Month - NGN 2,000'},
+                                    {value: 2, label: '3 Months - NGN 5,000'},
+                                    {value: 3, label: '6 Months - NGN 9,000'},
+                                    {value: 4, label: '1 Year - NGN 16,000'}
                                 ]}
                                 containerStyle={{ width: width/1.27, alignSelf: "center"}}
                                 labelTextStyle={{color: '#707070'}}
@@ -42,14 +42,14 @@ const AlertModal = props => {
                     <Button 
                         title='No' 
                         titleStyle={styles.buttonTitle}
-                        buttonStyle={{...styles.button, backgroundColor: '#EC5959'}} 
+                        buttonStyle={{...styles.button, backgroundColor: '#EC5959', borderBottomLeftRadius: 10}} 
                         containerStyle={{borderRadius: 0}} 
                         onPress={() => props.onClose()}
                     />
                     <Button 
                         title='Yes' 
                         titleStyle={styles.buttonTitle}
-                        buttonStyle={{...styles.button, backgroundColor: '#18BE91'}}
+                        buttonStyle={{...styles.button, backgroundColor: '#18BE91', borderBottomRightRadius: 10}}
                         containerStyle={{borderRadius: 0}} 
                         onPress={() => props.onContinue()} 
                     />
@@ -64,14 +64,18 @@ export default AlertModal
 const styles = StyleSheet.create({
     container: {
         width: width,
-        height: height/1.02,
+        height: height/1.01,
         backgroundColor: 'rgba(112, 112, 112, 0.5)',
-        justifyContent: 'flex-end'
+        justifyContent: 'center',
+        paddingLeft: 10,
+        paddingRight: 10
     },
 
     messageWrapper: {
         backgroundColor: '#fff',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10
     },
 
     message: {
@@ -83,14 +87,15 @@ const styles = StyleSheet.create({
 
     buttonsWrapper: {
         flexDirection: 'row',
-        width: width,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10
     },
 
     button: {
         height: 70,
-        width: width/2,
-        borderRadius: 0
+        width: width/2.107,
+        borderRadius: 0,
     },
 
     buttonTitle: {

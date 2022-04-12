@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Dimensions, 
-    Keyboard, ScrollView, ActivityIndicator} from 'react-native'
-import { Input, Button } from 'react-native-elements'
+    Keyboard, ScrollView, ActivityIndicator, ImageBackground } from 'react-native'
+import { Input, Button, Image } from 'react-native-elements'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 import { Dropdown } from 'react-native-material-dropdown-v2'
 import { useNetInfo } from "@react-native-community/netinfo"
 import { Formik } from 'formik'
 import * as Yup from 'yup'
+import { Icon } from 'react-native-elements'
 
-import CustomText from './CustomText'
+import CustomText from '../components/CustomText'
 import { signup, clearErrorMessages } from '../reducers/authAction'
-import InvisibleIcon from '../constants/InvisibleIcon'
+import logo from '../assets/logo/logo.jpeg'
+import img from '../assets/images/login_image.png'
+import img_overlay from '../assets/images/login_fade.png'
 
 const {width, height} = Dimensions.get('window')
 
@@ -52,15 +55,7 @@ const signupValidation = Yup.object({
     email: Yup.string().required('Required').min(5, 'Must be more than 5 characters').matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g, 'Invalid email address'),
     phone: Yup.string().required('Required').min(11, 'Must be more than 11 numbers'),
     address: Yup.string().required('Required').min(5, 'Must be more than 5 characters'),
-    classSelected: Yup.string().required('Required'),
-    password: Yup.string().required('Required').min(6, 'Must be 6 characters or more'),
-    confirm_password: Yup.string().required('Required').min(6, 'Must be 6 characters or more').when('password', {
-        is: val => (val && val.length > 0 ? true : false),
-        then: Yup.string().oneOf(
-            [Yup.ref('password')],
-            "Both password need to be the same"
-        )
-    })
+    classSelected: Yup.string().required('Required')
 })
 
 const RegistrationScreen = props => {
@@ -114,12 +109,32 @@ const RegistrationScreen = props => {
     }
 
     return (
-            <ScrollView style={{}}>
+            <ScrollView style={{ }}>
                 <View style={styles.container}>
 
+                    <View style={styles.header}>
+                        <View style={{marginTop: -80}}>
+                            <ImageBackground source={img} style={styles.img}>
+                                <ImageBackground source={img_overlay} style={styles.img_fade}>
+                                    <View style={{}}>
+                                        <Image 
+                                            source={logo}
+                                            style={{
+                                                width: width/3,
+                                                height: width/3,
+                                                borderRadius: 10,
+                                                marginTop: 120
+                                            }}
+                                        />
+                                    </View>
+                                </ImageBackground>
+                            </ImageBackground>
+                        </View>
+                    </View>
+
                     {/* Title */}
-                    <View style={{alignSelf: 'center', width: width/1.24, paddingBottom: 30, marginTop: 20}}>
-                        <CustomText style={{fontSize: 23, fontWeight: '700', color: '#171717'}}>Create your account</CustomText>
+                    <View style={{alignSelf: 'center', width: width/1.24, paddingBottom: 30, marginTop: 50}}>
+                        <CustomText weight="bold" style={{fontSize: 23, color: '#171717'}}>Create your account</CustomText>
                         {props.signup_success_message ? <CustomText style={{color: '#171717'}}>{signupMsg}</CustomText> : null}
                     </View>
                     
@@ -137,7 +152,7 @@ const RegistrationScreen = props => {
                                     placeholderTextColor='#707070'
                                     textContentType='givenName'
                                     inputContainerStyle={styles.inputContainerStyle}
-                                    inputStyle={{color: '#707070'}} 
+                                    inputStyle={{color: '#707070',  fontFamily: 'Montserrat-Regular', fontSize: 16}} 
                                     value={values.firstName}
                                     onChangeText={handleChange('firstName')}
                                     onFocus={() => {
@@ -146,6 +161,7 @@ const RegistrationScreen = props => {
                                     }
                                     }}
                                     onBlur={() => validateField('firstName')}
+                                    leftIcon={<Icon type="antdesign" name="user" />}
                                 />
                                 {errors.firstName && touched.firstName ? <CustomText style={styles.errorMessage}>{errors.firstName}</CustomText> : null}
 
@@ -154,15 +170,15 @@ const RegistrationScreen = props => {
                                     placeholderTextColor='#707070'
                                     textContentType='familyName'
                                     inputContainerStyle={styles.inputContainerStyle}
-                                    inputStyle={{color: '#707070'}} 
+                                    inputStyle={{color: '#707070',  fontFamily: 'Montserrat-Regular', fontSize: 16}} 
                                     value={values.lastName}
                                     onChangeText={handleChange('lastName')} 
                                     onFocus={() => {
                                         if (!touched.lastName) {
                                         setTouched({ ...touched, lastName: true })
-                                    }
-                                    }}
+                                    }}}
                                     onBlur={() => validateField('lastName')}
+                                    leftIcon={<Icon type="antdesign" name="user" />}
                                 />
                                 {errors.lastName && touched.lastName ? <CustomText style={styles.errorMessage}>{errors.lastName}</CustomText> : null}
 
@@ -171,15 +187,15 @@ const RegistrationScreen = props => {
                                     placeholderTextColor='#707070'
                                     textContentType='emailAddress'
                                     inputContainerStyle={styles.inputContainerStyle}
-                                    inputStyle={{color: '#707070'}}
+                                    inputStyle={{color: '#707070',  fontFamily: 'Montserrat-Regular', fontSize: 16}}
                                     value={values.email} 
                                     onChangeText={handleChange('email')}
                                     onFocus={() => {
                                         if (!touched.email) {
                                         setTouched({ ...touched, email: true })
-                                    }
-                                    }}
-                                    onBlur={() => validateField('email')} 
+                                    }}}
+                                    onBlur={() => validateField('email')}
+                                    leftIcon={<Icon type="antdesign" name="mail" />}
                                 />
                                 {errors.email && touched.email ? <CustomText style={styles.errorMessage}>{errors.email}</CustomText> : null}
 
@@ -188,15 +204,15 @@ const RegistrationScreen = props => {
                                     placeholderTextColor='#707070'
                                     textContentType='telephoneNumber'
                                     inputContainerStyle={styles.inputContainerStyle}
-                                    inputStyle={{color: '#707070'}}
+                                    inputStyle={{color: '#707070',  fontFamily: 'Montserrat-Regular', fontSize: 16}}
                                     value={values.phone} 
                                     onChangeText={handleChange('phone')} 
                                     onFocus={() => {
                                         if (!touched.phone) {
                                         setTouched({ ...touched, phone: true })
-                                    }
-                                    }}
+                                    }}}
                                     onBlur={() => validateField('phone')}
+                                    leftIcon={<Icon type="antdesign" name="phone" />}
                                 />
                                 {errors.phone && touched.phone ? <CustomText style={styles.errorMessage}>{errors.phone}</CustomText> : null}
 
@@ -205,67 +221,30 @@ const RegistrationScreen = props => {
                                     placeholderTextColor='#707070'
                                     textContentType='fullStreetAddress'
                                     inputContainerStyle={styles.inputContainerStyle}
-                                    inputStyle={{color: '#707070'}} 
+                                    inputStyle={{color: '#707070',  fontFamily: 'Montserrat-Regular', fontSize: 16}} 
                                     value={values.address}
                                     onChangeText={handleChange('address')}
                                     onFocus={() => {
                                         if (!touched.address) {
                                         setTouched({ ...touched, address: true })
-                                    }
-                                    }}
-                                    onBlur={() => validateField('address')} 
+                                    }}}
+                                    onBlur={() => validateField('address')}
+                                    leftIcon={<Icon type="antdesign" name="home" />}
                                 />
                                 {errors.address && touched.address ? <CustomText style={styles.errorMessage}>{errors.address}</CustomText> : null}
 
                                 <Dropdown
                                     data={classes}
                                     containerStyle={{...styles.inputContainerStyle, marginTop: -25, marginBottom: 20, width: width/1.3, alignSelf: "center"}}
-                                    labelTextStyle={{color: '#707070'}}
+                                    itemTextStyle={{fontFamily: 'Montserrat-Regular'}}
+                                    overlayStyle={{fontFamily: 'Montserrat-Regular'}}                              
                                     itemColor='#707070'
-                                    style={{borderBottomWidth: 0, backgroundColor: 'transparent'}}
+                                    style={{borderBottomWidth: 0, backgroundColor: 'transparent', fontFamily: 'Montserrat-Regular'}}
                                     label='Class'
                                     value={values.classSelected}
                                     onChangeText={(value) => setFieldValue('classSelected', value)}
-                                    inputContainerStyle={{ borderBottomWidth: 0 }}
                                 />
                                 {errors.classSelected && touched.classSelected ? <CustomText style={styles.errorMessage}>{errors.classSelected}</CustomText> : null}
-
-                                <Input 
-                                    placeholder='Password' 
-                                    placeholderTextColor='#707070'
-                                    textContentType='password'
-                                    inputContainerStyle={styles.inputContainerStyle}
-                                    rightIcon={<InvisibleIcon />}
-                                    inputStyle={{color: '#707070'}}
-                                    value={values.password}
-                                    secureTextEntry onChangeText={handleChange('password')} 
-                                    onFocus={() => {
-                                        if (!touched.password) {
-                                        setTouched({ ...touched, password: true })
-                                    }
-                                    }}
-                                    onBlur={() => validateField('password')}
-                                />
-                                {errors.password && touched.password ? <CustomText style={styles.errorMessage}>{errors.password}</CustomText> : null}
-
-                                <Input 
-                                    placeholder='Confirm Password' 
-                                    placeholderTextColor='#707070'
-                                    textContentType='password'
-                                    inputContainerStyle={styles.inputContainerStyle}
-                                    rightIcon={<InvisibleIcon />}
-                                    value={values.confirm_password}
-                                    inputStyle={{color: '#707070'}}
-                                    secureTextEntry 
-                                    onChangeText={handleChange('confirm_password')}
-                                    onFocus={() => {
-                                        if (!touched.confirm_password) {
-                                        setTouched({ ...touched, confirm_password: true })
-                                        }
-                                    }}
-                                    onBlur={() => validateField('confirm_password')}
-                                />
-                                {errors.confirm_password && touched.confirm_password ? <CustomText style={styles.errorMessage}>{errors.confirm_password}</CustomText> : null}
 
                                 {
                                     signupMsg 
@@ -284,7 +263,7 @@ const RegistrationScreen = props => {
                                         <Button 
                                             title='Sign Up'
                                             buttonStyle={styles.button}
-                                            titleStyle={{fontSize: 22, fontWeight: '700'}}
+                                            titleStyle={{fontSize: 22,  fontFamily: 'Montserrat-Bold'}}
                                             onPress={() => handleSubmit()}
                                         />
                                     </View> : <ActivityIndicator size={50} color='#257F9B' />}
@@ -300,8 +279,8 @@ const RegistrationScreen = props => {
                     alignItems: 'center'
                 }}>
 
-                    <View style={{flexDirection: 'row'}}>
-                        <Button title="Already have an account?" type='clear' titleStyle={{fontSize: 16, color: '#707070'}} />
+                    <View style={{flexDirection: 'row', alignItems: 'center', paddingBottom: 20}}>
+                        <CustomText style={{fontSize: 16, color: '#707070'}}>Already have an account?</CustomText>
                         <Button title='Sign In' type='clear' titleStyle={styles.clearButton} onPress={() => Navigation.pop(props.componentId)} />
                     </View>
                 </View>
@@ -336,16 +315,29 @@ const styles = StyleSheet.create({
     },
 
     header: {
-        height: height/2.1,
         width: width,
         alignItems: 'center',
-        marginTop: -100
+    },
+
+    img: {
+        height: height/1.6,
+        width: width*1.23,
+        borderBottomRightRadius: 75,
+        marginTop: -50
+    },
+
+    img_fade: {
+        height: '100%',
+        width: '100%',
+        borderBottomRightRadius: 75,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 
     clearButton: {
         color: '#3FB0D4',
         fontSize: 16,
-        fontWeight: '200',
+        fontFamily: 'Montserrat-Regular'
     },
 
     inputs: {
@@ -363,7 +355,7 @@ const styles = StyleSheet.create({
 
     errorMessage: {
         color: 'red',
-        marginTop: -18,
+        marginTop: -14,
         marginBottom: 18,
         marginLeft: 10
     },

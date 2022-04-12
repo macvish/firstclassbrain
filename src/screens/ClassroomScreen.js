@@ -3,7 +3,7 @@ import { Dimensions, FlatList, StyleSheet, View, RefreshControl } from 'react-na
 import { connect } from 'react-redux'
 
 import ClassroomCardView from '../components/ClassroomCardView'
-import CustomText from './CustomText'
+import CustomText from '../components/CustomText'
 import subjects from '../helper/subjects.json'
 import wait from '../helper/wait'
 
@@ -28,6 +28,7 @@ const ClassroomScreen = props => {
 
     const onRefresh = useCallback(() => {
         setRefreshing(true)
+        setClassroom(subjects.filter(item => item.class === props.user.classSelected).map(data => ({...data})))
         wait(2000).then(() => {
             setRefreshing(false)
         })
@@ -38,7 +39,7 @@ const ClassroomScreen = props => {
             <ClassroomCardView 
                 componentId={props.componentId} 
                 isPaid={props.user.paid} 
-                // uri={item.icon} 
+                uri={item.icon}
                 item={item} 
                 title={item.name} height={height/8}
             />

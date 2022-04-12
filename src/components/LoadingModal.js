@@ -5,8 +5,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 const {width, height} = Dimensions.get('window')
 
 const LoadingModal = props => {
-	useEffect(() => {
-		if(props.visible){
+  useEffect(() => {
+    if(props.visible){
+      props.handleImmediately ? props.handleImmediately() : null
 		setTimeout(() => {
 			props.handleOnpress()
 		}, 3000);

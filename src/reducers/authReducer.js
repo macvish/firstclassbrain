@@ -11,15 +11,17 @@ import {
     GET_USER_FAILED ,
     CLEAR_ALL_ERROR_MESSAGE,
     GET_ACCESS_TOKEN,
-    CHANGE_CLASS
+    CHANGE_CLASS,
+    FORGOT_PASSWORD_FAILURE
 } from './reducerTypes'
 
 const INT_STATE = {
     payload: {},
-    forgot_payload: {},
     login_err_msg: '',
     signup_err_msg: '',
     signup_success_message: '',
+    forgot_password_err_msg: '',
+    forgot_password_success_message: '',
     err_msg: '',
     is_logged_in: false,
     has_onboarded: false,
@@ -69,7 +71,11 @@ export const authReducer = (state = INT_STATE, action) => {
             })
         case FORGOT_PASSWORD:
             return Object.assign({}, state, {
-                forgot_payload: action.data
+                forgot_password_success_message: action.msg
+            })
+        case FORGOT_PASSWORD_FAILURE:
+            return Object.assign({}, state, {
+                forgot_password_err_msg: action.msg
             })
         case CHANGE_CLASS:
             return Object.assign({}, state, {
@@ -83,12 +89,15 @@ export const authReducer = (state = INT_STATE, action) => {
                 has_onboarded: true,
                 login_err_msg: '',
                 signup_err_msg: '',
+                forgot_password_err_msg: '',
                 auth_type: '',
             })
         case CLEAR_ALL_ERROR_MESSAGE:
             return Object.assign({}, state, {
                 login_err_msg: '',
                 signup_err_msg: '',
+                forgot_password_err_msg: '',
+                forgot_password_err_msg: '',
                 signup_success_message: '',
                 err_msg: '',
             })

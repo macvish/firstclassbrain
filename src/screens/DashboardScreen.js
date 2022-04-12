@@ -5,7 +5,7 @@ import { Navigation } from 'react-native-navigation'
 
 import subjects from '../helper/subjects.json'
 import ClassroomCardView from '../components/ClassroomCardView'
-import CustomText from './CustomText'
+import CustomText from '../components/CustomText'
 import QuestionsCardView from '../components/QuestionsCardView'
 import { connect } from 'react-redux'
 import wait from '../helper/wait'
@@ -39,7 +39,32 @@ const DashboardScreen = props => {
         return () => {
             mounted = false
         }
-    }, [props.assessments])
+    }, [props.assessments, props.user.classSelected])
+
+    useEffect(() => {
+        let mounted = true
+        if(mounted) {
+            setClassroom(subjects.filter(item => item.class === props.user.classSelected).map((data, index) => ({...data, id: index+1})))
+            let classes = classroom.sort(() =>  0.5 - Math.random()).slice(0, 4)
+            setCurrentWeekState(classes)
+        }
+
+        return () => {
+            mounted = false
+        }
+    }, [props.user.classSelected])
+
+    useEffect(() => {
+        let mounted = true
+        if(mounted) {
+            let classes = classroom.sort(() =>  0.5 - Math.random()).slice(0, 4)
+            setCurrentWeekState(classes)
+        }
+
+        return () => {
+            mounted = false
+        }
+    }, [classroom])
 
     const handleNavigation = (screenName, componentName, index) => {
         Navigation.push(props.componentId, {
@@ -86,12 +111,11 @@ const DashboardScreen = props => {
     }
 
     const renderClasses = () => {
-        let classes = classroom.sort(() =>  0.5 - Math.random()).slice(0, 4)
         return props.most_viewed.map((data) => {
             return <View key={data.id} style={{paddingLeft: 5, paddingRight: 5}}>
                 <ClassroomCardView  
                     componentId={props.componentId} 
-                    // uri={data.icon} 
+                    uri={data.icon} 
                     item={data} 
                     title={data.name} 
                     height={height/8} 
@@ -118,7 +142,7 @@ const DashboardScreen = props => {
             <ClassroomCardView 
                 componentId={props.componentId} 
                 isPaid={props.user.paid} 
-                // uri={item.icon} 
+                uri={item.icon} 
                 item={item} 
                 title={item.name} height={height/8}
             />
@@ -139,7 +163,9 @@ const DashboardScreen = props => {
                             horizontal
                             showsHorizontalScrollIndicator={false}
                         >
-                            {renderClasses() ?? (<CustomText> No content yet </CustomText>)}
+                            <View style={{ flexDirection: 'row' }}>
+                                {renderClasses() ?? (<CustomText> No content yet </CustomText>)}
+                            </View>
                         </ScrollView>
                     </View>
                 </View>

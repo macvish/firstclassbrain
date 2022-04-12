@@ -22,28 +22,32 @@ const Quiz = props => {
                     name: 'answerA',
                     answer: props.questions[questionNo].answerA,
                     correct: props.questions[questionNo].correctAnswer === 'answerA' ? true : false,
-                    selected: false
+                    selected: false,
+                    disabled: props.timer > 0 ? false : true
                 },
                 {
                     _id: 2,
                     name: 'answerB',
                     answer: props.questions[questionNo].answerB,
                     correct: props.questions[questionNo].correctAnswer === 'answerB' ? true : false,
-                    selected: false
+                    selected: false,
+                    disabled: props.timer > 0 ? false : true
                 },
                 {
                     _id: 3,
                     name: 'answerC',
                     answer: props.questions[questionNo].answerC,
                     correct: props.questions[questionNo].correctAnswer === 'answerC' ? true : false,
-                    selected: false
+                    selected: false,
+                    disabled: props.timer > 0 ? false : true
                 },
                 {
                     _id: 4,
                     name: 'answerD',
                     answer: props.questions[questionNo].answerD,
                     correct: props.questions[questionNo].correctAnswer === 'answerD' ? true : false,
-                    selected: false
+                    selected: false,
+                    disabled: props.timer > 0 ? false : true
                 },
             ]
         }
@@ -103,7 +107,7 @@ const Quiz = props => {
                         answer: props.questions[questionNo].answerA,
                         correct: props.questions[questionNo].correctAnswer === 'answerA' ? true : false,
                         selected: false,
-                        disabled: false
+                        disabled: props.timer > 0 ? false : true
                     },
                     {
                         _id: 2,
@@ -111,7 +115,7 @@ const Quiz = props => {
                         answer: props.questions[questionNo].answerB,
                         correct: props.questions[questionNo].correctAnswer === 'answerB' ? true : false,
                         selected: false,
-                        disabled: false
+                        disabled: props.timer > 0 ? false : true
                     },
                     {
                         _id: 3,
@@ -119,7 +123,7 @@ const Quiz = props => {
                         answer: props.questions[questionNo].answerC,
                         correct: props.questions[questionNo].correctAnswer === 'answerC' ? true : false,
                         selected: false,
-                        disabled: false
+                        disabled: props.timer > 0 ? false : true
                     },
                     {
                         _id: 4,
@@ -127,7 +131,7 @@ const Quiz = props => {
                         answer: props.questions[questionNo].answerD,
                         correct: props.questions[questionNo].correctAnswer === 'answerD' ? true : false,
                         selected: false,
-                        disabled: false
+                        disabled: props.timer > 0 ? false : true
                     },
                 ]
             })
@@ -187,9 +191,8 @@ const Quiz = props => {
     }, [props.timer])
 
     const handleNext = () => {
-        if(questionNo < props.questions.length-1){
+        if(questionNo < props.questions.length-1 && props.timer > 0){
             setQuestionNo(prevState => prevState+1)
-            // props.resetTimer()
         }
         else{
             props.getScore(correctAnswers.score)
@@ -213,7 +216,7 @@ const Quiz = props => {
             
             <View style={{  }}>
             <AnswerButton 
-                title={questionNo < props.questions.length-1 ? 'Next' : 'Submit'} 
+                title={questionNo < props.questions.length-1 ? (props.timer > 0 ? 'Next' : 'Submit') : 'Submit'} 
                 backgroundColor='#257F9B'
                 textSize={22}
                 textColor='#fff'
@@ -222,6 +225,7 @@ const Quiz = props => {
                 onPress={() => handleNext()}
             />
             </View>
+            <CustomText style={{ textAlign: 'center' }}>{questionNo+1}/{props.questions.length}</CustomText>
         </View>
     )
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 
-import CustomText from './CustomText'
+import CustomText from '../components/CustomText'
 
 const AccountScreen = () => {
     return (

@@ -24,6 +24,7 @@ import ChatScreen from './src/screens/ChatScreen'
 import AccountScreen from './src/screens/AccountScreen'
 import QuizScreen from './src/screens/QuizScreen'
 import CourseScreen from './src/screens/CourseScreen'
+import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen'
 
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
@@ -42,6 +43,7 @@ Navigation.registerComponentWithRedux('Splash', () => SplashScreen, Provider, st
 Navigation.registerComponentWithRedux('Intro', () => OnboardingScreen, Provider, store)
 Navigation.registerComponentWithRedux('Login', () => LoginScreen, Provider, store)
 Navigation.registerComponentWithRedux('Signup', () => RegistrationScreen, Provider, store)
+Navigation.registerComponentWithRedux('ForgotPassword', () => ForgotPasswordScreen, Provider, store)
 Navigation.registerComponentWithRedux('Dashboard', () => DashboardScreen, Provider, store)
 Navigation.registerComponentWithRedux('Classroom', () => ClassroomScreen, Provider, store)
 Navigation.registerComponentWithRedux('Courses', () => CourseScreen, Provider, store)
@@ -68,7 +70,7 @@ Navigation.setDefaultOptions({
         title: {
             text: 'First Class Brain',
             color: '#257F9B',
-            fontWeight: 'bold',
+            fontFamily: 'Montserrat-Bold',
             fontSize: '20'
         },
         rightButtons: [

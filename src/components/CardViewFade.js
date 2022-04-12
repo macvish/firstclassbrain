@@ -43,7 +43,7 @@ const CardViewFade = props => {
             <View style={styles.container}>
                 <ImageBackground source={props.src ?? pp} imageStyle={{borderRadius: 20}} style={styles.imageContainer}>
                     <View style={styles.fadeContainer}>
-                        <CustomText style={styles.title}>{props.title}</CustomText>
+                        <CustomText weight="bold" style={styles.title}>{props.title}</CustomText>
                     </View>
                 </ImageBackground>
             </View>
@@ -79,8 +79,6 @@ const styles = StyleSheet.create({
 
     title: {
         color: '#ffffff',
-        fontWeight: 'bold',
         fontSize: 18,
-        // textAlign: 'center'
     }
 })

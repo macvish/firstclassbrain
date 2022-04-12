@@ -5,7 +5,7 @@ import { Button } from 'react-native-elements'
 import { connect } from 'react-redux'
 
 import QuestionsCardView from '../components/QuestionsCardView'
-import CustomText from './CustomText'
+import CustomText from '../components/CustomText'
 import wait from '../helper/wait'
 
 const { width, height } = Dimensions.get('window')
@@ -204,14 +204,15 @@ const styles = StyleSheet.create({
 
     tab: {
         width: width/3.2, 
-        height: 35,
+        height: 45,
         borderRadius: 10,
         backgroundColor: 'transparent'
     },
 
     tabTitle: {
-        fontSize: 15,
-        color: '#000000'
+        fontSize: 13,
+        color: '#000000',
+        fontFamily: 'Montserrat-ExtraBold'
     },
 
     contentSection: {

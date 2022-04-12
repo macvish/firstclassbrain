@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 import { authCheckerRoot } from '../navigation/authCheckerRootNavigation'
 import API from '../helper/API'
-import {CLEAR_ALL_ERROR_MESSAGE, LOGIN, LOGOUT, LOGIN_FAILURE, SIGN_UP, SIGN_UP_FAILURE, FORGOT_PASSWORD, HAS_ONBOARDED, GET_ACCESS_TOKEN} from './reducerTypes'
+import {CLEAR_ALL_ERROR_MESSAGE, LOGIN, LOGOUT, LOGIN_FAILURE, SIGN_UP, SIGN_UP_FAILURE, FORGOT_PASSWORD, HAS_ONBOARDED, GET_ACCESS_TOKEN, FORGOT_PASSWORD_FAILURE} from './reducerTypes'
 import { authRoot } from '../navigation/authRootNavigation'
 
 export const onboard = () => async (dispatch) => {
@@ -61,27 +61,18 @@ export const signup = (data) => async (dispatch) => {
 
 export const forgot_password = ({email}) => async (dispatch) => {
 
-  await API.post('auth/password/token', { email })
+  await API.post('student/reset-password', { email })
 .then(res => {
   const { data } = res
   if(res.status === 200){
     dispatch({ type: FORGOT_PASSWORD, msg: data.message })
-    Navigation.push('AuthStack', {
-      component: {
-          name: 'Verify',
-          passProps: {
-            email: email,
-            uid: data.uid
-          }
-      }
-    })
+    Navigation.pop('AuthStack')
   } else{
-    dispatch({ type: FORGOT_PASSWORD, msg: data.message })
+    dispatch({ type: FORGOT_PASSWORD_FAILURE, msg: 'Something went wrong, please try again' })
   }
 })
 .catch(err => {
-
-  dispatch({ type: FORGOT_PASSWORD, msg: err })
+  dispatch({ type: FORGOT_PASSWORD_FAILURE, msg: 'Something went wrong, please make sure you are using the correct email and try again' })
 })
 }
 

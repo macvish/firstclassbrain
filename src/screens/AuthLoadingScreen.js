@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Component } from 'react'
 import { ActivityIndicator, Dimensions, ImageBackground, StyleSheet, View } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
@@ -12,46 +12,12 @@ import { getAccessToken } from '../reducers/authAction'
 
 const {width, height} = Dimensions.get('screen')
 
-const AuthLoadingScreen = (props) => {
-    const [counter, setCounter] = useState(0.0)
+class AuthLoadingScreen extends Component {
+    state = {
+        counter: 0.0
+    }
 
-    // using station to limit the amount of times useEffect rerender
-    const [station, setStation] = useState(0)
-
-    useEffect(() => {
-        let mounted = true
-        if(mounted){
-            setStation(1)
-            setTimeout(() => {
-                setCounter(prevState => prevState + 0.5)
-            }, 2000)
-
-            if(counter == 1){
-                _bootstrapAsyncNaviagete()
-            }
-        }
-
-        return () => {
-            clearTimeout()
-            mounted = false
-        }
-        
-    }, [counter])
-
-    useEffect(() => {
-        let mounted = true
-        if(mounted)
-        {
-            _bootstrapAsync()
-        }
-
-        return () => {
-            mounted = false
-        }
-    }, [station])
-
-    // Fetch the token from storage then navigate to our appropriate place
-	const _bootstrapAsync = async () => {
+    _bootstrapAsync = async () => {
 
         // Fetch the token from storage then navigate to our appropriate place
           const userToken = await AsyncStorage.getItem('access_token')
@@ -60,15 +26,14 @@ const AuthLoadingScreen = (props) => {
           // screen will be unmounted and thrown away.
 
         if (userToken){
-            props.get_courses()
-            props.get_tests()
-            props.get_user(userToken)
-            props.getAccessToken()
+            this.props.get_courses()
+            this.props.get_tests()
+            this.props.get_user(userToken)
+            this.props.getAccessToken()
         }
     }
 
-      // Fetch the token from storage then navigate to our appropriate place
-	const _bootstrapAsyncNaviagete = async () => {
+	_bootstrapAsyncNaviagete = async () => {
 
         // Fetch the token from storage then navigate to our appropriate place
         const userToken = await AsyncStorage.getItem('access_token')
@@ -76,7 +41,7 @@ const AuthLoadingScreen = (props) => {
         // This will switch to the App screen or Auth screen and this loading
         // screen will be unmounted and thrown away.
         if (userToken){
-            if(Object.keys(props.payload).length !== 0){
+            if(Object.keys(this.props.payload).length !== 0){
                 Navigation.setRoot(mainRoot)
             }
             else{
@@ -88,16 +53,37 @@ const AuthLoadingScreen = (props) => {
         }
     }
 
-    return (
-        <ImageBackground source={splash_bg} style={styles.container}>
-            <View style={styles.contentWrapper}>
-                <View style={{flex: 1, justifyContent: 'center'}}>
-                    <ActivityIndicator color='#F6F5F5' size="large" />
-                </View>
-            </View>
+    componentDidMount() {
+        this._bootstrapAsync()
+        setTimeout(() => {
+            this.setState(prevState => ({counter: prevState.counter + 0.5}))
+        }, 2000)
+    }
 
-        </ImageBackground>
-    )
+    componentDidUpdate() {
+        if(this.state.counter < 1) {
+            setTimeout(() => {
+                this.setState(prevState => ({counter: prevState.counter + 0.5}))
+            }, 2000)
+        }
+
+        if(this.state.counter === 1){
+            this._bootstrapAsyncNaviagete()
+        }
+    }
+
+    render() {
+        return (
+            <ImageBackground source={splash_bg} style={styles.container}>
+                <View style={styles.contentWrapper}>
+                    <View style={{flex: 1, justifyContent: 'center'}}>
+                        <ActivityIndicator color='#F6F5F5' size="large" />
+                    </View>
+                </View>
+
+            </ImageBackground>
+        )
+    }
 }
 
 AuthLoadingScreen.options = {

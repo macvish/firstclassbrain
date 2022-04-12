@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 
 import onboarding_header from '../assets/images/onboarding_header.png'
 import onboard_one from '../assets/images/onboard_one.png'
-import CustomText from './CustomText'
+import CustomText from '../components/CustomText'
 import onboard_two from '../assets/images/onboard_two.png'
 import onboard_three from '../assets/images/onboard_three.png'
 import { authRoot } from '../navigation/authRootNavigation'
@@ -110,11 +110,11 @@ const OnboardingContent = params => {
 
                 <View style={{alignItems: 'center', flex: 1}}>
                     <View style={{width: width/1.2}}>
-                        <CustomText style={styles.title}>{params.title}</CustomText>
+                        <CustomText weight="bold" style={styles.title}>{params.title}</CustomText>
                     </View>
 
                     <View>
-                        <CustomText style={styles.subTitle}>{params.content}</CustomText>
+                        <CustomText weight="bold" style={styles.subTitle}>{params.content}</CustomText>
                     </View>
 
                 </View>
@@ -123,7 +123,7 @@ const OnboardingContent = params => {
                     <Button 
                         title={params.btnTitle ?? 'Next'}
                         buttonStyle={styles.button}
-                        titleStyle={{fontSize: 22, fontWeight: '700'}}
+                        titleStyle={{fontSize: 22, fontFamily: 'Montserrat-Bold'}}
                         onPress={() => params.onPress()}
                     />
                 </View>
@@ -175,14 +175,12 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 22,
         color: '#171717',
-        fontWeight: '700',
         textAlign: 'center',
     },
 
     subTitle: {
         fontSize: 13,
         color: '#707070',
-        fontWeight: '700',
         textAlign: 'center',
         width: width/1.25
     },
@@ -190,6 +188,7 @@ const styles = StyleSheet.create({
     nextIcon: {
         
     },
+
     button: {
         backgroundColor: '#257F9B',
         borderRadius: 15,

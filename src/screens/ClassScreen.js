@@ -3,12 +3,13 @@ import { Dimensions, ScrollView, StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
 import HtmlView from 'react-native-htmlview'
 import VideoPlayer from 'react-native-video-player'
+import { CheckBox } from 'react-native-elements'
 
 import calendar from '../assets/icons/calendar.png'
-import CustomText from './CustomText'
+import CustomText from '../components/CustomText'
 import IconImage from '../components/IconImage'
 import weeks from '../helper/weeks.json'
-import { CheckBox } from 'react-native-elements'
+import { mark_attendance } from '../reducers/mainAction'
 
 
 const { width, height } = Dimensions.get('window')
@@ -51,13 +52,18 @@ const ClassScreen = props => {
     <p>${data.class.fourthTextSlide ?? null}</p>
     `
 
+    const handleMarkAttendance = () => {
+        setAttendance(true)
+        props.markAttendance(data.class._id)
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <CustomText style={{...styles.title, paddingTop: 10, paddingBottom: 10, width: width/2.7}}>{data.class.courseTitle}</CustomText>
+                <CustomText weight="bold" style={{...styles.title, paddingTop: 10, paddingBottom: 10, width: width/2.7}}>{data.class.courseTitle}</CustomText>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <IconImage source={calendar} />
-                    <CustomText style={{...styles.title, paddingTop: 10, paddingBottom: 10, paddingLeft: 5}}>{data.term} - {data.week}</CustomText>
+                    <CustomText weight="bold" style={{...styles.title, paddingTop: 10, paddingBottom: 10, paddingLeft: 5, width: width/1.9}}>{data.term} - {data.week}</CustomText>
                 </View>
             </View>
 
@@ -75,7 +81,7 @@ const ClassScreen = props => {
                     <View style={{flex: 1}}>
 
                         <View style={[styles.header, {justifyContent: 'center'}]}>
-                            <CustomText style={{...styles.title, paddingTop: 10, paddingBottom: 10}}>Overview</CustomText>
+                            <CustomText weight="bold" style={{...styles.title, paddingTop: 10, paddingBottom: 10}}>Overview</CustomText>
                         </View>
 
                         <View style={styles.content}>
@@ -85,24 +91,17 @@ const ClassScreen = props => {
                             />
                         </View>
 
-                        {/* <View style={styles.header}>
-                            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                <IconImage source={zip_folder} width={23} />
-                                <CustomText style={[styles.title, {paddingLeft: 12}]}>Week1.zip</CustomText>
-                            </View>
-                        </View> */}
-
                         <View style={{...styles.header, borderBottomWidth: 0}}>
                             <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                 <CheckBox 
                                     checked={attendance} 
                                     containerStyle={{ backgroundColor: 'transparent', borderWidth: 0, padding: 0, marginLeft: 0}} 
-                                    onPress={() => setAttendance(prev => !prev)}
+                                    onPress={handleMarkAttendance}
                                     title='Attendance'
                                     textStyle={{ 
                                         color: '#707070',
                                         fontSize: 16,
-                                        fontWeight: 'bold', 
+                                        fontFamily: 'Montserrat-Bold'
                                     }}
                                 />
                                 <CustomText style={[styles.title, {paddingLeft: 5}]}></CustomText>
@@ -126,7 +125,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    
+    markAttendance: mark_attendance
 }
 
 
@@ -148,6 +147,7 @@ const styles = StyleSheet.create({
         width: width,
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
         paddingLeft: 20,
         paddingRight: 20,
         borderBottomWidth: 1.3,
@@ -157,7 +157,6 @@ const styles = StyleSheet.create({
     title: {
         color: '#707070',
         fontSize: 16,
-        fontWeight: 'bold',
         paddingTop: 20,
         paddingBottom: 20
     },
@@ -188,6 +187,7 @@ const htmlStyles = StyleSheet.create({
     p: {
         textAlign: 'justify',
         lineHeight: 18,
-        marginBottom: -50
+        marginBottom: -50,
+        fontFamily: 'Montserrat-Regular'
     }
 })

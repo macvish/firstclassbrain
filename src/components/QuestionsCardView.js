@@ -66,9 +66,9 @@ const QuestionsCardView = props => {
                 >
                     {props.title ? 
                         <View style={styles.contentContainer}>
-                            <CustomText style={styles.title}>{String(props.title).toUpperCase()}</CustomText>
-                            <CustomText style={styles.title}>{props.subTitle}</CustomText>
-                            <CustomText style={styles.title}>{props.week}</CustomText>
+                            <CustomText weight="bold" style={styles.title}>{String(props.title).toUpperCase()}</CustomText>
+                            <CustomText weight="bold" style={styles.title}>{props.subTitle}</CustomText>
+                            <CustomText weight="bold" style={styles.title}>{props.week}</CustomText>
                             <CustomText style={{fontSize: 17, color: 'white', textAlign: 'center'}}>Start Quiz</CustomText>
                         </View>
                     :
@@ -115,7 +115,6 @@ const styles = StyleSheet.create({
 
     title: {
         color: '#ffffff',
-        fontWeight: 'bold',
         fontSize: 15,
         textAlign: 'center'
     }

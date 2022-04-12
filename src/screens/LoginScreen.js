@@ -7,27 +7,22 @@ import { connect } from 'react-redux'
 import { Formik } from 'formik'
 import { useNetInfo } from "@react-native-community/netinfo"
 import * as Yup from 'yup'
+import { Icon } from 'react-native-elements'
 
 import img from '../assets/images/login_image.png'
 import img_overlay from '../assets/images/login_fade.png'
-import CustomText from './CustomText'
+import CustomText from '../components/CustomText'
 import { login, clearErrorMessages } from '../reducers/authAction'
 import logo from '../assets/logo/logo.jpeg'
 
 const {width, height} = Dimensions.get('window')
 
 const INITIAL_VALUES = {
-    firstName: '',
-    lastName: '',
     email: '',
-    phone: '',
-    address: '',
-    classSelected: '',
     password: '',
-    confirm_password: ''
 }
 
-const signupValidation = Yup.object({
+const loginValidation = Yup.object({
     email: Yup.string().required('Required').min(5, 'Must be more than 5 characters').matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g, 'Invalid email address'),
     password: Yup.string().required('Required')
 })
@@ -36,12 +31,7 @@ const LoginScreen = props => {
 
     const netInfo = useNetInfo()
 
-    const [data, setData] = useState({
-        email: '',
-        password: ''
-    })
-
-    const [signupMsg, setSignupMsg] = useState('')
+    const [successMsg, setSuccessMsg] = useState('')
 
     const [err, setErr] = useState('')
 
@@ -55,13 +45,24 @@ const LoginScreen = props => {
     useEffect(() => {
         let mounted = true
         if(mounted) {
-            setSignupMsg(props.signupSuccessMessage)
+            setSuccessMsg(props.signupSuccessMessage)
         }
 
         return () => {
             mounted = false
         }
     }, [props.signupSuccessMessage])
+
+    useEffect(() => {
+        let mounted = true
+        if(mounted) {
+            setSuccessMsg(props.forgotPasswordSuccessMessage)
+        }
+
+        return () => {
+            mounted = false
+        }
+    }, [props.forgotPasswordSuccessMessage])
 
     useEffect(() => {
         let mounted = true
@@ -96,7 +97,7 @@ const LoginScreen = props => {
 
     const navigate = (screenName) => {
         setErr('')
-        setSignupMsg('')
+        setSuccessMsg('')
         Navigation.push(props.componentId, {
             component: {
                 name: screenName
@@ -124,12 +125,6 @@ const LoginScreen = props => {
                 }
             }
         })
-    }
-
-    const handleInput = (name, e) => {
-        setData(prevState => ({
-            ...prevState, [name]: e
-        }))
     }
     
     const handleSubmit = (values) => {
@@ -181,13 +176,20 @@ const LoginScreen = props => {
             </View>
 
                 <View style={{alignSelf: 'center', width: width/1.24, paddingTop: 20}}>
-                    <CustomText style={{fontSize: 20, fontWeight: '700', color: '#171717'}}>Login to your account</CustomText>
-                    {props.signupSuccessMessage ? <CustomText style={{color: '#3FB0D4'}}>{signupMsg}</CustomText> : null}
+                    <CustomText weight="bold" style={{fontSize: 20, color: '#171717'}}>Login to your account</CustomText>
+                    {
+                        props.signupSuccessMessage 
+                            ? <CustomText style={{color: '#3FB0D4'}}>{successMsg}</CustomText> 
+                            : (props.forgotPasswordSuccessMessage 
+                                ? <CustomText style={{color: '#3FB0D4'}}>Please {successMsg}</CustomText> 
+                                : null
+                            )
+                    }
                 </View>
 
                 <Formik
                     initialValues={INITIAL_VALUES}
-                    validationSchema={signupValidation}
+                    validationSchema={loginValidation}
                     onSubmit={values => handleSubmit(values)}
                 >
                     {({ errors, handleChange, handleSubmit, setTouched, touched, validateField, values, setFieldValue }) => (
@@ -198,16 +200,15 @@ const LoginScreen = props => {
                                     placeholderTextColor='#707070'
                                     textContentType='emailAddress'
                                     inputContainerStyle={{ borderBottomColor: '#171717', borderBottomWidth: 2.5, marginBottom: -10 }}
-                                    inputStyle={{color: '#707070'}} 
-                                    onChangeText={e => handleInput('email', e)} 
+                                    inputStyle={{color: '#707070', fontFamily: 'Montserrat-Regular', fontSize: 16}}
                                     value={values.email} 
                                     onChangeText={handleChange('email')}
                                     onFocus={() => {
                                         if (!touched.email) {
                                         setTouched({ ...touched, email: true })
-                                    }
-                                    }}
+                                    }}}
                                     onBlur={() => validateField('email')} 
+                                    leftIcon={<Icon type="antdesign" name="mail" />}
                                 />
                                 {errors.email && touched.email ? <CustomText style={styles.errorMessage}>{errors.email}</CustomText> : null}
 
@@ -216,16 +217,16 @@ const LoginScreen = props => {
                                     placeholderTextColor='#707070'
                                     textContentType='password'
                                     inputContainerStyle={{ borderBottomColor: '#171717', borderBottomWidth: 2.5, marginTop: -10 }}
-                                    inputStyle={{color: '#707070',}}
-                                    secureTextEntry onChangeText={e => handleInput('password', e)}
+                                    inputStyle={{color: '#707070', fontFamily: 'Montserrat-Regular', fontSize: 16}}
+                                    secureTextEntry
                                     value={values.password} 
                                     onChangeText={handleChange('password')}
                                     onFocus={() => {
                                         if (!touched.password) {
                                         setTouched({ ...touched, password: true })
-                                    }
-                                    }}
+                                    }}}
                                     onBlur={() => validateField('password')} 
+                                    leftIcon={<Icon type="antdesign" name="lock" />}
                                 />
                                 {errors.password && touched.password ? <CustomText style={styles.errorMessage}>{errors.password}</CustomText> : null}
 
@@ -246,7 +247,7 @@ const LoginScreen = props => {
                                     <Button 
                                         title='Sign in'
                                         buttonStyle={styles.button}
-                                        titleStyle={{fontSize: 22, fontWeight: '700'}}
+                                        titleStyle={{fontSize: 22, fontFamily: 'Montserrat-Bold'}}
                                         onPress={() => handleSubmit()}
                                     />
                                 </View> : <ActivityIndicator size={50} color='#257F9B' />}
@@ -268,10 +269,10 @@ const LoginScreen = props => {
                 </View>
                 <View style={{marginTop: -14}}>
                     <Button 
-                        title='Forget Password' 
+                        title='Forgot Password' 
                         type='clear' 
                         titleStyle={styles.clearButton} 
-                        onPress={async () => await Linking.openURL('https://firstclassbrain.com/forgot-password')} 
+                        onPress={() => navigate('ForgotPassword')} 
                     />
                 </View>
             </View>
@@ -288,7 +289,8 @@ LoginScreen.options = {
 const mapStateToProps = (state) => ({
     loginMessage: state.auth.login_err_msg,
     isLoggedIn: state.auth.is_logged_in,
-    signupSuccessMessage: state.auth.signup_success_message
+    signupSuccessMessage: state.auth.signup_success_message,
+    forgotPasswordSuccessMessage: state.auth.forgot_password_success_message
 })
 
 const mapDispatchToProps = {
@@ -321,13 +323,12 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 75,
         justifyContent: 'center',
         alignItems: 'center',
-        // backgroundColor: 'blue'
     },
 
     clearButton: {
         color: '#3FB0D4',
         fontSize: 16,
-        fontWeight: '200',
+        fontFamily: 'Montserrat-Regular'
     },
 
     inputContainer: {

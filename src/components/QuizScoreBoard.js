@@ -40,7 +40,7 @@ const QuizScoreBoard = props => {
         return solution.solutions.map((data, index) => {
             return (
                 <View key={data._id} style={styles.solution}>
-                    <CustomText style={{ fontSize: 18, fontWeight: 'bold', color: '#fff' }}>Solution {data.sn}:</CustomText>
+                    <CustomText weight="bold" style={{ fontSize: 18, color: '#fff' }}>Solution {data.sn}:</CustomText>
                     <CustomText style={{
                         fontSize: 15, 
                         textAlign: 'justify', 

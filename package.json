@@ -1,6 +1,6 @@
 {
   "name": "firstclassbrain",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
@@ -24,6 +24,7 @@
     "react-native-gesture-handler": "^1.7.0",
     "react-native-htmlview": "^0.16.0",
     "react-native-image-picker": "^2.3.3",
+    "react-native-image-zoom-viewer": "^3.0.1",
     "react-native-material-dropdown-v2": "^0.11.1",
     "react-native-navigation": "^6.12.0",
     "react-native-paper": "^4.4.1",

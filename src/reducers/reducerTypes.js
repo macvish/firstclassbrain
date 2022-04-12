@@ -16,6 +16,8 @@ export const LOGOUT = 'LOGOUT'
 
 export const FORGOT_PASSWORD = 'FORGOT_PASSWORD'
 
+export const FORGOT_PASSWORD_FAILURE = 'FORGOT_PASSWORD_FAILURE'
+
 export const VERIFY_EMAIL = 'VERIFY_EMAIL'
 
 export const RESEND_CODE = 'RESEND_CODE'
@@ -54,4 +56,6 @@ export const PAYMENT_FAILURE = 'PAYMENT_FAILURE'
 
 export const GET_ACCESS_TOKEN = 'GET_ACCESS_TOKEN'
 
-export const MOST_VIEWED = 'MOST_VIEW'
+export const MOST_VIEWED = 'MOST_VIEWED'
+
+export const MARK_ATTENDANCE = 'MARK_ATTENDANCE'

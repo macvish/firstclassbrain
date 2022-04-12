@@ -64,14 +64,14 @@ const SelectionModal = (props) => {
                     <Button 
                         title='Cancel' 
                         titleStyle={styles.buttonTitle}
-                        buttonStyle={{...styles.button, backgroundColor: '#EC5959'}} 
+                        buttonStyle={{...styles.button, backgroundColor: '#EC5959', borderBottomLeftRadius: 10}} 
                         containerStyle={{borderRadius: 0}} 
                         onPress={() => props.onClose()}
                     />
                     <Button 
                         title='Continue' 
                         titleStyle={styles.buttonTitle}
-                        buttonStyle={{...styles.button, backgroundColor: '#18BE91'}}
+                        buttonStyle={{...styles.button, backgroundColor: '#18BE91', borderBottomRightRadius: 10}}
                         containerStyle={{borderRadius: 0}} 
                         onPress={() => props.onContinue()} 
                     />
@@ -86,14 +86,18 @@ export default SelectionModal
 const styles = StyleSheet.create({
     container: {
         width: width,
-        height: height,
+        height: height/1.01,
         backgroundColor: 'rgba(112, 112, 112, 0.8)',
-        justifyContent: 'flex-end'
+        justifyContent: 'center',
+        paddingLeft: 10,
+        paddingRight: 10
     },
 
     messageWrapper: {
         backgroundColor: '#fff',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10
     },
 
     selectContainer: {
@@ -111,13 +115,14 @@ const styles = StyleSheet.create({
 
     buttonsWrapper: {
         flexDirection: 'row',
-        width: width,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10
     },
 
     button: {
-        height: 60,
-        width: width/2,
+        height: 70,
+        width: width/2.105,
         borderRadius: 0
     },
 
